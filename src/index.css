@@ -1,0 +1,74 @@
+@import "tailwindcss"; /* replaces @tailwind base */
+
+/* 3D helpers */
+.perspective {
+  perspective: 1200px;
+}
+
+.transform-style {
+  transform-style: preserve-3d;
+}
+
+@keyframes smokeMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1000px 500px;
+  }
+}
+@keyframes smokeMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1200px 600px;
+  }
+}
+
+/* Grid lines background effect */
+.bg-grid-lines {
+  background-color: #f5f7f6; /* light background similar to blog */
+  background-image:
+    linear-gradient(rgba(128, 128, 128, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 128, 128, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px; /* spacing between grid lines */
+}
+
+.perspective-container {
+  perspective: 1400px;
+  -webkit-perspective: 1400px;
+}
+
+@font-face {
+  font-family: "Bezmiar";
+  src: url("./assets/fonts/Bezmiar.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@theme {
+  --font-bezmiar: "Bezmiar", sans-serif;
+}
+@font-face {
+  font-family: "SpaceMono";
+  src: url("./assets/fonts/SpaceMono-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@theme {
+  --font-space-mono: "Space Mono", monospace;
+}
+/* external styles (e.g., in styles.css or tailwind.config.js) */
+.bg-radial-gradient-custom {
+  background-image:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(47, 94, 75, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(127, 174, 141, 0.06) 0%,
+      transparent 40%
+    );
+}

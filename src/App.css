@@ -1,0 +1,6 @@
+/* globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+.font-alfa {
+  font-family: 'Alfa Slab One', cursive;
+}

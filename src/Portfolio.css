@@ -1,0 +1,64 @@
+/* ============================================================
+   Portfolio.css
+   All styles extracted from inline style props to satisfy
+   the webhint `no-inline-styles` rule.
+   ============================================================ */
+
+/* Section */
+.portfolio-section {
+  overflow: hidden; /* prevents horizontal scrollbar */
+}
+
+/* Carousel outer wrapper — clips the scrolling track */
+.portfolio-carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Carousel track — flex row translated by JS */
+.portfolio-carousel-track {
+  display: flex;
+  gap: 24px;
+  will-change: transform;
+}
+
+/* Individual card */
+.portfolio-card {
+  flex-shrink: 0;
+  width: 320px;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow:
+    0 10px 24px rgba(47, 94, 75, 0.06),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover {
+  box-shadow:
+    0 20px 40px rgba(47, 94, 75, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Image wrapper */
+.portfolio-card-image-wrapper {
+  position: relative;
+  height: 16rem; /* h-64 */
+  overflow: hidden;
+}
+
+/* Image */
+.portfolio-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Category badge */
+.portfolio-card-category {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #5b8869;
+}
