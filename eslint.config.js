@@ -6,17 +6,30 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
+  // Ignore build/dist folder
   globalIgnores(['dist']),
+
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
+      // Base JS rules
       js.configs.recommended,
-      tseslint.configs.recommended,
+      
+      // TypeScript rules with type-checking
+      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.strictTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+      
+      // React plugin rules
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
     languageOptions: {
-      ecmaVersion: 2020,
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+        ecmaVersion: 2020,
+      },
       globals: globals.browser,
     },
   },
