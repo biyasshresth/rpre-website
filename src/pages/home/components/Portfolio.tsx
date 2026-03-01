@@ -133,7 +133,7 @@ const Portfolio = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: LUXURY_EASE }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center "
         >
           <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#7FAE8D] mb-3">
             Our Work
@@ -143,7 +143,7 @@ const Portfolio = () => {
           </h2>
 
           {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-3 mt-6">
+          <div className="flex flex-wrap justify-center gap-1">
             {categories.map((category) => (
               <motion.button
                 key={category}

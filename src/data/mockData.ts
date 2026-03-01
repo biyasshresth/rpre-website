@@ -13,6 +13,7 @@ export interface Service {
   description: string;
   icon: LucideIcon;
   image: string;
+  link?: string;
 }
 
 export interface PortfolioItem {
@@ -69,6 +70,7 @@ export const services: Readonly<Service[]> = [
     icon: Code,
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800",
+      link:"/web-landing"
   },
   {
     id: 2,

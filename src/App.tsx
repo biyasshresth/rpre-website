@@ -1,10 +1,10 @@
 import "./App.css";
-import HomePage from "./pages/home/Homepage";
 import { Toaster } from "react-hot-toast";
+import AppRoute from "./route/AppRoute";
 const App = () => {
   return (
     <>
-      <HomePage />{" "}
+      <AppRoute />
       <Toaster position="top-right" />
     </>
   );

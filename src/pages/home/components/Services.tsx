@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { services } from "../../../data/mockData";
 import BackgroundGear from "./BackgroundGear";
+import { Link } from "react-router-dom";
 const ease: Easing = [0.42, 0, 0.58, 1];
 
 const containerVariants: Variants = {
@@ -48,9 +49,9 @@ const Services: React.FC = () => {
       className="relative py-24 bg-grid-lines bg-gray-50 overflow-hidden"
     >
       {/* Background Gear - Top Right */}
-    <div className="absolute -top-72 -right-72 w-95 h-95 text-[#2F5E4B] opacity-10 pointer-events-none z-0" />
-  <BackgroundGear />
-  
+      <div className="absolute -top-72 -right-72 w-95 h-95 text-[#2F5E4B] opacity-10 pointer-events-none z-0" />
+      <BackgroundGear />
+
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -79,45 +80,46 @@ const Services: React.FC = () => {
             const IconComponent: LucideIcon = service.icon;
 
             return (
-              <motion.div
-                key={service.id}
-                className="group bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden cursor-pointer mt-10"
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <motion.img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover"
-                    variants={imageVariants}
-                  />
+              <Link key={service.id} to={service.link!} className="block">
+                <motion.div
+                  className="group bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden cursor-pointer mt-10"
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                >
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <motion.img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                      variants={imageVariants}
+                    />
 
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-[rgba(47,94,75,0.8)] to-transparent" />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-linear-to-t from-[rgba(47,94,75,0.8)] to-transparent" />
 
-                  {/* Icon */}
-                  <motion.div
-                    variants={iconVariants}
-                    className="absolute bottom-4 left-4 bg-white rounded-full p-3 shadow-lg"
-                  >
-                    <IconComponent className="text-[#2F5E4B]" size={28} />
-                  </motion.div>
-                </div>
+                    {/* Icon */}
+                    <motion.div
+                      variants={iconVariants}
+                      className="absolute bottom-4 left-4 bg-white rounded-full p-3 shadow-lg"
+                    >
+                      <IconComponent className="text-[#2F5E4B]" size={28} />
+                    </motion.div>
+                  </div>
 
-                {/* Content */}
-                <div className="p-6 ">
-                  <h3 className="text-2xl font-bold text-[#3e6e5c] mb-3 group-hover:text-[#274b32] transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed font-space-mono">
-                    {service.description}
-                  </p>
-                </div>
-              </motion.div>
+                  {/* Content */}
+                  <div className="p-6 ">
+                    <h3 className="text-2xl font-bold text-[#3e6e5c] mb-3 group-hover:text-[#274b32] transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed font-space-mono">
+                      {service.description}
+                    </p>
+                  </div>
+                </motion.div>
+              </Link>
             );
           })}
         </motion.div>
