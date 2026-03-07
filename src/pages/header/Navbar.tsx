@@ -51,8 +51,7 @@ const Navbar: React.FC = () => {
     const element = document.getElementById(sectionId);
     if (!element) return;
 
-    const targetY =
-      window.scrollY + element.getBoundingClientRect().top - 16;
+    const targetY = window.scrollY + element.getBoundingClientRect().top - 16;
 
     smoothScrollTo(targetY, 1400);
   };
@@ -72,10 +71,10 @@ const Navbar: React.FC = () => {
     <nav
       className={[
         "fixed top-0 left-0 right-0 z-100 transition-all duration-700 ease-in-out",
-        hideNavbar ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100",
-        showSolidBg
-          ? "bg-[#254F3E] shadow-lg"
-          : "bg-[#254F3E] shadow-md",
+        hideNavbar
+          ? "-translate-y-full opacity-0"
+          : "translate-y-0 opacity-100",
+        showSolidBg ? "bg-[#254F3E] shadow-lg" : "bg-[#254F3E] shadow-md",
       ].join(" ")}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -91,9 +90,17 @@ const Navbar: React.FC = () => {
           <button
             type="button"
             onClick={handleGetStarted}
-            className="rounded-lg bg-[#F5F5F5] px-5 py-2 font-semibold text-black shadow-md transition-all duration-300 hover:bg-[#6b9c7c]"
+            className="group cursor-pointer rounded-lg bg-[#F5F5F5] px-5 py-2 font-semibold text-black shadow-md transition-all duration-300 hover:bg-[#6b9c7c] overflow-hidden"
           >
-            Get Started
+            <div className="relative h-5 overflow-hidden">
+              <p className="transition-transform duration-900 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-6">
+                Get Started
+              </p>
+
+              <p className="absolute   top-6 flex justify-center text-white transition-all duration-900 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-0">
+                Let's Go
+              </p>
+            </div>
           </button>
         </div>
       </div>

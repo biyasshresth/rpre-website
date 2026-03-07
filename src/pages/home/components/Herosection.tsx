@@ -13,10 +13,10 @@ import Lottie from "lottie-react";
 import type { LottieRefCurrentProps } from "lottie-react";
 import robot from "@assets/robot.json";
 
-const iconVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.8 },
-  show: { opacity: 1, y: 0, scale: 1 },
-};
+// const iconVariants = {
+//   hidden: { opacity: 0, y: 20, scale: 0.8 },
+//   show: { opacity: 1, y: 0, scale: 1 },
+// };
 
 const Icons = {
   Settings: () => (
