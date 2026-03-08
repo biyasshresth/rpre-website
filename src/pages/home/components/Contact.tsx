@@ -4,7 +4,6 @@ const Contact: React.FC = () => {
   return (
     <section className="bg-[#254F3E] text-white py-24 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-start">
-        {/* LEFT SIDE */}
         <div className="space-y-8">
           <p className="uppercase tracking-widest text-sm text-white/80 font-space-mono">
             Ready to start?
@@ -25,9 +24,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* RIGHT SIDE FORM */}
         <form className="space-y-8">
-          {/* Name */}
           <div className="relative">
             <label className="block text-xs font-space-mono uppercase tracking-widest text-white/60 mb-3">
               Name
@@ -39,7 +36,6 @@ const Contact: React.FC = () => {
             />
           </div>
 
-          {/* Email */}
           <div className="relative">
             <label className="block text-xs uppercase tracking-widest font-space-mono text-white/60 mb-3">
               Email
@@ -51,7 +47,6 @@ const Contact: React.FC = () => {
             />
           </div>
 
-          {/* Message */}
           <div className="relative">
             <label className="block text-xs font-space-mono uppercase tracking-widest text-white/60 mb-3">
               Message
@@ -63,10 +58,9 @@ const Contact: React.FC = () => {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-white text-[#254F3E] py-4 font-space-mono cursor-pointer relative rounded-md font-bold flex items-center justify-center gap-2 transition hover:bg-white/90"
+            className=" w-full  bg-white text-[#254F3E] py-4 font-space-mono cursor-pointer relative rounded-md font-bold flex items-center justify-center gap-2 transition hover:bg-white/90"
           >
             Send Message
           </button>

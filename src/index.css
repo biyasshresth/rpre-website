@@ -1,4 +1,7 @@
-@import "tailwindcss"; /* replaces @tailwind base */
+@import "tailwindcss";
+html {
+  scroll-behavior: smooth;
+}
 
 /* 3D helpers */
 .perspective {
@@ -8,23 +11,7 @@
 .transform-style {
   transform-style: preserve-3d;
 }
-
-@keyframes smokeMove {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 1000px 500px;
-  }
-}
-@keyframes smokeMove {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 1200px 600px;
-  }
-}
+ 
 
 /* Grid lines background effect */
 .bg-grid-lines {
@@ -71,4 +58,66 @@
       rgba(127, 174, 141, 0.06) 0%,
       transparent 40%
     );
+}
+
+/* From Uiverse.io by mrhyddenn, now scoped to .fancy-button */
+.fancy-button {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgb(3, 99, 38);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  transition: all 0.2s ease-in;
+}
+
+.fancy-button:hover {
+  background: rgb(8, 99, 38);
+  box-shadow: 0 0 30px 5px rgba(39, 105, 50, 0.815);
+  transition: all 0.2s ease-out;
+}
+
+.fancy-button:hover::before {
+  animation: sh02 0.5s 0s linear;
+}
+
+.fancy-button::before {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.fancy-button:active {
+  box-shadow: 0 0 0 0 transparent;
+  transition: box-shadow 0.2s ease-in;
 }

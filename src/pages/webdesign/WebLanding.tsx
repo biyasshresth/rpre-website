@@ -9,7 +9,6 @@ const WebLanding: React.FC = () => {
 
   return (
     <div className="App">
-      {/* Introduction Section */}
       <section
         id="introduction"
         ref={sectionsRef}

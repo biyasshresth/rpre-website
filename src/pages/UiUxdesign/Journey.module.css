@@ -1,0 +1,134 @@
+.section {
+  padding: 120px 24px;
+  background: var(--cream);
+  position: relative;
+}
+
+.topRule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, color-mix(in srgb, var(--gold) 53%, transparent), transparent);
+}
+
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ── heading ── */
+.headingWrap {
+  text-align: center;
+  margin-bottom: 80px;
+}
+.chapterLabel {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.3em;
+  font-size: 11px;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+}
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  color: var(--ink);
+  margin: 16px 0 0;
+  line-height: 1.1;
+}
+.headingAccent {
+  color: var(--olive);
+  font-style: italic;
+}
+
+/* ── timeline ── */
+.timeline {
+  position: relative;
+}
+.spine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--olive) 40%, transparent), transparent);
+  transform: translateX(-50%);
+}
+
+/* ── row ── */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 64px;
+}
+.rowEven  { flex-direction: row; }
+.rowOdd   { flex-direction: row-reverse; }
+
+/* ── card ── */
+.cardWrap       { flex: 1; }
+.cardWrapEven   { text-align: right; }
+.cardWrapOdd    { text-align: left; }
+
+.card {
+  background: linear-gradient(135deg, var(--cream-dark), var(--cream));
+  border: 1px solid color-mix(in srgb, var(--olive) 27%, transparent);
+  border-radius: 8px;
+  padding: 32px 36px;
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--olive) 9%, transparent);
+}
+.cardYear {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-weight: 600;
+  display: block;
+}
+.cardTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--ink);
+  margin: 10px 0 14px;
+}
+.cardBody {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  color: var(--ink-light);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ── center node ── */
+.node {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--olive), var(--olive-dark));
+  border: 3px solid var(--cream);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--olive) 33%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--cream);
+  margin-top: 28px;
+}
+
+.spacer { flex: 1; }
+
+/* ── responsive ── */
+@media (max-width: 640px) {
+  .row,
+  .rowEven,
+  .rowOdd {
+    flex-direction: column;
+    align-items: center;
+  }
+  .spine   { display: none; }
+  .spacer  { display: none; }
+  .cardWrapEven,
+  .cardWrapOdd { text-align: left; }
+}

@@ -1,0 +1,99 @@
+.section {
+  padding: 120px 24px;
+  background: linear-gradient(175deg, var(--cream-dark) 0%, color-mix(in srgb, var(--olive-light) 20%, transparent) 100%);
+  position: relative;
+}
+
+.topRule {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, color-mix(in srgb, var(--olive) 40%, transparent), transparent);
+}
+
+.inner { max-width: 900px; margin: 0 auto; }
+
+/* heading */
+.headingBlock { margin-bottom: 72px; }
+.chapterLabel {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.3em;
+  font-size: 11px;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+}
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  color: var(--ink);
+  margin: 16px 0 20px;
+  line-height: 1.1;
+}
+.headingAccent { color: var(--olive); font-style: italic; }
+.intro {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  color: var(--ink-light);
+  line-height: 1.8;
+  max-width: 560px;
+}
+
+/* list */
+.list { display: flex; flex-direction: column; }
+
+/* row */
+.challengeRow {
+  display: flex;
+  align-items: stretch;
+  padding: 32px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--olive) 20%, transparent);
+  background: transparent;
+  transition: background 0.3s ease;
+  cursor: default;
+}
+.challengeRow:last-child { border-bottom: none; }
+.challengeRow:hover { background: color-mix(in srgb, var(--row-accent, var(--gold)) 5%, transparent); }
+
+/* accent bar */
+.accentBar {
+  width: 4px;
+  border-radius: 4px;
+  margin-right: 32px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--row-accent, var(--gold)),
+    color-mix(in srgb, var(--row-accent, var(--gold)) 27%, transparent)
+  );
+}
+
+/* accent colour variants */
+.gold     { --row-accent: #D4AF37; }
+.olive    { --row-accent: #A3B18A; }
+.goldDark { --row-accent: #A8871C; }
+.oliveDk  { --row-accent: #7A8F6A; }
+
+.rowBody { flex: 1; }
+.rowMeta { display: flex; align-items: baseline; gap: 20px; margin-bottom: 10px; }
+
+.rowIndex {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--row-accent, var(--gold));
+}
+.rowTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0;
+}
+.rowDesc {
+  font-family: 'Lora', serif;
+  font-size: 15.5px;
+  color: var(--ink-light);
+  line-height: 1.85;
+  margin: 0;
+  max-width: 680px;
+}

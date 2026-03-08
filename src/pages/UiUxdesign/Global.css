@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  --olive:       #A3B18A;
+  --olive-dark:  #7A8F6A;
+  --olive-light: #C5D4AE;
+  --cream:       #F5F1E7;
+  --cream-dark:  #EAE4D2;
+  --gold:        #D4AF37;
+  --gold-light:  #E8CD6A;
+  --gold-dark:   #A8871C;
+  --ink:         #2C2A22;
+  --ink-light:   #4A4840;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+.innerbody { overflow-x: hidden; font-family: 'Lora', serif; background: var(--cream); }
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50%       { opacity: 1;   transform: scaleY(1); }
+}

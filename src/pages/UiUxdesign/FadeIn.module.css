@@ -1,0 +1,17 @@
+.base {
+  opacity: 0;
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+/* initial offsets */
+.fromUp    { transform: translateY(40px); }
+.fromDown  { transform: translateY(-40px); }
+.fromLeft  { transform: translateX(-40px); }
+.fromRight { transform: translateX(40px); }
+.fromNone  { transform: none; }
+
+/* revealed */
+.visible {
+  opacity: 1;
+  transform: none;
+}

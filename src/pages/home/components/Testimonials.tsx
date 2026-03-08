@@ -36,10 +36,10 @@ const Testimonials: React.FC = () => {
 
   const variants = {
     enter: (dir: number) => ({
-      x: dir > 0 ? 400 : -400,
+      x: dir > 0 ? 120 : -120,
       opacity: 0,
-      scale: 0.9,
-      filter: "blur(8px)",
+      scale: 0.96,
+      filter: "blur(4px)",
     }),
     center: {
       x: 0,
@@ -48,21 +48,20 @@ const Testimonials: React.FC = () => {
       filter: "blur(0px)",
     },
     exit: (dir: number) => ({
-      x: dir < 0 ? 400 : -400,
+      x: dir < 0 ? 120 : -120,
       opacity: 0,
-      scale: 0.9,
-      filter: "blur(8px)",
+      scale: 0.96,
+      filter: "blur(4px)",
     }),
   };
 
   const active: Testimonial = testimonials[index];
 
   return (
-<section
-  id="testimonial"
-  className=" py-24 relative bg-grid-lines overflow-hidden"
->
-
+    <section
+      id="testimonial"
+      className=" py-24 relative bg-grid-lines overflow-hidden"
+    >
       <motion.div
         style={{ x: backgroundX }}
         className="absolute inset-0 bg-linear-to-br from-[#2F5E4B]/5 to-[#7FAE8D]/5"
@@ -153,7 +152,7 @@ const Testimonials: React.FC = () => {
                 {/* Author */}
                 <div className="flex items-center justify-center gap-5 relative z-10">
                   <motion.img
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ y: -4 }}
                     src={active.avatar}
                     alt={active.name}
                     className="w-16 h-16 rounded-full object-cover border-4 border-[#7FAE8D]"
@@ -174,7 +173,7 @@ const Testimonials: React.FC = () => {
             type="button"
             aria-label="Previous testimonial"
             onClick={() => paginate(-1)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-[#2F5E4B] hover:text-white transition-all duration-300 hover:scale-110"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-[#254F3E] rounded-full p-3 shadow-lg hover:bg-[#436859] hover:text-white transition-all duration-300 hover:scale-110"
           >
             <ChevronLeft size={24} />
           </button>
@@ -183,7 +182,7 @@ const Testimonials: React.FC = () => {
             type="button"
             aria-label="Next testimonial"
             onClick={() => paginate(1)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-[#2F5E4B] hover:text-white transition-all duration-300 hover:scale-110"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-[#254F3E] rounded-full p-3 shadow-lg hover:bg-[#436859] hover:text-white transition-all duration-300 hover:scale-110"
           >
             <ChevronRight size={24} />
           </button>

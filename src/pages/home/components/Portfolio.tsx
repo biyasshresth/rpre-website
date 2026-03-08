@@ -121,7 +121,7 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="py-24 relative overflow-hidden bg-linear-to-r from-[#f7f3ee] to-[#ede8e0]">
+    <section className="py-24 relative overflow-hidden bg-grid-lines">
       {/* Ambient depth blobs */}
       <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" />
@@ -143,7 +143,7 @@ const Portfolio = () => {
           </h2>
 
           {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-1">
+          <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
               <motion.button
                 key={category}
@@ -152,8 +152,8 @@ const Portfolio = () => {
                 transition={{ duration: 0.2, ease: LUXURY_EASE }}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 border ${
                   filter === category
-                    ? "bg-[#2F5E4B] border-[#2F5E4B] shadow-lg shadow-[#2F5E4B]/20 text-white"
-                    : "bg-white/70 text-[#4a7060] hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] backdrop-blur-sm"
+                    ? "bg-[#2F5E4B] shadow-lg shadow-[#2F5E4B]/20 text-white"
+                    : "bg-white/70 text-[#4a7060] hover:bg-[#2F5E4B] hover:text-white hover:border-[#2e5f4c] backdrop-blur-sm"
                 }`}
               >
                 {category}
@@ -209,21 +209,20 @@ const Portfolio = () => {
                       ease: ORGANIC_EASE,
                     },
                     y: {
-                      duration: TRANSITION_DURATION * 1.1, // slightly delayed — arc settles last
+                      duration: TRANSITION_DURATION * 1.1,  
                       ease: LUXURY_EASE,
                     },
-                    // Rotation lags behind position intentionally — creates
-                    // the sense that the card "follows through" like a pendulum
+                  
                     rotate: {
                       duration: ROTATE_DURATION,
-                      ease: [0.34, 1.04, 0.64, 1], // subtle overshoot
+                      ease: [0.34, 1.04, 0.64, 1],  
                     },
-                    // Scale breathes in gently
+                    
                     scale: {
                       duration: TRANSITION_DURATION * 0.95,
                       ease: LUXURY_EASE,
                     },
-                    // Opacity races slightly ahead — depth reads immediately
+                    
                     opacity: {
                       duration: OPACITY_DURATION,
                       ease: FADE_EASE,
@@ -234,7 +233,7 @@ const Portfolio = () => {
                       ease: FADE_EASE,
                     },
                   }}
-                  // ── Hover — center lifts, side cards nudge ─────────────────
+                   
                   whileHover={
                     isCenter
                       ? {
