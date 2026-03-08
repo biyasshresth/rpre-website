@@ -1,4 +1,3 @@
-import "./App.css";
 import { Toaster } from "react-hot-toast";
 import AppRoute from "./route/AppRoute";
 const App = () => {

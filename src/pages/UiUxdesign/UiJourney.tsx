@@ -58,10 +58,24 @@ export function Journey() {
           {milestones.map((m, i) => {
             const isEven = i % 2 === 0;
             return (
-              <FadeIn key={i} delay={i * 0.12} direction={isEven ? "left" : "right"}>
-                <div className={[styles.row, isEven ? styles.rowEven : styles.rowOdd].join(" ")}>
+              <FadeIn
+                key={i}
+                delay={i * 0.12}
+                direction={isEven ? "left" : "right"}
+              >
+                <div
+                  className={[
+                    styles.row,
+                    isEven ? styles.rowEven : styles.rowOdd,
+                  ].join(" ")}
+                >
                   {/* Card */}
-                  <div className={[styles.cardWrap, isEven ? styles.cardWrapEven : styles.cardWrapOdd].join(" ")}>
+                  <div
+                    className={[
+                      styles.cardWrap,
+                      isEven ? styles.cardWrapEven : styles.cardWrapOdd,
+                    ].join(" ")}
+                  >
                     <div className={styles.card}>
                       <span className={styles.cardYear}>{m.year}</span>
                       <h3 className={styles.cardTitle}>{m.title}</h3>
@@ -70,7 +84,9 @@ export function Journey() {
                   </div>
 
                   {/* Center node */}
-                  <div className={styles.node} aria-hidden="true">{m.icon}</div>
+                  <div className={styles.node} aria-hidden="true">
+                    {m.icon}
+                  </div>
 
                   {/* Spacer */}
                   <div className={styles.spacer} />
