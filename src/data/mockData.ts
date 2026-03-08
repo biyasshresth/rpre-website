@@ -90,6 +90,7 @@ export const services: Readonly<Service[]> = [
     icon: Shield,
     image:
       "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=800",
+      link:"/ui-ux-design"
   },
 ] as const;
 
