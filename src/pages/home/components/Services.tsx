@@ -5,8 +5,7 @@ import type { Variants, Easing } from "framer-motion";
 import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { services } from "../../../data/mockData";
-import BackgroundGear from "./BackgroundGear";
-import { Link } from "react-router-dom";
+ import { Link } from "react-router-dom";
 
 const ease: Easing = [0.42, 0, 0.58, 1];
 
@@ -54,7 +53,7 @@ const Services: React.FC = () => {
     >
       <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" />
       <div className="pointer-events-none absolute -top-72 -right-72 z-0 h-95 w-95 text-[#2F5E4B] opacity-10" />
-      <BackgroundGear />
+       
 
       <div className="relative mx-auto max-w-7xl px-6">
         <motion.div

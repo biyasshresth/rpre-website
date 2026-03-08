@@ -8,7 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { Menu, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import Lottie from "lottie-react";
 import type { LottieRefCurrentProps } from "lottie-react";
 import robot from "@assets/robot.json";
@@ -173,13 +173,13 @@ const HeroSection: React.FC = () => {
                       </svg>
                     </button>
 
-                    <button
+                    {/* <button
                       type="button"
                       aria-label="Menu"
                       className="flex items-center justify-center rounded-lg bg-[#997f61] p-4 shadow-lg transition hover:scale-105"
                     >
                       <Menu size={22} />
-                    </button>
+                    </button> */}
                   </motion.div>
 
                   <motion.div
@@ -199,7 +199,12 @@ const HeroSection: React.FC = () => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <Lottie lottieRef={lottieRef} animationData={robot} autoplay loop />
+                <Lottie
+                  lottieRef={lottieRef}
+                  animationData={robot}
+                  autoplay
+                  loop
+                />
               </motion.div>
             </div>
           </div>

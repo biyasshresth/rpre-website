@@ -4,6 +4,7 @@ import { GrainOverlay } from "./GrainOverlay";
 import { Journey } from "./UiJourney";
 import { Challenges } from "./UiChallanges";
 import { Conclusion } from "./Conclusion";
+
 //  import "./global.css";
 export function UiheroSection() {
   const [mounted, setMounted] = useState(false);
@@ -11,6 +12,9 @@ export function UiheroSection() {
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 100);
     return () => clearTimeout(t);
+  }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   const m = (extraDelay?: string) =>
