@@ -36,16 +36,9 @@ html {
 @theme {
   --font-bezmiar: "Bezmiar", sans-serif;
 }
-@font-face {
-  font-family: "SpaceMono";
-  src: url("./assets/fonts/SpaceMono-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@theme {
-  --font-space-mono: "Space Mono", monospace;
-}
-/* external styles (e.g., in styles.css or tailwind.config.js) */
+ 
+ 
+/* external styles  */
 .bg-radial-gradient-custom {
   background-image:
     radial-gradient(
@@ -60,7 +53,7 @@ html {
     );
 }
 
-/* From Uiverse.io by mrhyddenn, now scoped to .fancy-button */
+/* .fancy-button */
 .fancy-button {
   position: relative;
   padding: 10px 20px;

@@ -5,17 +5,12 @@ import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 const AUTO_SCROLL_INTERVAL = 2500;
 
 // ─── Luxury easing curves ────────────────────────────────────────────────────
-// Primary: slow-in / expo-out — the card "breathes" as it settles
 const LUXURY_EASE = [0.25, 0.46, 0.45, 0.94] as const;
-// For transform properties that need more overshoot feel
 const ORGANIC_EASE = [0.32, 0.72, 0.0, 1.0] as const;
-// Opacity fades slightly faster than movement — creates depth
 const FADE_EASE = [0.22, 1, 0.36, 1] as const;
 
-// Duration constants — longer = more premium
-const TRANSITION_DURATION = 0.85; // main position/scale
-const OPACITY_DURATION = 0.65; // opacity follows slightly ahead
-const ROTATE_DURATION = 1.0; // rotation lags slightly behind — organic
+const TRANSITION_DURATION = 0.85;
+const OPACITY_DURATION = 0.65;
 
 const Portfolio = () => {
   const [filter, setFilter] = useState<
@@ -65,7 +60,7 @@ const Portfolio = () => {
       tickRef.current += forward <= backward ? forward : -backward;
       setActiveIndex(index);
     },
-    [total],
+    [total]
   );
 
   const startInterval = useCallback(() => {
@@ -121,29 +116,26 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="py-24 relative overflow-hidden bg-grid-lines">
-      {/* Ambient depth blobs */}
+    <section className="py-16 relative overflow-hidden bg-grid-lines">
       <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: LUXURY_EASE }}
           viewport={{ once: true }}
-          className="text-center "
+          className="text-center"
         >
-          <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#7FAE8D] mb-3">
+          <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#7FAE8D] mb-2">
             Our Work
           </p>
-          <h2 className="text-5xl md:text-6xl font-bold text-[#1a3328] mb-8 font-serif tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328] mb-5 font-serif tracking-tight">
             Portfolio
           </h2>
 
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2">
             {categories.map((category) => (
               <motion.button
                 key={category}
@@ -162,9 +154,8 @@ const Portfolio = () => {
           </div>
         </motion.div>
 
-        {/* ── Luxury Arc Carousel ── */}
         <div
-          className="relative flex items-end justify-center select-none h-130"
+          className="relative flex items-end justify-center select-none h-110"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
@@ -173,84 +164,64 @@ const Portfolio = () => {
               const isCenter = posIndex === 0;
               const absPos = Math.abs(posIndex);
 
-              const translateX = posIndex * 220;
+              const translateX = posIndex * 210;
               const translateY = absPos * absPos * 8;
-              const rotate = posIndex * 6;
-              const scale = isCenter ? 1 : 1 - absPos * 0.08;
-              const opacity = 1 - absPos * 0.2;
+              const rotateZ = posIndex * 4 + posIndex * absPos * 1.5;
+              const rotateY = posIndex * 12;
+              const scale = isCenter
+                ? 1
+                : 1 - absPos * 0.12 - absPos * absPos * 0.03;
+              const opacity = 1 - absPos * 0.22;
               const zIndex = 10 - absPos;
 
               return (
                 <motion.div
                   key={`slot-${posIndex}`}
-                  // ── Entry / Exit ───────────────────────────────────────────
-                  initial={{ opacity: 0, scale: 0.88, filter: "blur(4px)" }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.88,
-                    filter: "blur(4px)",
-                    transition: { duration: 0.45, ease: FADE_EASE },
-                  }}
-                  // ── Core animate target ────────────────────────────────────
+                  initial={
+                    isCenter
+                      ? { opacity: 0, scale: 0.9, rotateY: -8, rotateZ: -4, filter: "blur(6px)" }
+                      : { opacity: 0, scale: 0.88, filter: "blur(4px)" }
+                  }
                   animate={{
                     x: translateX,
                     y: translateY,
-                    rotate,
                     scale,
                     opacity,
                     zIndex,
+                    rotateZ: isCenter ? 0 : rotateZ,
+                    rotateY: isCenter ? 0 : rotateY,
                     filter: "blur(0px)",
                   }}
-                  // ── Per-property transitions — the key to organic feel ─────
+                  exit={
+                    isCenter
+                      ? { opacity: 0, scale: 0.88, rotateY: 8, rotateZ: 4, filter: "blur(4px)" }
+                      : { opacity: 0, scale: 0.88, filter: "blur(4px)" }
+                  }
                   transition={{
-                    // X/Y position: expo-out, feels like sliding on silk
-                    x: {
-                      duration: TRANSITION_DURATION,
-                      ease: ORGANIC_EASE,
-                    },
-                    y: {
-                      duration: TRANSITION_DURATION * 1.1,  
-                      ease: LUXURY_EASE,
-                    },
-                  
-                    rotate: {
-                      duration: ROTATE_DURATION,
-                      ease: [0.34, 1.04, 0.64, 1],  
-                    },
-                    
-                    scale: {
-                      duration: TRANSITION_DURATION * 0.95,
-                      ease: LUXURY_EASE,
-                    },
-                    
-                    opacity: {
-                      duration: OPACITY_DURATION,
-                      ease: FADE_EASE,
-                    },
-                    // Blur clears early so content is never murky
-                    filter: {
-                      duration: OPACITY_DURATION * 0.8,
-                      ease: FADE_EASE,
-                    },
+                    x: { duration: TRANSITION_DURATION, ease: ORGANIC_EASE },
+                    y: { duration: TRANSITION_DURATION * 1.1, ease: LUXURY_EASE },
+                    rotateZ: isCenter
+                      ? { type: "spring", stiffness: 40, damping: 30, mass: 1.7 }
+                      : { duration: TRANSITION_DURATION, ease: LUXURY_EASE },
+                    rotateY: isCenter
+                      ? { type: "spring", stiffness: 40, damping: 30, mass: 1.7 }
+                      : { duration: TRANSITION_DURATION, ease: LUXURY_EASE },
+                    scale: isCenter
+                      ? { type: "spring", stiffness: 45, damping: 28, mass: 1.5 }
+                      : { duration: TRANSITION_DURATION * 0.95, ease: LUXURY_EASE },
+                    opacity: { duration: OPACITY_DURATION, ease: FADE_EASE },
+                    filter: { duration: OPACITY_DURATION * 0.8, ease: FADE_EASE },
                   }}
-                   
                   whileHover={
                     isCenter
                       ? {
                           y: translateY - 18,
-                          scale: scale * 1.025,
-                          transition: {
-                            duration: 0.55,
-                            ease: LUXURY_EASE,
-                          },
+                          scale: scale * 1.03,
+                          rotateY: rotateY * 0.85,
+                          rotateZ: rotateZ * 0.85,
+                          transition: { type: "spring", stiffness: 50, damping: 25 },
                         }
-                      : {
-                          scale: scale * 1.018,
-                          transition: {
-                            duration: 0.4,
-                            ease: LUXURY_EASE,
-                          },
-                        }
+                      : { scale: scale * 1.018, transition: { duration: 0.4, ease: LUXURY_EASE } }
                   }
                   onClick={() => {
                     if (!isCenter) {
@@ -261,20 +232,6 @@ const Portfolio = () => {
                   className="absolute cursor-pointer w-75 origin-bottom"
                   style={{ willChange: "transform, opacity, filter" }}
                 >
-                  {/* Glow halo behind center card */}
-                  {isCenter && (
-                    <motion.div
-                      className="absolute -inset-2 rounded-3xl bg-linear-to-br from-[#2F5E4B]/20 to-[#7FAE8D]/10 blur-xl -z-10"
-                      animate={{ opacity: [0.6, 1, 0.6] }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        repeatType: "mirror",
-                      }}
-                    />
-                  )}
-
                   <div
                     className={`rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${
                       isCenter
@@ -282,7 +239,6 @@ const Portfolio = () => {
                         : "shadow-xl"
                     }`}
                   >
-                    {/* Image */}
                     <div className="relative overflow-hidden h-60">
                       <motion.img
                         src={item.image}
@@ -307,24 +263,15 @@ const Portfolio = () => {
                       </motion.span>
                     </div>
 
-                    {/* Content */}
                     <div className="p-5">
-                      <h3 className="text-lg font-bold text-[#1a3328] mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
-                        {item.description}
-                      </p>
+                      <h3 className="text-lg font-bold text-[#1a3328] mb-1">{item.title}</h3>
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{item.description}</p>
 
                       {isCenter && (
                         <motion.div
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: 0.18,
-                            duration: 0.55,
-                            ease: LUXURY_EASE,
-                          }}
+                          transition={{ delay: 0.18, duration: 0.55, ease: LUXURY_EASE }}
                           className="mt-4 flex items-center gap-2"
                         >
                           <motion.span
@@ -342,7 +289,7 @@ const Portfolio = () => {
                               transition={{
                                 duration: 2.2,
                                 repeat: Infinity,
-                                ease: [0.45, 0, 0.55, 1], // smooth sine-like
+                                ease: [0.45, 0, 0.55, 1],
                                 repeatType: "mirror",
                               }}
                             >
@@ -367,7 +314,7 @@ const Portfolio = () => {
 
         {/* Navigation row */}
         <div className="flex items-center justify-center gap-5 mt-8">
-          {/* Prev */}
+          {/* Prev Button */}
           <motion.button
             type="button"
             aria-label="Previous"
@@ -381,13 +328,7 @@ const Portfolio = () => {
             className="w-9 h-9 rounded-full border border-[#2F5E4B]/30 bg-white/80 text-[#2F5E4B] flex items-center justify-center shadow-sm hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] transition-colors duration-300"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M10 3L5 8l5 5"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.button>
 
@@ -414,7 +355,7 @@ const Portfolio = () => {
             ))}
           </div>
 
-          {/* Next */}
+          {/* Next Button */}
           <motion.button
             type="button"
             aria-label="Next"
@@ -428,13 +369,7 @@ const Portfolio = () => {
             className="w-9 h-9 rounded-full border border-[#2F5E4B]/30 bg-white/80 text-[#2F5E4B] flex items-center justify-center shadow-sm hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] transition-colors duration-300"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M6 3l5 5-5 5"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.button>
         </div>

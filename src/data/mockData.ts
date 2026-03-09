@@ -76,7 +76,7 @@ export const services: Readonly<Service[]> = [
     id: 2,
     title: "Mobile App Development",
     description:
-      "Bring your ideas to life with innovative mobile applications. Our expert team delivers native and cross-platform solutions that provide seamless user experiences and robust functionality.",
+      "Bring your ideas to life with innovative mobile applications. Our expert team delivers native and cross-platform solutions that provide seamless user experiences and robust functionality. We craft responsive, scalable  websites.",
     icon: Smartphone,
     image:
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
@@ -194,48 +194,48 @@ export const testimonials: Readonly<Testimonial[]> = [
   },
 ] as const;
 
-/* =========================
+/* === 
    Blogs
-========================= */
+ === */
 
-export const blogs: Readonly<Blog[]> = [
-  {
-    id: 1,
-    title: "The Future of Web Development: Trends to Watch in 2025",
-    excerpt:
-      "Explore the latest technologies and frameworks shaping the web development landscape, from AI-powered tools to progressive web apps.",
-    author: "Alex Thompson",
-    date: "Dec 15, 2024",
-    category: "Web Development",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
-    readTime: "5 min read",
-  },
-  {
-    id: 2,
-    title: "Mobile App Security: Best Practices for 2025",
-    excerpt:
-      "Learn essential security measures to protect your mobile applications from emerging threats and vulnerabilities.",
-    author: "Priya Sharma",
-    date: "Dec 12, 2024",
-    category: "Cyber Security",
-    image:
-      "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800",
-    readTime: "7 min read",
-  },
-  {
-    id: 3,
-    title: "Building Scalable Cloud Solutions: A Comprehensive Guide",
-    excerpt:
-      "Discover how to design and implement cloud architectures that grow with your business needs.",
-    author: "David Kumar",
-    date: "Dec 10, 2024",
-    category: "Cloud Computing",
-    image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
-    readTime: "6 min read",
-  },
-] as const;
+// export const blogs: Readonly<Blog[]> = [
+//   {
+//     id: 1,
+//     title: "The Future of Web Development: Trends to Watch in 2025",
+//     excerpt:
+//       "Explore the latest technologies and frameworks shaping the web development landscape, from AI-powered tools to progressive web apps.",
+//     author: "Alex Thompson",
+//     date: "Dec 15, 2024",
+//     category: "Web Development",
+//     image:
+//       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+//     readTime: "5 min read",
+//   },
+//   {
+//     id: 2,
+//     title: "Mobile App Security: Best Practices for 2025",
+//     excerpt:
+//       "Learn essential security measures to protect your mobile applications from emerging threats and vulnerabilities.",
+//     author: "Priya Sharma",
+//     date: "Dec 12, 2024",
+//     category: "Cyber Security",
+//     image:
+//       "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800",
+//     readTime: "7 min read",
+//   },
+//   {
+//     id: 3,
+//     title: "Building Scalable Cloud Solutions: A Comprehensive Guide",
+//     excerpt:
+//       "Discover how to design and implement cloud architectures that grow with your business needs.",
+//     author: "David Kumar",
+//     date: "Dec 10, 2024",
+//     category: "Cloud Computing",
+//     image:
+//       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+//     readTime: "6 min read",
+//   },
+// ] as const;
 
 /* =========================
    Clients

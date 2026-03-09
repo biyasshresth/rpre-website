@@ -1,4 +1,4 @@
-import Blog from "./components/Blog";
+// import Blog from "./components/Blog";
 import Contact from "./components/Contact";
 import HeroSection from "./components/Herosection";
 import Portfolio from "./components/Portfolio";
@@ -20,7 +20,7 @@ const HomePage = () => {
         <Portfolio />
         <Stats />
         <Testimonials />
-        <Blog />
+        {/* <Blog /> */}
         <Contact />
       </div>
     </div>
