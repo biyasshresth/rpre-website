@@ -5,7 +5,7 @@ import { Journey } from "./UiJourney";
 import { Challenges } from "./UiChallanges";
 import { Conclusion } from "./Conclusion";
 
-//  import "./global.css";
+
 export function UiheroSection() {
   const [mounted, setMounted] = useState(false);
 

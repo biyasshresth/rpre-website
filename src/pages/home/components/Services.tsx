@@ -5,27 +5,63 @@ import type { Variants, Easing } from "framer-motion";
 import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { services } from "../../../data/mockData";
- import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const ease: Easing = [0.42, 0, 0.58, 1];
-
+const ease: Easing = [0.66, 0, 0.34, 1];
 const containerVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.2 } },
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.25,
+    },
+  },
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease } },
-  hover: { y: -10, scale: 1.03, transition: { duration: 0.45, ease } },
+  hidden: { opacity: 0, y: 50, scale: 0.97 }, // start slightly lower and smaller
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring", // spring gives natural bounce
+      stiffness: 140, // controls speed/rigidity
+      damping: 15, // lower = more bounce
+      mass: 0.7, // affects "weight" of card
+    },
+  },
+  hover: {
+    y: -12,
+    scale: 1.05,
+    transition: {
+      type: "spring",
+      stiffness: 120,
+      damping: 12,
+      mass: 0.7,
+    },
+  },
 };
-
 const imageVariants: Variants = {
-  hover: { scale: 1.08, transition: { duration: 0.5, ease } },
+  hover: {
+    scale: 1.1,
+    transition: {
+      type: "spring",
+      stiffness: 120,
+      damping: 12,
+    },
+  },
 };
-
 const iconVariants: Variants = {
-  hover: { rotate: 360, scale: 1.08, transition: { duration: 0.6, ease } },
+  hover: {
+    rotate: 25, // gentle rotation
+    scale: 1.12, // subtle pop
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10, // less damping for bounce
+    },
+  },
 };
 
 const Services: React.FC = () => {
@@ -49,11 +85,10 @@ const Services: React.FC = () => {
   return (
     <section
       id="services-overlay"
-      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem] bg-grid-lines   py-20 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden"
+      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem] bg-grid-lines py-14 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" />
       <div className="pointer-events-none absolute -top-72 -right-72 z-0 h-95 w-95 text-[#2F5E4B] opacity-10" />
-       
 
       <div className="relative mx-auto max-w-7xl px-6">
         <motion.div
@@ -85,7 +120,7 @@ const Services: React.FC = () => {
             return (
               <Link key={service.id} to={service.link!} className="block">
                 <motion.div
-                  className="group mt-6 cursor-pointer overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md"
+                  className="group cursor-pointer overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md"
                   variants={cardVariants}
                   whileHover="hover"
                 >
@@ -111,9 +146,7 @@ const Services: React.FC = () => {
                     <h3 className="mb-3 text-2xl font-bold text-[#3e6e5c] transition-colors duration-300 group-hover:text-[#274b32]">
                       {service.title}
                     </h3>
-                    <p className="font-space-mono leading-relaxed text-gray-600">
-                      {service.description}
-                    </p>
+                    <p className="  text-gray-600">{service.description}</p>
                   </div>
                 </motion.div>
               </Link>
