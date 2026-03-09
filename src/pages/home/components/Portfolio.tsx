@@ -4,14 +4,90 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
-const AUTO_SCROLL_INTERVAL = 2500;
+const AUTO_SCROLL_INTERVAL = 3000; // ✅ Increased from 2500 → 3000ms to reduce perceived jumpiness
 
-// ─── Easing curves ─────────────────────────────────────────────────
 const LUXURY_EASE = [0.25, 0.46, 0.45, 0.94] as const;
-const FADE_EASE = [0.22, 1, 0.36, 1] as const;
 
-const OPACITY_DURATION = 0.65;
+const CARD_TRANSITION = {
+  x: { type: "spring", stiffness: 260, damping: 30 },
+  y: { type: "spring", stiffness: 260, damping: 30 },
+  rotateY: { type: "spring", stiffness: 260, damping: 30 },
+  rotateZ: { type: "spring", stiffness: 260, damping: 30 },
+  scale: { type: "spring", stiffness: 260, damping: 30 },
+  opacity: { duration: 0.25, ease: LUXURY_EASE },
+  filter: { duration: 0.2, ease: LUXURY_EASE },
+} as const;
 
+// ✅ Static initial/exit states — no recalculation per render
+const CARD_INITIAL = {
+  opacity: 0,
+  scale: 0.88,
+  rotateY: -6,
+  rotateZ: -3,
+  filter: "blur(8px)",
+} as const;
+
+const CARD_EXIT = {
+  opacity: 0,
+  scale: 0.88,
+  rotateY: 6,
+  rotateZ: 3,
+  filter: "blur(5px)",
+} as const;
+
+const CENTER_HOVER_TRANSITION = {
+  type: "spring",
+  stiffness: 260,
+  damping: 30,
+} as const;
+
+const SIDE_HOVER_TRANSITION = {
+  type: "spring",
+  stiffness: 260,
+  damping: 30,
+} as const;
+
+// ─── Per-card animate props factory ────────────────────────────────
+// ✅ Extracted to a pure function so useMemo can cache results per posIndex
+function getCardAnimate(
+  isCenter: boolean,
+  translateX: number,
+  translateY: number,
+  scale: number,
+  opacity: number,
+  zIndex: number,
+  rotateY: number,
+  rotateZ: number,
+) {
+  return {
+    x: translateX,
+    y: translateY,
+    scale,
+    opacity,
+    zIndex,
+    rotateY: isCenter ? 0 : rotateY,
+    rotateZ: isCenter ? 0 : rotateZ,
+    filter: "blur(0px)",
+  };
+}
+
+function getWhileHover(isCenter: boolean, translateY: number, scale: number) {
+  if (isCenter) {
+    return {
+      y: translateY - 16,
+      scale: scale * 1.028,
+      rotateY: 0,
+      rotateZ: 0,
+      transition: CENTER_HOVER_TRANSITION,
+    };
+  }
+  return {
+    scale: scale * 1.015,
+    transition: SIDE_HOVER_TRANSITION,
+  };
+}
+
+// ─── Component ─────────────────────────────────────────────────────
 const Portfolio = () => {
   const [filter, setFilter] = useState<
     "All" | "Web Development" | "Mobile Development" | "Cyber Security"
@@ -20,7 +96,8 @@ const Portfolio = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const activeIndexRef = useRef(0);
+  // ✅ Use ref for hover state inside interval to avoid stale closure
+  const isHoveringRef = useRef(false);
 
   const categories = [
     "All",
@@ -37,6 +114,11 @@ const Portfolio = () => {
 
   const total = filteredPortfolio.length;
 
+  // Sync hover ref with state
+  useEffect(() => {
+    isHoveringRef.current = isHovering;
+  }, [isHovering]);
+
   // Persist active index on refresh
   useEffect(() => {
     const savedIndex = sessionStorage.getItem("portfolioActiveIndex");
@@ -45,7 +127,6 @@ const Portfolio = () => {
 
   useEffect(() => {
     sessionStorage.setItem("portfolioActiveIndex", activeIndex.toString());
-    activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
   const next = useCallback(
@@ -58,12 +139,15 @@ const Portfolio = () => {
   );
   const goTo = useCallback((index: number) => setActiveIndex(index), []);
 
+  // ✅ Use isHoveringRef in interval callback to avoid stale closure re-creating interval
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      if (!isHovering) next();
+      if (!isHoveringRef.current) {
+        setActiveIndex((prev) => (prev + 1) % total);
+      }
     }, AUTO_SCROLL_INTERVAL);
-  }, [isHovering, next]);
+  }, [total]); // ✅ Removed isHovering from deps — ref handles it
 
   useEffect(() => {
     startInterval();
@@ -80,13 +164,53 @@ const Portfolio = () => {
     });
   }, [filteredPortfolio]);
 
+  // ✅ Memoize visibleItems with full derived animation values
+  // This prevents recalculating posIndex math on every render
   const visibleItems = useMemo(
     () =>
-      filteredPortfolio.map((item, idx) => ({
-        item,
-        originalIndex: idx,
-        posIndex: idx - activeIndex,
-      })),
+      filteredPortfolio.map((item, idx) => {
+        const posIndex = idx - activeIndex;
+        const isCenter = posIndex === 0;
+        const absPos = Math.abs(posIndex);
+
+        const translateX = posIndex * 220;
+        const translateY = absPos * absPos * 6;
+        const rotateZ = posIndex * 5 + posIndex * absPos * 1.5;
+        const rotateY = posIndex * 12;
+        // ✅ Slightly gentler falloff: less aggressive scale/opacity decay
+        const scale = isCenter
+          ? 1
+          : 1 - absPos * 0.11 - absPos * absPos * 0.025;
+        const opacity = 1 - absPos * 0.2;
+        const zIndex = 10 - absPos;
+
+        return {
+          item,
+          originalIndex: idx,
+          posIndex,
+          isCenter,
+          absPos,
+          translateX,
+          translateY,
+          rotateZ,
+          rotateY,
+          scale,
+          opacity,
+          zIndex,
+          // ✅ Pre-compute animate and whileHover objects
+          animateProps: getCardAnimate(
+            isCenter,
+            translateX,
+            translateY,
+            scale,
+            opacity,
+            zIndex,
+            rotateY,
+            rotateZ,
+          ),
+          hoverProps: getWhileHover(isCenter, translateY, scale),
+        };
+      }),
     [activeIndex, filteredPortfolio],
   );
 
@@ -145,97 +269,39 @@ const Portfolio = () => {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <AnimatePresence mode="popLayout" initial={false}>
-            {visibleItems.map(({ item, originalIndex, posIndex }) => {
-              const isCenter = posIndex === 0;
-              const absPos = Math.abs(posIndex);
-
-              const translateX = posIndex * 220;
-              const translateY = absPos * absPos * 6;
-              const rotateZ = posIndex * 5 + posIndex * absPos * 1.5;
-              const rotateY = posIndex * 12;
-              const scale = isCenter
-                ? 1
-                : 1 - absPos * 0.12 - absPos * absPos * 0.03;
-              const opacity = 1 - absPos * 0.22;
-              const zIndex = 10 - absPos;
-
-              return (
+          <AnimatePresence mode="sync" initial={false}>
+            {visibleItems.map(
+              ({ item, originalIndex, isCenter, animateProps, hoverProps }) => (
                 <motion.div
                   key={`slot-${originalIndex}`}
-                  layout
-                  transition={{
-                    layout: {
-                      type: "spring",
-                      stiffness: 120,
-                      damping: 28,
-                      mass: 1.2,
-                    },
-                    x: { type: "spring", stiffness: 100, damping: 24 },
-                    y: { type: "spring", stiffness: 90, damping: 20 },
-                    rotateY: { type: "spring", stiffness: 100, damping: 24 },
-                    rotateZ: { type: "spring", stiffness: 90, damping: 22 },
-                    scale: { type: "spring", stiffness: 120, damping: 25 },
-                    opacity: { duration: OPACITY_DURATION, ease: FADE_EASE },
-                    filter: {
-                      duration: OPACITY_DURATION * 0.8,
-                      ease: FADE_EASE,
-                    },
-                  }}
-                  initial={{
-                    opacity: 0,
-                    scale: isCenter ? 0.9 : 0.88,
-                    rotateY: isCenter ? -8 : 0,
-                    rotateZ: isCenter ? -4 : 0,
-                    filter: "blur(6px)",
-                  }}
-                  animate={{
-                    x: translateX,
-                    y: translateY,
-                    scale,
-                    opacity,
-                    zIndex,
-                    rotateY: isCenter ? 0 : rotateY,
-                    rotateZ: isCenter ? 0 : rotateZ,
-                    filter: "blur(0px)",
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.88,
-                    rotateY: 8,
-                    rotateZ: 4,
-                    filter: "blur(4px)",
-                  }}
-                  whileHover={
-                    isCenter
-                      ? {
-                          y: translateY - 18,
-                          scale: scale * 1.03,
-                          rotateY: rotateY * 0.85,
-                          rotateZ: rotateZ * 0.85,
-                          transition: {
-                            type: "spring",
-                            stiffness: 60,
-                            damping: 24,
-                            mass: 1.3,
-                          },
-                        }
-                      : {
-                          scale: scale * 1.018,
-                          transition: { duration: 0.45, ease: LUXURY_EASE },
-                        }
-                  }
+                  transition={CARD_TRANSITION}
+                  initial={CARD_INITIAL} // ✅ Stable reference
+                  animate={animateProps} // ✅ Pre-computed in useMemo
+                  exit={CARD_EXIT} // ✅ Stable reference
+                  whileHover={hoverProps} // ✅ Pre-computed in useMemo
                   onClick={() => {
                     if (!isCenter) {
                       goTo(originalIndex);
                       startInterval();
                     }
                   }}
-                  className="absolute cursor-pointer w-75 origin-bottom transform-style-3d"
-                  style={{ willChange: "transform, opacity, filter" }}
+                  className="absolute cursor-pointer w-75 origin-bottom"
+                  // ✅ GPU acceleration: translate3d forces compositor layer
+                  // ✅ transform-style: preserve-3d enables proper 3D card depth
+                  // ✅ will-change declared on ALL animated properties
+                  style={{
+                    willChange: "transform, opacity, filter",
+                    transformStyle: "preserve-3d",
+                    backfaceVisibility: "hidden", // ✅ Prevents flickering on rotateY
+                    WebkitBackfaceVisibility: "hidden",
+                  }}
                 >
                   <div
-                    className={`rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${isCenter ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]" : "shadow-xl"}`}
+                    className={`rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${
+                      isCenter
+                        ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]"
+                        : "shadow-xl"
+                    }`}
                   >
                     <div className="relative overflow-hidden h-60">
                       <motion.img
@@ -244,7 +310,9 @@ const Portfolio = () => {
                         className="w-full h-full object-cover"
                         loading="eager"
                         whileHover={{ scale: 1.06 }}
-                        transition={{ duration: 0.7, ease: LUXURY_EASE }}
+                        transition={{ duration: 0.65, ease: LUXURY_EASE }}
+                        // ✅ Isolate image on its own GPU layer
+                        style={{ willChange: "transform" }}
                       />
                       <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                       <motion.span
@@ -282,7 +350,7 @@ const Portfolio = () => {
                         >
                           <motion.span
                             whileHover={{ x: 4 }}
-                            transition={{ duration: 0.35, ease: LUXURY_EASE }}
+                            transition={{ duration: 0.3, ease: LUXURY_EASE }}
                             className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer"
                           >
                             View Project
@@ -313,8 +381,8 @@ const Portfolio = () => {
                     </div>
                   </div>
                 </motion.div>
-              );
-            })}
+              ),
+            )}
           </AnimatePresence>
         </div>
 
@@ -358,7 +426,7 @@ const Portfolio = () => {
                   backgroundColor:
                     index === activeIndex ? "#2F5E4B" : "rgba(47,94,75,0.25)",
                 }}
-                transition={{ duration: 0.45, ease: LUXURY_EASE }}
+                transition={{ duration: 0.4, ease: LUXURY_EASE }}
                 className="h-2 rounded-full cursor-pointer"
                 style={{ minWidth: 8 }}
               />
