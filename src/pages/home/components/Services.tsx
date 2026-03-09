@@ -19,7 +19,7 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.97 }, // start slightly lower and smaller
+  hidden: { opacity: 0, y: 50, scale: 0.97 },  
   visible: {
     opacity: 1,
     y: 0,
@@ -54,16 +54,14 @@ const imageVariants: Variants = {
 };
 const iconVariants: Variants = {
   hover: {
-    rotate: 25, // gentle rotation
-    scale: 1.12, // subtle pop
+    rotate: [0, 360, 350, 365, 358, 360],
+    scale: 1.12,
     transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 10, // less damping for bounce
+      duration: 1.5,
+      ease: "easeOut",
     },
   },
 };
-
 const Services: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
 

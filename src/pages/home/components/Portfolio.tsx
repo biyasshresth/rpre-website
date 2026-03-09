@@ -1,15 +1,15 @@
+"use client";
+
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
 const AUTO_SCROLL_INTERVAL = 2500;
 
-// ─── Luxury easing curves ────────────────────────────────────────────────────
+// ─── Easing curves ─────────────────────────────────────────────────
 const LUXURY_EASE = [0.25, 0.46, 0.45, 0.94] as const;
-const ORGANIC_EASE = [0.32, 0.72, 0.0, 1.0] as const;
 const FADE_EASE = [0.22, 1, 0.36, 1] as const;
 
-const TRANSITION_DURATION = 0.85;
 const OPACITY_DURATION = 0.65;
 
 const Portfolio = () => {
@@ -20,8 +20,7 @@ const Portfolio = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const tickRef = useRef<number>(0);
-  const activeIndexRef = useRef<number>(0);
+  const activeIndexRef = useRef(0);
 
   const categories = [
     "All",
@@ -38,74 +37,60 @@ const Portfolio = () => {
 
   const total = filteredPortfolio.length;
 
+  // Persist active index on refresh
   useEffect(() => {
+    const savedIndex = sessionStorage.getItem("portfolioActiveIndex");
+    if (savedIndex) setActiveIndex(Number(savedIndex));
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("portfolioActiveIndex", activeIndex.toString());
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
-  const next = useCallback(() => {
-    tickRef.current += 1;
-    setActiveIndex((prev) => (prev + 1) % total);
-  }, [total]);
-
-  const prev = useCallback(() => {
-    tickRef.current -= 1;
-    setActiveIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  const goTo = useCallback(
-    (index: number) => {
-      const current = activeIndexRef.current;
-      const forward = (index - current + total) % total;
-      const backward = (current - index + total) % total;
-      tickRef.current += forward <= backward ? forward : -backward;
-      setActiveIndex(index);
-    },
-    [total]
+  const next = useCallback(
+    () => setActiveIndex((prev) => (prev + 1) % total),
+    [total],
   );
+  const prev = useCallback(
+    () => setActiveIndex((prev) => (prev - 1 + total) % total),
+    [total],
+  );
+  const goTo = useCallback((index: number) => setActiveIndex(index), []);
 
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      tickRef.current += 1;
-      setActiveIndex((prev) => (prev + 1) % total);
+      if (!isHovering) next();
     }, AUTO_SCROLL_INTERVAL);
-  }, [total]);
+  }, [isHovering, next]);
 
   useEffect(() => {
-    if (isHovering || total === 0) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
     startInterval();
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isHovering, startInterval, total]);
+  }, [startInterval]);
 
+  // Preload images
   useEffect(() => {
-    tickRef.current = 0;
-    setActiveIndex(0);
-  }, [filter]);
-
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
-  const visibleItems = useMemo(() => {
-    if (total === 0) return [];
-    return [-2, -1, 0, 1, 2].map((offset) => {
-      const idx = (((activeIndex + offset) % total) + total) % total;
-      return {
-        item: filteredPortfolio[idx],
-        originalIndex: idx,
-        posIndex: offset,
-      };
+    filteredPortfolio.forEach((item) => {
+      const img = new Image();
+      img.src = item.image;
     });
-  }, [activeIndex, filteredPortfolio, total]);
+  }, [filteredPortfolio]);
 
-  if (total === 0) {
+  const visibleItems = useMemo(
+    () =>
+      filteredPortfolio.map((item, idx) => ({
+        item,
+        originalIndex: idx,
+        posIndex: idx - activeIndex,
+      })),
+    [activeIndex, filteredPortfolio],
+  );
+
+  if (total === 0)
     return (
       <section className="py-24 relative overflow-hidden bg-linear-to-r from-[#f7f3ee] to-[#ede8e0]">
         <div className="max-w-7xl mx-auto px-6 text-center">
@@ -113,7 +98,6 @@ const Portfolio = () => {
         </div>
       </section>
     );
-  }
 
   return (
     <section className="py-16 relative overflow-hidden bg-grid-lines">
@@ -121,6 +105,7 @@ const Portfolio = () => {
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -154,8 +139,9 @@ const Portfolio = () => {
           </div>
         </motion.div>
 
+        {/* Carousel */}
         <div
-          className="relative flex items-end justify-center select-none h-110"
+          className="relative flex items-end justify-center select-none h-110 perspective-1000"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
@@ -164,9 +150,9 @@ const Portfolio = () => {
               const isCenter = posIndex === 0;
               const absPos = Math.abs(posIndex);
 
-              const translateX = posIndex * 210;
-              const translateY = absPos * absPos * 8;
-              const rotateZ = posIndex * 4 + posIndex * absPos * 1.5;
+              const translateX = posIndex * 220;
+              const translateY = absPos * absPos * 6;
+              const rotateZ = posIndex * 5 + posIndex * absPos * 1.5;
               const rotateY = posIndex * 12;
               const scale = isCenter
                 ? 1
@@ -176,41 +162,49 @@ const Portfolio = () => {
 
               return (
                 <motion.div
-                  key={`slot-${posIndex}`}
-                  initial={
-                    isCenter
-                      ? { opacity: 0, scale: 0.9, rotateY: -8, rotateZ: -4, filter: "blur(6px)" }
-                      : { opacity: 0, scale: 0.88, filter: "blur(4px)" }
-                  }
+                  key={`slot-${originalIndex}`}
+                  layout
+                  transition={{
+                    layout: {
+                      type: "spring",
+                      stiffness: 120,
+                      damping: 28,
+                      mass: 1.2,
+                    },
+                    x: { type: "spring", stiffness: 100, damping: 24 },
+                    y: { type: "spring", stiffness: 90, damping: 20 },
+                    rotateY: { type: "spring", stiffness: 100, damping: 24 },
+                    rotateZ: { type: "spring", stiffness: 90, damping: 22 },
+                    scale: { type: "spring", stiffness: 120, damping: 25 },
+                    opacity: { duration: OPACITY_DURATION, ease: FADE_EASE },
+                    filter: {
+                      duration: OPACITY_DURATION * 0.8,
+                      ease: FADE_EASE,
+                    },
+                  }}
+                  initial={{
+                    opacity: 0,
+                    scale: isCenter ? 0.9 : 0.88,
+                    rotateY: isCenter ? -8 : 0,
+                    rotateZ: isCenter ? -4 : 0,
+                    filter: "blur(6px)",
+                  }}
                   animate={{
                     x: translateX,
                     y: translateY,
                     scale,
                     opacity,
                     zIndex,
-                    rotateZ: isCenter ? 0 : rotateZ,
                     rotateY: isCenter ? 0 : rotateY,
+                    rotateZ: isCenter ? 0 : rotateZ,
                     filter: "blur(0px)",
                   }}
-                  exit={
-                    isCenter
-                      ? { opacity: 0, scale: 0.88, rotateY: 8, rotateZ: 4, filter: "blur(4px)" }
-                      : { opacity: 0, scale: 0.88, filter: "blur(4px)" }
-                  }
-                  transition={{
-                    x: { duration: TRANSITION_DURATION, ease: ORGANIC_EASE },
-                    y: { duration: TRANSITION_DURATION * 1.1, ease: LUXURY_EASE },
-                    rotateZ: isCenter
-                      ? { type: "spring", stiffness: 40, damping: 30, mass: 1.7 }
-                      : { duration: TRANSITION_DURATION, ease: LUXURY_EASE },
-                    rotateY: isCenter
-                      ? { type: "spring", stiffness: 40, damping: 30, mass: 1.7 }
-                      : { duration: TRANSITION_DURATION, ease: LUXURY_EASE },
-                    scale: isCenter
-                      ? { type: "spring", stiffness: 45, damping: 28, mass: 1.5 }
-                      : { duration: TRANSITION_DURATION * 0.95, ease: LUXURY_EASE },
-                    opacity: { duration: OPACITY_DURATION, ease: FADE_EASE },
-                    filter: { duration: OPACITY_DURATION * 0.8, ease: FADE_EASE },
+                  exit={{
+                    opacity: 0,
+                    scale: 0.88,
+                    rotateY: 8,
+                    rotateZ: 4,
+                    filter: "blur(4px)",
                   }}
                   whileHover={
                     isCenter
@@ -219,9 +213,17 @@ const Portfolio = () => {
                           scale: scale * 1.03,
                           rotateY: rotateY * 0.85,
                           rotateZ: rotateZ * 0.85,
-                          transition: { type: "spring", stiffness: 50, damping: 25 },
+                          transition: {
+                            type: "spring",
+                            stiffness: 60,
+                            damping: 24,
+                            mass: 1.3,
+                          },
                         }
-                      : { scale: scale * 1.018, transition: { duration: 0.4, ease: LUXURY_EASE } }
+                      : {
+                          scale: scale * 1.018,
+                          transition: { duration: 0.45, ease: LUXURY_EASE },
+                        }
                   }
                   onClick={() => {
                     if (!isCenter) {
@@ -229,15 +231,11 @@ const Portfolio = () => {
                       startInterval();
                     }
                   }}
-                  className="absolute cursor-pointer w-75 origin-bottom"
+                  className="absolute cursor-pointer w-75 origin-bottom transform-style-3d"
                   style={{ willChange: "transform, opacity, filter" }}
                 >
                   <div
-                    className={`rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${
-                      isCenter
-                        ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]"
-                        : "shadow-xl"
-                    }`}
+                    className={`rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${isCenter ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]" : "shadow-xl"}`}
                   >
                     <div className="relative overflow-hidden h-60">
                       <motion.img
@@ -264,14 +262,22 @@ const Portfolio = () => {
                     </div>
 
                     <div className="p-5">
-                      <h3 className="text-lg font-bold text-[#1a3328] mb-1">{item.title}</h3>
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{item.description}</p>
+                      <h3 className="text-lg font-bold text-[#1a3328] mb-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
+                        {item.description}
+                      </p>
 
                       {isCenter && (
                         <motion.div
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.18, duration: 0.55, ease: LUXURY_EASE }}
+                          transition={{
+                            delay: 0.18,
+                            duration: 0.55,
+                            ease: LUXURY_EASE,
+                          }}
                           className="mt-4 flex items-center gap-2"
                         >
                           <motion.span
@@ -312,9 +318,8 @@ const Portfolio = () => {
           </AnimatePresence>
         </div>
 
-        {/* Navigation row */}
+        {/* Navigation */}
         <div className="flex items-center justify-center gap-5 mt-8">
-          {/* Prev Button */}
           <motion.button
             type="button"
             aria-label="Previous"
@@ -328,11 +333,16 @@ const Portfolio = () => {
             className="w-9 h-9 rounded-full border border-[#2F5E4B]/30 bg-white/80 text-[#2F5E4B] flex items-center justify-center shadow-sm hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] transition-colors duration-300"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M10 3L5 8l5 5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </motion.button>
 
-          {/* Dots */}
           <div className="flex items-center gap-2">
             {filteredPortfolio.map((_, index) => (
               <motion.button
@@ -355,7 +365,6 @@ const Portfolio = () => {
             ))}
           </div>
 
-          {/* Next Button */}
           <motion.button
             type="button"
             aria-label="Next"
@@ -369,7 +378,13 @@ const Portfolio = () => {
             className="w-9 h-9 rounded-full border border-[#2F5E4B]/30 bg-white/80 text-[#2F5E4B] flex items-center justify-center shadow-sm hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] transition-colors duration-300"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M6 3l5 5-5 5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </motion.button>
         </div>

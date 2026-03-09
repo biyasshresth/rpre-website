@@ -103,8 +103,7 @@ export const portfolio: Readonly<PortfolioItem[]> = [
     id: 1,
     title: "E-Commerce Platform",
     category: "Web Development",
-    image:
-      "https://images.unsplash.com/photo-1661956602116-aa6865609028?w=800",
+    image: "/Ecomerce.png",  
     description: "Modern shopping experience with seamless checkout",
   },
   {
@@ -125,10 +124,9 @@ export const portfolio: Readonly<PortfolioItem[]> = [
   },
   {
     id: 4,
-    title: "IoT Dashboard",
+    title: "Sports App development",
     category: "Web Development",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+     image: "/Sports.png",
     description: "Real-time device monitoring and analytics",
   },
   {
