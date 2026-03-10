@@ -1,153 +1,312 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
+import { motion, type TargetAndTransition } from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
-const AUTO_SCROLL_INTERVAL = 3000; // ✅ Increased from 2500 → 3000ms to reduce perceived jumpiness
+// ---------------------------------------------------------------------------
+// ROOT CAUSE OF LAG — explained once here:
+//
+// The previous version used AnimatePresence with key="slot-{originalIndex}".
+// On every advance(), the card entering the ±2 window was FRESHLY MOUNTED
+// with CARD_INITIAL (opacity:0, scale:0.88, rotateY:-8).
+// This means on every tick:
+//   • 4 existing cards → retarget their spring (already in motion)
+//   • 1 new card       → start spring from zero (CARD_INITIAL → animate)
+//
+// 5 springs competing in the same RAF frame = compositor overload.
+// The ±2 cards have the largest delta (furthest from center) so they
+// are the ones that visibly stutter.
+//
+// FIX: Remove AnimatePresence entirely.
+// All cards are always mounted with a STABLE key (their array index).
+// React never unmounts/remounts them — it only changes `animate` targets.
+// Pure retargeting. Zero mount overhead. Perfectly smooth at any speed.
+// ---------------------------------------------------------------------------
 
-const LUXURY_EASE = [0.25, 0.46, 0.45, 0.94] as const;
+const AUTO_SCROLL_INTERVAL = 3000;
+
+const EASE_LUXURY = [0.25, 0.46, 0.45, 0.94] as const;
+
+// Slightly softer spring to eliminate any residual overshoot on outer cards
+const SPRING_CARD = {
+  type: "spring",
+  stiffness: 260,
+  damping: 28,
+  mass: 0.8,
+} as const;
 
 const CARD_TRANSITION = {
-  x: { type: "spring", stiffness: 260, damping: 30 },
-  y: { type: "spring", stiffness: 260, damping: 30 },
-  rotateY: { type: "spring", stiffness: 260, damping: 30 },
-  rotateZ: { type: "spring", stiffness: 260, damping: 30 },
-  scale: { type: "spring", stiffness: 260, damping: 30 },
-  opacity: { duration: 0.25, ease: LUXURY_EASE },
-  filter: { duration: 0.2, ease: LUXURY_EASE },
+  x: SPRING_CARD,
+  y: SPRING_CARD,
+  rotateY: SPRING_CARD,
+  rotateZ: SPRING_CARD,
+  scale: SPRING_CARD,
+  opacity: { duration: 0.2, ease: "easeOut" },
 } as const;
 
-// ✅ Static initial/exit states — no recalculation per render
-const CARD_INITIAL = {
-  opacity: 0,
-  scale: 0.88,
-  rotateY: -6,
-  rotateZ: -3,
-  filter: "blur(8px)",
-} as const;
-
-const CARD_EXIT = {
-  opacity: 0,
-  scale: 0.88,
-  rotateY: 6,
-  rotateZ: 3,
-  filter: "blur(5px)",
-} as const;
-
-const CENTER_HOVER_TRANSITION = {
+const HOVER_SPRING = {
   type: "spring",
-  stiffness: 260,
-  damping: 30,
+  stiffness: 300,
+  damping: 22,
+  mass: 0.7,
 } as const;
 
-const SIDE_HOVER_TRANSITION = {
-  type: "spring",
-  stiffness: 260,
-  damping: 30,
+const DOT_TRANSITION = { duration: 0.35, ease: EASE_LUXURY } as const;
+const BADGE_TRANSITION = {
+  delay: 0.1,
+  duration: 0.4,
+  ease: EASE_LUXURY,
+} as const;
+const CTA_TRANSITION = {
+  delay: 0.15,
+  duration: 0.45,
+  ease: EASE_LUXURY,
+} as const;
+const HEADER_TRANSITION = { duration: 0.9, ease: EASE_LUXURY } as const;
+
+const ARROW_TRANSITION = {
+  duration: 2.2,
+  repeat: Infinity,
+  ease: [0.45, 0, 0.55, 1] as const,
+  repeatType: "mirror" as const,
 } as const;
 
-// ─── Per-card animate props factory ────────────────────────────────
-// ✅ Extracted to a pure function so useMemo can cache results per posIndex
-function getCardAnimate(
-  isCenter: boolean,
-  translateX: number,
-  translateY: number,
-  scale: number,
-  opacity: number,
-  zIndex: number,
-  rotateY: number,
-  rotateZ: number,
-) {
+// ---------------------------------------------------------------------------
+// Slot configs — precomputed once, never change
+// ---------------------------------------------------------------------------
+interface SlotConfig {
+  x: number;
+  y: number;
+  scale: number;
+  opacity: number;
+  rotateY: number;
+  rotateZ: number;
+  zIndex: number;
+}
+
+function computeSlot(pos: number): SlotConfig {
+  const abs = Math.abs(pos);
   return {
-    x: translateX,
-    y: translateY,
-    scale,
-    opacity,
-    zIndex,
-    rotateY: isCenter ? 0 : rotateY,
-    rotateZ: isCenter ? 0 : rotateZ,
-    filter: "blur(0px)",
+    x: pos * 220,
+    y: abs * abs * 6,
+    scale: pos === 0 ? 1 : 1 - abs * 0.11 - abs * abs * 0.025,
+    opacity: pos === 0 ? 1 : 1 - abs * 0.2,
+    rotateY: pos === 0 ? 0 : pos * 6,
+    rotateZ: pos === 0 ? 0 : pos * 4,
+    zIndex: 10 - abs,
   };
 }
 
-function getWhileHover(isCenter: boolean, translateY: number, scale: number) {
-  if (isCenter) {
-    return {
-      y: translateY - 16,
-      scale: scale * 1.028,
-      rotateY: 0,
-      rotateZ: 0,
-      transition: CENTER_HOVER_TRANSITION,
+// Precompute slot positions -2…+2
+const SLOT_CONFIGS: Record<number, SlotConfig> = {};
+for (let p = -2; p <= 2; p++) SLOT_CONFIGS[p] = computeSlot(p);
+
+// Cards outside ±2 window get this — invisible, centered, waiting
+const HIDDEN: SlotConfig = {
+  x: 0,
+  y: 0,
+  scale: 0.85,
+  opacity: 0,
+  rotateY: 0,
+  rotateZ: 0,
+  zIndex: 0,
+};
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+type FilterType =
+  | "All"
+  | "Web Development"
+  | "Mobile Development"
+  | "Cyber Security";
+
+const CATEGORIES: FilterType[] = [
+  "All",
+  "Web Development",
+  "Mobile Development",
+  "Cyber Security",
+];
+
+// ---------------------------------------------------------------------------
+// CarouselCard — always mounted, no enter/exit animations, pure retargeting
+// ---------------------------------------------------------------------------
+interface CarouselCardProps {
+  item: PortfolioItem;
+  slot: SlotConfig;
+  isCenter: boolean;
+  isVisible: boolean;
+  onClickSide: () => void;
+}
+
+const CarouselCard = memo(
+  function CarouselCard({
+    item,
+    slot,
+    isCenter,
+    isVisible,
+    onClickSide,
+  }: CarouselCardProps) {
+    const animTarget: TargetAndTransition = {
+      x: slot.x,
+      y: slot.y,
+      scale: slot.scale,
+      opacity: slot.opacity,
+      rotateY: slot.rotateY,
+      rotateZ: slot.rotateZ,
     };
-  }
-  return {
-    scale: scale * 1.015,
-    transition: SIDE_HOVER_TRANSITION,
-  };
-}
 
-// ─── Component ─────────────────────────────────────────────────────
+    const hoverTarget: TargetAndTransition = isCenter
+      ? {
+          y: slot.y - 16,
+          scale: slot.scale * 1.028,
+          rotateY: 0,
+          rotateZ: 0,
+          transition: HOVER_SPRING,
+        }
+      : { scale: slot.scale * 1.015, transition: HOVER_SPRING };
+
+    return (
+      <motion.div
+        // No `initial` prop — Framer will use whatever `animate` says immediately.
+        // This means a card that starts hidden (opacity:0) stays hidden until
+        // it's assigned a visible slot, then springs smoothly into view.
+        animate={animTarget}
+        whileHover={isVisible ? hoverTarget : undefined}
+        transition={CARD_TRANSITION}
+        onClick={isCenter || !isVisible ? undefined : onClickSide}
+        className="absolute cursor-pointer w-75 origin-bottom will-change-[transform,opacity] transform-3d backface-hidden"
+        style={{ zIndex: slot.zIndex }}
+      >
+        <div
+          className={`contain-[layout_paint] rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${
+            isCenter ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]" : "shadow-xl"
+          }`}
+        >
+          <div className="relative overflow-hidden h-60 group">
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+              loading="eager"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
+            <motion.span
+              animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 10 }}
+              transition={BADGE_TRANSITION}
+              className="absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full bg-white/90 text-[#2F5E4B] shadow-lg"
+            >
+              {item.category}
+            </motion.span>
+          </div>
+
+          <div className="p-5">
+            <h3 className="text-lg font-bold text-[#1a3328] mb-1">
+              {item.title}
+            </h3>
+            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
+              {item.description}
+            </p>
+
+            {isCenter && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={CTA_TRANSITION}
+                className="mt-4 flex items-center gap-2"
+              >
+                <motion.span
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.3, ease: EASE_LUXURY }}
+                  className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer"
+                >
+                  View Project
+                  <motion.svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={ARROW_TRANSITION}
+                  >
+                    <path
+                      d="M3 8h10M9 4l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </motion.svg>
+                </motion.span>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  },
+  (prev, next) =>
+    prev.item === next.item &&
+    prev.isCenter === next.isCenter &&
+    prev.isVisible === next.isVisible &&
+    prev.onClickSide === next.onClickSide &&
+    prev.slot.x === next.slot.x &&
+    prev.slot.y === next.slot.y &&
+    prev.slot.scale === next.slot.scale &&
+    prev.slot.opacity === next.slot.opacity &&
+    prev.slot.rotateY === next.slot.rotateY &&
+    prev.slot.rotateZ === next.slot.rotateZ &&
+    prev.slot.zIndex === next.slot.zIndex,
+);
+
+// ---------------------------------------------------------------------------
+// Portfolio root
+// ---------------------------------------------------------------------------
 const Portfolio = () => {
-  const [filter, setFilter] = useState<
-    "All" | "Web Development" | "Mobile Development" | "Cyber Security"
-  >("All");
+  const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
 
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  // ✅ Use ref for hover state inside interval to avoid stale closure
   const isHoveringRef = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const categories = [
-    "All",
-    "Web Development",
-    "Mobile Development",
-    "Cyber Security",
-  ] as const;
-
-  const filteredPortfolio = useMemo(() => {
-    return filter === "All"
-      ? portfolio
-      : portfolio.filter((item: PortfolioItem) => item.category === filter);
-  }, [filter]);
+  const filteredPortfolio = useMemo(
+    () =>
+      filter === "All"
+        ? portfolio
+        : portfolio.filter((item: PortfolioItem) => item.category === filter),
+    [filter],
+  );
 
   const total = filteredPortfolio.length;
+  const safeActive = Math.min(activeIndex, Math.max(0, total - 1));
 
-  // Sync hover ref with state
-  useEffect(() => {
-    isHoveringRef.current = isHovering;
-  }, [isHovering]);
-
-  // Persist active index on refresh
-  useEffect(() => {
-    const savedIndex = sessionStorage.getItem("portfolioActiveIndex");
-    if (savedIndex) setActiveIndex(Number(savedIndex));
-  }, []);
-
-  useEffect(() => {
-    sessionStorage.setItem("portfolioActiveIndex", activeIndex.toString());
-  }, [activeIndex]);
-
-  const next = useCallback(
-    () => setActiveIndex((prev) => (prev + 1) % total),
+  const advance = useCallback(
+    () => setActiveIndex((p) => (p + 1) % total),
     [total],
   );
-  const prev = useCallback(
-    () => setActiveIndex((prev) => (prev - 1 + total) % total),
+  const retreat = useCallback(
+    () => setActiveIndex((p) => (p - 1 + total) % total),
     [total],
   );
-  const goTo = useCallback((index: number) => setActiveIndex(index), []);
+  const goTo = useCallback((i: number) => setActiveIndex(i), []);
 
-  // ✅ Use isHoveringRef in interval callback to avoid stale closure re-creating interval
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      if (!isHoveringRef.current) {
-        setActiveIndex((prev) => (prev + 1) % total);
-      }
+      if (!isHoveringRef.current) setActiveIndex((p) => (p + 1) % total);
     }, AUTO_SCROLL_INTERVAL);
-  }, [total]); // ✅ Removed isHovering from deps — ref handles it
+  }, [total]);
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem("portfolioActiveIndex");
+    if (saved) setActiveIndex(Number(saved));
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("portfolioActiveIndex", String(safeActive));
+  }, [safeActive]);
 
   useEffect(() => {
     startInterval();
@@ -156,65 +315,32 @@ const Portfolio = () => {
     };
   }, [startInterval]);
 
-  // Preload images
   useEffect(() => {
-    filteredPortfolio.forEach((item) => {
+    filteredPortfolio.forEach(({ image }) => {
       const img = new Image();
-      img.src = item.image;
+      img.src = image;
     });
   }, [filteredPortfolio]);
 
-  // ✅ Memoize visibleItems with full derived animation values
-  // This prevents recalculating posIndex math on every render
-  const visibleItems = useMemo(
+  // Each card always renders. It receives the SlotConfig for its position
+  // relative to safeActive, or HIDDEN if it's outside the ±2 window.
+  const cardList = useMemo(
     () =>
       filteredPortfolio.map((item, idx) => {
-        const posIndex = idx - activeIndex;
-        const isCenter = posIndex === 0;
-        const absPos = Math.abs(posIndex);
-
-        const translateX = posIndex * 220;
-        const translateY = absPos * absPos * 6;
-        const rotateZ = posIndex * 5 + posIndex * absPos * 1.5;
-        const rotateY = posIndex * 12;
-        // ✅ Slightly gentler falloff: less aggressive scale/opacity decay
-        const scale = isCenter
-          ? 1
-          : 1 - absPos * 0.11 - absPos * absPos * 0.025;
-        const opacity = 1 - absPos * 0.2;
-        const zIndex = 10 - absPos;
-
+        const pos = idx - safeActive;
+        const inWindow = Math.abs(pos) <= 2;
         return {
           item,
-          originalIndex: idx,
-          posIndex,
-          isCenter,
-          absPos,
-          translateX,
-          translateY,
-          rotateZ,
-          rotateY,
-          scale,
-          opacity,
-          zIndex,
-          // ✅ Pre-compute animate and whileHover objects
-          animateProps: getCardAnimate(
-            isCenter,
-            translateX,
-            translateY,
-            scale,
-            opacity,
-            zIndex,
-            rotateY,
-            rotateZ,
-          ),
-          hoverProps: getWhileHover(isCenter, translateY, scale),
+          idx,
+          pos,
+          inWindow,
+          slot: inWindow ? SLOT_CONFIGS[pos] : HIDDEN,
         };
       }),
-    [activeIndex, filteredPortfolio],
+    [filteredPortfolio, safeActive],
   );
 
-  if (total === 0)
+  if (total === 0) {
     return (
       <section className="py-24 relative overflow-hidden bg-linear-to-r from-[#f7f3ee] to-[#ede8e0]">
         <div className="max-w-7xl mx-auto px-6 text-center">
@@ -222,6 +348,7 @@ const Portfolio = () => {
         </div>
       </section>
     );
+  }
 
   return (
     <section className="py-16 relative overflow-hidden bg-grid-lines">
@@ -233,7 +360,7 @@ const Portfolio = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: LUXURY_EASE }}
+          transition={HEADER_TRANSITION}
           viewport={{ once: true }}
           className="text-center"
         >
@@ -245,12 +372,15 @@ const Portfolio = () => {
           </h2>
 
           <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
+            {CATEGORIES.map((category) => (
               <motion.button
                 key={category}
-                onClick={() => setFilter(category)}
+                onClick={() => {
+                  setFilter(category);
+                  setActiveIndex(0);
+                }}
                 whileTap={{ scale: 0.96 }}
-                transition={{ duration: 0.2, ease: LUXURY_EASE }}
+                transition={{ duration: 0.2, ease: EASE_LUXURY }}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 border ${
                   filter === category
                     ? "bg-[#2F5E4B] shadow-lg shadow-[#2F5E4B]/20 text-white"
@@ -263,127 +393,29 @@ const Portfolio = () => {
           </div>
         </motion.div>
 
-        {/* Carousel */}
+        {/* Carousel — AnimatePresence removed, all cards always in DOM */}
         <div
           className="relative flex items-end justify-center select-none h-110 perspective-1000"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
+          onMouseEnter={() => {
+            isHoveringRef.current = true;
+          }}
+          onMouseLeave={() => {
+            isHoveringRef.current = false;
+          }}
         >
-          <AnimatePresence mode="sync" initial={false}>
-            {visibleItems.map(
-              ({ item, originalIndex, isCenter, animateProps, hoverProps }) => (
-                <motion.div
-                  key={`slot-${originalIndex}`}
-                  transition={CARD_TRANSITION}
-                  initial={CARD_INITIAL} // ✅ Stable reference
-                  animate={animateProps} // ✅ Pre-computed in useMemo
-                  exit={CARD_EXIT} // ✅ Stable reference
-                  whileHover={hoverProps} // ✅ Pre-computed in useMemo
-                  onClick={() => {
-                    if (!isCenter) {
-                      goTo(originalIndex);
-                      startInterval();
-                    }
-                  }}
-                  className="absolute cursor-pointer w-75 origin-bottom"
-                  // ✅ GPU acceleration: translate3d forces compositor layer
-                  // ✅ transform-style: preserve-3d enables proper 3D card depth
-                  // ✅ will-change declared on ALL animated properties
-                  style={{
-                    willChange: "transform, opacity, filter",
-                    transformStyle: "preserve-3d",
-                    backfaceVisibility: "hidden", // ✅ Prevents flickering on rotateY
-                    WebkitBackfaceVisibility: "hidden",
-                  }}
-                >
-                  <div
-                    className={`rounded-2xl overflow-hidden bg-white transition-shadow duration-700 ${
-                      isCenter
-                        ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]"
-                        : "shadow-xl"
-                    }`}
-                  >
-                    <div className="relative overflow-hidden h-60">
-                      <motion.img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                        whileHover={{ scale: 1.06 }}
-                        transition={{ duration: 0.65, ease: LUXURY_EASE }}
-                        // ✅ Isolate image on its own GPU layer
-                        style={{ willChange: "transform" }}
-                      />
-                      <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-                      <motion.span
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          delay: 0.15,
-                          duration: 0.5,
-                          ease: LUXURY_EASE,
-                        }}
-                        className="absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full bg-white/90 text-[#2F5E4B] backdrop-blur-sm shadow-lg"
-                      >
-                        {item.category}
-                      </motion.span>
-                    </div>
-
-                    <div className="p-5">
-                      <h3 className="text-lg font-bold text-[#1a3328] mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
-                        {item.description}
-                      </p>
-
-                      {isCenter && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: 0.18,
-                            duration: 0.55,
-                            ease: LUXURY_EASE,
-                          }}
-                          className="mt-4 flex items-center gap-2"
-                        >
-                          <motion.span
-                            whileHover={{ x: 4 }}
-                            transition={{ duration: 0.3, ease: LUXURY_EASE }}
-                            className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer"
-                          >
-                            View Project
-                            <motion.svg
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              animate={{ x: [0, 4, 0] }}
-                              transition={{
-                                duration: 2.2,
-                                repeat: Infinity,
-                                ease: [0.45, 0, 0.55, 1],
-                                repeatType: "mirror",
-                              }}
-                            >
-                              <path
-                                d="M3 8h10M9 4l4 4-4 4"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </motion.svg>
-                          </motion.span>
-                        </motion.div>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ),
-            )}
-          </AnimatePresence>
+          {cardList.map(({ item, idx, pos, inWindow, slot }) => (
+            <CarouselCard
+              key={idx} // stable key = React never unmounts this node
+              item={item}
+              slot={slot}
+              isCenter={pos === 0}
+              isVisible={inWindow}
+              onClickSide={() => {
+                goTo(idx);
+                startInterval();
+              }}
+            />
+          ))}
         </div>
 
         {/* Navigation */}
@@ -392,12 +424,12 @@ const Portfolio = () => {
             type="button"
             aria-label="Previous"
             onClick={() => {
-              prev();
+              retreat();
               startInterval();
             }}
             whileHover={{ scale: 1.1, x: -2 }}
             whileTap={{ scale: 0.92 }}
-            transition={{ duration: 0.3, ease: LUXURY_EASE }}
+            transition={{ duration: 0.3, ease: EASE_LUXURY }}
             className="w-9 h-9 rounded-full border border-[#2F5E4B]/30 bg-white/80 text-[#2F5E4B] flex items-center justify-center shadow-sm hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] transition-colors duration-300"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -422,11 +454,11 @@ const Portfolio = () => {
                   startInterval();
                 }}
                 animate={{
-                  width: index === activeIndex ? 28 : 8,
+                  width: index === safeActive ? 28 : 8,
                   backgroundColor:
-                    index === activeIndex ? "#2F5E4B" : "rgba(47,94,75,0.25)",
+                    index === safeActive ? "#2F5E4B" : "rgba(47,94,75,0.25)",
                 }}
-                transition={{ duration: 0.4, ease: LUXURY_EASE }}
+                transition={DOT_TRANSITION}
                 className="h-2 rounded-full cursor-pointer"
                 style={{ minWidth: 8 }}
               />
@@ -437,12 +469,12 @@ const Portfolio = () => {
             type="button"
             aria-label="Next"
             onClick={() => {
-              next();
+              advance();
               startInterval();
             }}
             whileHover={{ scale: 1.1, x: 2 }}
             whileTap={{ scale: 0.92 }}
-            transition={{ duration: 0.3, ease: LUXURY_EASE }}
+            transition={{ duration: 0.3, ease: EASE_LUXURY }}
             className="w-9 h-9 rounded-full border border-[#2F5E4B]/30 bg-white/80 text-[#2F5E4B] flex items-center justify-center shadow-sm hover:bg-[#2F5E4B] hover:text-white hover:border-[#2F5E4B] transition-colors duration-300"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">

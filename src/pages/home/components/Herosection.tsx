@@ -13,7 +13,6 @@ import Lottie from "lottie-react";
 import type { LottieRefCurrentProps } from "lottie-react";
 import robot from "@assets/robot.json";
 
-
 const HeroSection: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const lottieRef = useRef<LottieRefCurrentProps>(null);
@@ -74,7 +73,7 @@ const HeroSection: React.FC = () => {
   }, [isHovered]);
 
   return (
-    <section className="relative h-[200vh] bg-grid-lines">
+    <section className="relative h-[200vh] bg-grid-lines pt-24 md:pt-0">
       <motion.div
         style={{ scale: heroScale, opacity: heroOpacity, y: heroY }}
         className="sticky top-0 h-screen overflow-hidden"
@@ -90,20 +89,31 @@ const HeroSection: React.FC = () => {
                 >
                   <motion.div
                     variants={fadeUp}
-                    className="mb-6 flex justify-center gap-3 lg:justify-start"
+                    className="mb-6 flex justify-center lg:justify-start"
                   >
-                    <Sparkles className="text-[#b9a57b]" />
-                    <span className="font-space-mono font-medium uppercase tracking-wide text-[#997f61]">
-                      Innovative IT Solutions
-                    </span>
+                    <button className="group relative flex items-center gap-2 rounded-full px-3 py-1 border border-[#2F5E4B]/20 bg-white/70 backdrop-blur-sm transition-all duration-300 hover:border-[#2F5E4B]">
+                      {/* Glow background */}
+                      <span className="absolute inset-0 rounded-full bg-linear-to-r from-[#66be9b] via-[#64d1ab] to-[#68d6aa] opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-40"></span>
+
+                      {/* Content */}
+                      <span className="relative flex items-center gap-1.5">
+                        <Sparkles
+                          size={14}
+                          className="text-[#2F5E4B] group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <span className="font-medium font-serif text-[10px] uppercase tracking-wide text-[#2F5E4B]">
+                          Innovative IT Solutions
+                        </span>
+                      </span>
+                    </button>
                   </motion.div>
 
                   <motion.h1
                     variants={fadeUp}
-                    className="mb-8 font-serif text-5xl font-bold tracking-tight text-[#244738] md:text-6xl"
+                    className="mb-8 font-serif text-4xl font-bold tracking-tight text-[#244738] md:text-6xl"
                   >
                     Transform Your
-                    <span className="mb-8 block font-serif text-5xl font-bold tracking-tight text-[#997f61] md:text-6xl">
+                    <span className="mb-8 block font-serif text-4xl font-bold tracking-tight text-[#997f61] md:text-6xl">
                       Digital Future
                     </span>
                   </motion.h1>
@@ -111,14 +121,18 @@ const HeroSection: React.FC = () => {
                   {/* Description Text */}
                   <motion.div
                     variants={fadeUp}
-                    className="mb-8 text-lg font-medium text-gray-700 font-poppins"
+                    className="mb-8 text-base font-medium text-gray-700 font-poppins"
                   >
                     <p>Empowering businesses with cutting-edge web,</p>
                     <p>mobile & cybersecurity solutions.</p>
 
                     {/* ✅ Explore Services Button */}
                     <div className="mt-6 flex justify-center lg:justify-start">
-                      <button className="explore-button" onClick={revealServices}>
+                      <button
+                      type="button"
+                        className="explore-button"
+                        onClick={revealServices}
+                      >
                         <span>Explore Services</span>
                         <span className="explore-button-icon" />
                       </button>

@@ -1,5 +1,5 @@
 // src/data/portfolioData.ts
-
+ 
 export interface PortfolioItem {
   id: number;
   title: string;
@@ -9,16 +9,16 @@ export interface PortfolioItem {
 }
 
 export const portfolio: PortfolioItem[] = [
-  {
+   {
     id: 1,
     title: "E-Commerce Platform",
-    description: "Modern scalable ecommerce solution.",
     category: "Web Development",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c",
+    image: "/Ecomerce.png", 
+    description: "Modern shopping experience with seamless checkout",
   },
   {
     id: 2,
-    title: "Banking Mobile App",
+    title: " Mobile Banking  App",
     description: "Secure and intuitive banking experience.",
     category: "Mobile Development",
     image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28",

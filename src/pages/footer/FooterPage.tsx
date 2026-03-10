@@ -1,4 +1,4 @@
-import { FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
 
 const FooterPage = () => {
   return (
@@ -32,7 +32,7 @@ const FooterPage = () => {
             after:w-0 after:h-1px after:bg-emerald-400 
             hover:after:w-full after:transition-all after:duration-300"
           >
-            Privacy Policy
+            Privacy  
           </a>
 
           <a
@@ -42,7 +42,7 @@ const FooterPage = () => {
             after:w-0 after:h-1px after:bg-emerald-400 
             hover:after:w-full after:transition-all after:duration-300"
           >
-            Terms
+            Terms & Conditions
           </a>
 
           <a
@@ -52,7 +52,7 @@ const FooterPage = () => {
             after:w-0 after:h-1px after:bg-emerald-400 
             hover:after:w-full after:transition-all after:duration-300"
           >
-            Contact
+            Policy
           </a>
         </div>
 
@@ -65,7 +65,7 @@ const FooterPage = () => {
           <div className="flex gap-4">
             <a
               aria-label="LinkedIn"
-              href="/facebook"
+              href="/linkedin"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
@@ -75,14 +75,14 @@ const FooterPage = () => {
             </a>
 
             <a
-              aria-label="Twitter"
-              href="/twitter"
+              aria-label="Facebook"
+              href="/facebook"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
               transition-all duration-300 text-white"
             >
-              <FaTwitter size={14} />
+              <FaFacebookF size={14} />
             </a>
 
             <a
