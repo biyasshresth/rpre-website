@@ -1,5 +1,4 @@
-/* For a module, class names need to be imported as styles.exploreButton */
-.exploreButton {
+.explore-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -10,36 +9,53 @@
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: #000;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #1a1a1a;
+  border: 1px solid rgba(47, 94, 75, 0.3);
   border-radius: 999px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   isolation: isolate;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08),
               inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
+  transition: color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.exploreButtonIcon {
-  width: 1.5rem;
-  height: 1.5rem;
-  padding: 0.2rem;
+/* Water fill effect */
+.explore-button::before {
+  content: '';
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #2F5E4B, #4a9175);
   border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.5);
-  transition: all 0.35s ease;
-  transform: rotate(45deg);
-  flex-shrink: 0;
+  transition: bottom 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
 }
 
-.exploreButton:hover {
+.explore-button:hover::before {
+  bottom: 0;
+}
+
+.explore-button:hover {
   color: white;
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 12px 40px rgba(47, 94, 75, 0.45);
 }
 
-.exploreButton:hover .exploreButtonIcon {
-  transform: rotate(180deg);
-  background: white;
-  border: none;
+ /* Arrow icon */
+.explore-button-icon {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);        /* points RIGHT → */
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.explore-button:hover .explore-button-icon {
+  transform: rotate(405deg);        /* 360° spin + stops at DOWN ↓ */
 }

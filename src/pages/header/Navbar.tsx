@@ -57,8 +57,7 @@ const Navbar: React.FC = () => {
     const element = document.getElementById(sectionId);
     if (!element) return;
 
-    const targetY =
-      window.scrollY + element.getBoundingClientRect().top - 16;
+    const targetY = window.scrollY + element.getBoundingClientRect().top - 16;
 
     smoothScrollTo(targetY);
   };
@@ -73,25 +72,27 @@ const Navbar: React.FC = () => {
     <nav
       className={[
         "fixed top-0 left-0 right-0 z-100 transition-all duration-500 ease-in-out",
-        hideNavbar ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100",
+        hideNavbar
+          ? "-translate-y-full opacity-0"
+          : "translate-y-0 opacity-100",
         showSolidBg ? "bg-[#254F3E] shadow-lg" : "bg-[#254F3E] shadow-md",
       ].join(" ")}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-
           {/* Logo */}
-        <button
-  onClick={scrollToHero}
-  className="relative text-xl font-bezmiar font-bold text-white overflow-hidden group"
->
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#d8f3e2]">
-    RPRE
-  </span>
+          <button
+          type="button"
+            onClick={scrollToHero}
+            className="relative text-xl font-serif font-bold text-white overflow-hidden group"
+          >
+            <span className="relative z-10 leading-relaxed  transition-colors duration-300 group-hover:text-[#d8f3e2]">
+              R P R E
+            </span>
 
-  {/* shine sweep */}
-  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700"></span>
-</button>
+            {/* shine sweep */}
+            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700"></span>
+          </button>
 
           {/* CTA */}
           <button
@@ -108,7 +109,6 @@ const Navbar: React.FC = () => {
               </p>
             </div>
           </button>
-
         </div>
       </div>
     </nav>

@@ -2,8 +2,7 @@
 
 import { Code, Smartphone, Shield } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-
-/* =========================
+ /* =========================
    Interfaces
 ========================= */
 
@@ -76,7 +75,7 @@ export const services: Readonly<Service[]> = [
     id: 2,
     title: "Mobile App Development",
     description:
-      "Bring your ideas to life with innovative mobile applications. Our expert team delivers native and cross-platform solutions that provide seamless user experiences and robust functionality. We craft responsive, scalable  websites.",
+      "Bring your ideas to life with innovative mobile applications. Our expert team delivers native and cross-platform solutions that provide user experiences and robust functionality. We craft responsive, scalable  websites.",
     icon: Smartphone,
     image:
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
@@ -98,54 +97,54 @@ export const services: Readonly<Service[]> = [
    Portfolio
 ========================= */
 
-export const portfolio: Readonly<PortfolioItem[]> = [
-  {
-    id: 1,
-    title: "E-Commerce Platform",
-    category: "Web Development",
-    image: "/Ecomerce.png",  
-    description: "Modern shopping experience with seamless checkout",
-  },
-  {
-    id: 2,
-    title: "FinTech Mobile App",
-    category: "Mobile Development",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
-    description: "Secure financial transactions on the go",
-  },
-  {
-    id: 3,
-    title: "Healthcare Portal",
-    category: "Web Development",
-    image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
-    description: "Patient management and telemedicine solution",
-  },
-  {
-    id: 4,
-    title: "Sports App development",
-    category: "Web Development",
-     image: "/Sports.png",
-    description: "Real-time device monitoring and analytics",
-  },
-  {
-    id: 5,
-    title: "Security Audit System",
-    category: "Cyber Security",
-    image:
-      "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800",
-    description: "Comprehensive security assessment platform",
-  },
-  {
-    id: 6,
-    title: "Fitness Tracking App",
-    category: "Mobile Development",
-    image:
-      "https://images.unsplash.com/photo-1461088945293-0c17689e48ac?w=800",
-    description: "Personal wellness and activity monitoring",
-  },
-] as const;
+// export const portfolio: Readonly<PortfolioItem[]> = [
+//   {
+//     id: 1,
+//     title: "E-Commerce Platform",
+//     category: "Web Development",
+//     image: "/Ecomerce.png", 
+//     description: "Modern shopping experience with seamless checkout",
+//   },
+//   {
+//     id: 2,
+//     title: "ApplyCan Mobile App",
+//     category: "Mobile App Development",
+//     image:
+//       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+//     description: "Secure financial transactions on the go",
+//   },
+//   {
+//     id: 3,
+//     title: "Healthcare Portal",
+//     category: "Web Development",
+//     image:
+//       "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
+//     description: "Patient management and telemedicine solution",
+//   },
+//   {
+//     id: 4,
+//     title: "Sports App development",
+//     category: "Mobile App Development",
+//      image: "/Sports.png",
+//     description: "Real-time device monitoring and analytics",
+//   },
+//   {
+//     id: 5,
+//     title: "Security Audit System",
+//     category: "Cyber Security",
+//     image:
+//       "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800",
+//     description: "Comprehensive security assessment platform",
+//   },
+//   {
+//     id: 6,
+//     title: "Fitness Tracking App",
+//     category: "Mobile App Development",
+//     image:
+//       "https://images.unsplash.com/photo-1461088945293-0c17689e48ac?w=800",
+//     description: "Personal wellness and activity monitoring",
+//   },
+// ] as const;
 
 /* =========================
    Stats
@@ -169,7 +168,7 @@ export const testimonials: Readonly<Testimonial[]> = [
     position: "CEO, TechCorp",
     avatar: "https://i.pravatar.cc/150?img=1",
     content:
-      "RPRE transformed our digital infrastructure completely. Their expertise in web development and security is unmatched. The team delivered beyond our expectations.",
+      "RPRE transform our digital infrastructure completely. The team deliver unexpected results beyond our expectations.",
     rating: 5,
   },
   {
@@ -178,7 +177,7 @@ export const testimonials: Readonly<Testimonial[]> = [
     position: "CTO, InnovateLabs",
     avatar: "https://i.pravatar.cc/150?img=2",
     content:
-      "Working with RPRE was a game-changer for our mobile app. They brought creativity, technical excellence, and dedication to every sprint. Highly recommend!",
+      "Working with RPRE was a game-changer for our mobile app. They brought creativity, technical excellence, and dedication to every sprint.",
     rating: 5,
   },
   {

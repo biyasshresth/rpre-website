@@ -77,7 +77,7 @@ const Stats: React.FC = () => {
           className="text-center mb-20"
         >
           {" "}
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 tracking-tight">
             {" "}
             Why Choose RPRE?{" "}
           </h2>{" "}
@@ -119,12 +119,12 @@ const Stats: React.FC = () => {
                   />{" "}
                 </motion.div>{" "}
                 {/* Counter */}{" "}
-                <div className="text-5xl md:text-6xl font-bold text-white font-space-mono uppercase   mb-3 tracking-tight">
+                <div className="text-3xl md:text-5xl font-bold font-serif text-white uppercase mb-3 tracking-tight">
                   {" "}
                   {counts[index]} {stat.suffix}{" "}
                 </div>{" "}
                 {/* Label */}{" "}
-                <div className="text-white/90 font-medium font-space-mono text-lg">
+                <div className="text-white/90 font-medium font-space-mono text-base">
                   {" "}
                   {stat.label}{" "}
                 </div>{" "}

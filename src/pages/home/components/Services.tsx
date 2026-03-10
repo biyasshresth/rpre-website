@@ -88,7 +88,7 @@ const Services: React.FC = () => {
       <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" />
       <div className="pointer-events-none absolute -top-72 -right-72 z-0 h-95 w-95 text-[#2F5E4B] opacity-10" />
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,18 +96,18 @@ const Services: React.FC = () => {
           transition={{ duration: 0.8, ease }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-8 font-serif text-5xl font-bold tracking-tight text-[#1a3328] md:text-6xl">
+          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#1a3328] md:text-5xl">
             Our Services
           </h2>
 
-          <p className="mx-auto mt-10 max-w-2xl font-space-mono text-lg text-gray-600">
-            Comprehensive IT solutions tailored to elevate your business and
-            drive digital excellence
+          <p className="mx-auto   max-w-2xl text-base text-gray-600">
+            Comprehensive IT solutions <br /> tailored to rise or lift your business and
+            drive digital excellence.
           </p>
         </motion.div>
 
         <motion.div
-          className="grid gap-8 md:grid-cols-3"
+          className="grid gap-8 md:grid-cols-3 -mt-6"
           variants={containerVariants}
           initial="hidden"
           animate={loaded ? "visible" : "hidden"}
@@ -122,7 +122,7 @@ const Services: React.FC = () => {
                   variants={cardVariants}
                   whileHover="hover"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-42 overflow-hidden">
                     <motion.img
                       src={service.image}
                       alt={service.title}
