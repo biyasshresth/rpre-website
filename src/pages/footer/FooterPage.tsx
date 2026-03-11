@@ -1,5 +1,5 @@
 import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 const FooterPage = () => {
   return (
     <footer
@@ -11,7 +11,6 @@ const FooterPage = () => {
       <div className="absolute top-0 left-0 w-full h-1px bg-linear-to-r from-transparent via-emerald-400/40 to-transparent" />
 
       <div className="flex flex-col md:flex-row justify-between gap-10 text-center md:text-left">
-
         {/* Left Section */}
         <div className="max-w-xs">
           <h3 className="text-white font-semibold text-xl tracking-wide mb-3">
@@ -32,7 +31,7 @@ const FooterPage = () => {
             after:w-0 after:h-1px after:bg-emerald-400 
             hover:after:w-full after:transition-all after:duration-300"
           >
-            Privacy  
+            Privacy
           </a>
 
           <a
@@ -45,15 +44,15 @@ const FooterPage = () => {
             Terms & Conditions
           </a>
 
-          <a
-            href="#"
+          <Link
+            to="/policy"
             className="relative text-gray-200 hover:text-white transition duration-300
-            after:content-[''] after:absolute after:left-0 after:-bottom-1 
-            after:w-0 after:h-1px after:bg-emerald-400 
-            hover:after:w-full after:transition-all after:duration-300"
+             after:content-[''] after:absolute after:left-0 after:-bottom-1 
+             after:w-0 after:h-1px after:bg-emerald-400 
+             hover:after:w-full after:transition-all after:duration-300"
           >
             Policy
-          </a>
+          </Link>
         </div>
 
         {/* Right Section (Copyright + Social Icons) */}
@@ -65,7 +64,7 @@ const FooterPage = () => {
           <div className="flex gap-4">
             <a
               aria-label="LinkedIn"
-              href="/linkedin"
+              href="/#"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
@@ -76,7 +75,7 @@ const FooterPage = () => {
 
             <a
               aria-label="Facebook"
-              href="/facebook"
+              href="/#"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
@@ -87,7 +86,7 @@ const FooterPage = () => {
 
             <a
               aria-label="Instagram"
-              href="/instagram"
+              href="/#"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
@@ -97,7 +96,6 @@ const FooterPage = () => {
             </a>
           </div>
         </div>
-
       </div>
     </footer>
   );

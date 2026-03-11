@@ -1,5 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap");
 .section {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,8 +201,6 @@
 .delay07 {
   transition-delay: 0.7s;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap");
 
 :root {
   --olive: #a3b18a;

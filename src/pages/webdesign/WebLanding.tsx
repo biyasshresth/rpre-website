@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import WebJourney from "./componnts/WebJourney";
 import WebChallange from "./componnts/WebChallange";
 import WebConclusion from "./componnts/WebConlusion";
-
+import starsUrl from "@/assets/icons/Stars.svg";
+import FlashUrl from "@/assets/icons/Flash.svg";
+import EndlessUrl from "@/assets/icons/Endless.svg";
 const WebLanding: React.FC = () => {
   const sectionsRef = useRef<HTMLElement | null>(null);
 
@@ -42,31 +44,37 @@ const WebLanding: React.FC = () => {
           </motion.p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.div
-              className="group px-8 py-4 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-[#A3B18A]/20"
+              className="group px-8 py-4 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-[#A3B18A]/20 flex flex-col items-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
             >
-              <div className="text-4xl font-bold text-[#A3B18A] mb-1">∞</div>
+               <div className="mb-2 w-8 h-8 ">
+                <img src={EndlessUrl} alt="Endless Icon" />
+              </div>
               <div className="text-sm text-slate-700">Endless Creativity</div>
             </motion.div>
             <motion.div
-              className="group px-8 py-4 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-[#A3B18A]/20"
+              className="group px-8 py-4 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-[#A3B18A]/20 flex flex-col items-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
             >
-              <div className="text-4xl font-bold text-[#D4AF37] mb-1">⚡</div>
-              <div className="text-sm text-slate-700">Dynamic Solutions</div>
+              <div className="mb-2 w-8 h-8 ">
+                <img src={starsUrl} alt="Stars Icon" />
+              </div>
+              <div className="text-sm text-slate-700">Beautiful Results</div>
             </motion.div>
             <motion.div
-              className="group px-8 py-4 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-[#A3B18A]/20"
+              className="group px-8 py-4 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-[#A3B18A]/20 flex flex-col items-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
             >
-              <div className="text-4xl font-bold text-[#A3B18A] mb-1">✨</div>
-              <div className="text-sm text-slate-700">Beautiful Results</div>
+              <div className="mb-2 w-8 h-8 ">
+                <img src={FlashUrl} alt="Flash Icon" />
+              </div>
+              <div className="text-sm text-slate-700"> Dynamic Solutions</div>
             </motion.div>
           </div>
         </div>

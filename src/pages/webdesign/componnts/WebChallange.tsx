@@ -1,129 +1,184 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import type { Variants } from "framer-motion";
+import creativeUrl from "@/assets/icons/Creative.svg";
+import rocketUrl from "@/assets/icons/Rocket.svg";
+import settingUrl from "@/assets/icons/Setting.svg";
+
+const steps = [
+  {
+    id: 1,
+    emoji: "🎯",
+    title: "Discovery & Planning",
+    description:
+      "Understanding user needs, defining goals, and mapping out the site structure. This phase sets the foundation for a purposeful design that resonates with the target audience and achieves business objectives.",
+    variant: "green",
+  },
+  {
+    id: 2,
+    icon: creativeUrl,
+    iconAlt: "Creative Icon",
+    title: "Creative Design",
+    description:
+      "Bringing ideas to life through wireframes, mockups, and prototypes. Designers explore color schemes, typography, layouts, and visual elements that create a unique and memorable brand identity.",
+    variant: "white",
+  },
+  {
+    id: 3,
+    icon: settingUrl,
+    iconAlt: "Setting Icon",
+    title: "Development & Build",
+    description:
+      "Transforming designs into functional, responsive websites using modern technologies. Code comes alive with animations, interactions, and seamless experiences across all devices and platforms.",
+    variant: "white",
+  },
+  {
+    id: 4,
+    icon: rocketUrl,
+    iconAlt: "Rocket Icon",
+    title: "Launch & Optimize",
+    description:
+      "Testing, refining, and deploying the final product. Post-launch, continuous monitoring and improvements ensure the website stays relevant, performs optimally, and delivers exceptional user experiences.",
+    variant: "gold",
+  },
+];
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.15,
+      duration: 0.6,
+      type: "spring" as const,
+      stiffness: 80,
+      damping: 15,
+    },
+  }),
+};
 
 const WebJourney: React.FC = () => {
-  // Use useRef to create a reference to the section element
   const sectionsRef = useRef<HTMLElement | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  // Scroll to top on page load
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
+  // Use IntersectionObserver to reveal cards one-by-one as the grid scrolls into view
+  useEffect(() => {
+    if (!gridRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Stagger revealing each card
+            steps.forEach((_, i) => {
+              setTimeout(() => {
+                setVisibleCount((prev) => Math.max(prev, i + 1));
+              }, i * 200);
+            });
+            observer.disconnect(); // Only trigger once
+          }
+        });
+      },
+      {
+        threshold: 0.15, // Trigger when 15% of the grid is visible
+      }
+    );
+
+    observer.observe(gridRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="journey"
-      ref={sectionsRef} // Directly use useRef here
+      ref={sectionsRef}
       data-testid="journey-section"
-      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-[#F5F1E7] relative"
+      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-white relative"
     >
       <div className="max-w-6xl mx-auto w-full">
-        <div className="text-center mb-16 animate-slide-up">
+        {/* Header */}
+        <div className="text-center mb-16">
           <motion.h2
             className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 mb-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, type: 'spring', stiffness: 100 }}
+            transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
           >
-            Overcoming Challenges
+            The Design Journey
           </motion.h2>
+
           <motion.p
             className="text-lg sm:text-xl text-slate-700 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
           >
-            Every design journey comes with obstacles. Here's how we navigate the most common challenges in webpage design.
+            Every great website begins with a vision and evolves through careful
+            planning, creative exploration, and iterative refinement.
           </motion.p>
         </div>
 
-        <div className="space-y-6">
-          {/* Challenge 1 */}
-          <motion.div
-            className="group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-          >
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-l-4 border-[#A3B18A] hover:border-l-8">
-              <div className="flex items-start gap-6">
-                <div className="shrink-0 w-16 h-16 bg-[#A3B18A]/20 rounded-xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-                  📱
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-slate-800 mb-3">Responsive Design</h3>
-                  <p className="text-slate-700 leading-relaxed">
-                    Creating layouts that adapt seamlessly across countless devices and screen sizes requires careful planning
-                    and testing. Mobile-first approaches and flexible grid systems help ensure consistent experiences everywhere.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+        {/* Cards Grid */}
+        <div ref={gridRef} className="grid md:grid-cols-2 gap-8">
+          {steps.map((step, i) => {
+            const isVisible = i < visibleCount;
 
-          {/* Challenge 2 */}
-          <motion.div
-            className="group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-l-4 border-[#D4AF37] hover:border-l-8">
-              <div className="flex items-start gap-6">
-                <div className="shrink-0 w-16 h-16 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-                  ⚡
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-slate-800 mb-3">Performance Optimization</h3>
-                  <p className="text-slate-700 leading-relaxed">
-                    Balancing rich visual experiences with fast load times is crucial. Optimizing images, minimizing code,
-                    lazy loading, and leveraging modern techniques ensure websites are both beautiful and blazingly fast.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            const cardClass =
+              step.variant === "green"
+                ? "bg-gradient-to-br from-[#A3B18A] to-[#8A9A73] border-[#A3B18A]/30"
+                : step.variant === "gold"
+                ? "bg-gradient-to-br from-[#D4AF37] to-[#C4A137] border-[#D4AF37]/30"
+                : "bg-white border-gray-200";
 
-          {/* Challenge 3 */}
-          <motion.div
-            className="group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-l-4 border-[#A3B18A] hover:border-l-8">
-              <div className="flex items-start gap-6">
-                <div className="shrink-0 w-16 h-16 bg-[#A3B18A]/20 rounded-xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-                  ♿
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-slate-800 mb-3">Accessibility & Inclusion</h3>
-                  <p className="text-slate-700 leading-relaxed">
-                    Designing for everyone means considering diverse abilities and needs. Proper contrast, keyboard navigation,
-                    screen reader support, and semantic HTML create inclusive experiences that reach the widest audience.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            const titleClass =
+              step.variant === "white" ? "text-slate-800" : "text-white";
 
-          {/* Challenge 4 */}
-          <motion.div
-            className="group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-l-4 border-[#8A9A73] hover:border-l-8">
-              <div className="flex items-start gap-6">
-                <div className="shrink-0 w-16 h-16 bg-[#8A9A73]/20 rounded-xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-                  🎭
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-slate-800 mb-3">Brand Consistency</h3>
-                  <p className="text-slate-700 leading-relaxed">
-                    Maintaining a cohesive visual identity across all pages and touchpoints strengthens brand recognition.
-                    Design systems, style guides, and component libraries help teams deliver consistent, on-brand experiences.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            const descClass =
+              step.variant === "white" ? "text-slate-700" : "text-[#F5F1E7]";
+
+            return (
+              <AnimatePresence key={step.id}>
+                {isVisible && (
+                  <motion.div
+                    className="group"
+                    custom={0}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <div
+                      className={`rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full border ${cardClass}`}
+                    >
+                      {/* Icon or Emoji */}
+                      {step.emoji ? (
+                        <div className="text-5xl mb-4">{step.emoji}</div>
+                      ) : (
+                        <div className="mb-4 w-12 h-12">
+                          <img src={step.icon} alt={step.iconAlt} />
+                        </div>
+                      )}
+
+                      <h3 className={`text-2xl font-bold mb-4 ${titleClass}`}>
+                        {step.title}
+                      </h3>
+                      <p className={`leading-relaxed ${descClass}`}>
+                        {step.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            );
+          })}
         </div>
       </div>
     </section>

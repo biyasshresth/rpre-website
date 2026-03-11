@@ -2,7 +2,7 @@ import React from "react";
 
 const Contact: React.FC = () => {
   return (
-    <section className="bg-[#254F3E] text-white py-20 px-6 md:px-16">
+    <section id="contact" className="bg-[#254F3E] text-white py-20 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-start">
         <div className="space-y-8">
           <p className="uppercase tracking-widest text-xs text-white/80 font-serif">
@@ -10,7 +10,7 @@ const Contact: React.FC = () => {
           </p>
 
           <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
-            Let's build <br /> together.
+            Let's build <br /> <p className="text-[#8a6c4b]">together</p> .
           </h2>
 
           <p className="text-white/80 max-w-md font-space-mono">

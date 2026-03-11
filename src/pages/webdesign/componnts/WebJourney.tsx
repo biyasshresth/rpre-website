@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-
+import creativeUrl from "@/assets/icons/Creative.svg";
+import rocketUrl from "@/assets/icons/Rocket.svg";
+import settingUrl from "@/assets/icons/Setting.svg";
 const WebJourney: React.FC = () => {
   const sectionsRef = useRef<HTMLElement | null>(null);
 
@@ -8,7 +10,7 @@ const WebJourney: React.FC = () => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "auto", // change to "smooth" if you prefer
+      behavior: "auto",   
     });
   }, []);
 
@@ -71,7 +73,9 @@ const WebJourney: React.FC = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full border border-gray-200">
-              <div className="text-5xl mb-4">🎨</div>
+              <div className="mb-4 w-12 h-12">
+                <img src={creativeUrl} alt="Creative Icon" />
+              </div>
               <h3 className="text-2xl font-bold text-slate-800 mb-4">
                 Creative Design
               </h3>
@@ -92,7 +96,9 @@ const WebJourney: React.FC = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full border border-gray-200">
-              <div className="text-5xl mb-4">⚙️</div>
+             <div className="mb-4 w-12 h-12">
+                <img src={settingUrl} alt="Setting Icon" />
+              </div>
               <h3 className="text-2xl font-bold text-slate-800 mb-4">
                 Development & Build
               </h3>
@@ -113,7 +119,9 @@ const WebJourney: React.FC = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             <div className="bg-linear-to-br from-[#D4AF37] to-[#C4A137] rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full border border-[#D4AF37]/30">
-              <div className="text-5xl mb-4">🚀</div>
+              <div className="mb-4 w-12 h-12">
+                <img src={rocketUrl} alt="Rocket Icon" />
+              </div>
               <h3 className="text-2xl font-bold text-white mb-4">
                 Launch & Optimize
               </h3>

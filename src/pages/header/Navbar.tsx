@@ -11,7 +11,6 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      // hide on scroll down, show on scroll up
       if (currentScroll > lastScrollY && currentScroll > 80) {
         setHideNavbar(true);
       } else {
@@ -58,7 +57,6 @@ const Navbar: React.FC = () => {
     if (!element) return;
 
     const targetY = window.scrollY + element.getBoundingClientRect().top - 16;
-
     smoothScrollTo(targetY);
   };
 
@@ -82,33 +80,52 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <button
-          type="button"
+            type="button"
             onClick={scrollToHero}
             className="relative text-xl font-serif font-bold text-white overflow-hidden group"
           >
-            <span className="relative z-10 leading-relaxed  transition-colors duration-300 group-hover:text-[#d8f3e2]">
+            <span className="relative z-10 leading-relaxed text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2]">
               R P R E
             </span>
-
-            {/* shine sweep */}
-            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700"></span>
+            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full rounded-3xl transition-all duration-700"></span>
           </button>
 
-          {/* CTA */}
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="group cursor-pointer rounded-lg bg-[#F5F5F5] px-5 py-2 font-semibold text-black shadow-md transition-all duration-300 hover:bg-[#6b9c7c] overflow-hidden"
-          >
-            <div className="relative h-5 overflow-hidden">
-              <p className="transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-6">
-                Get Started
-              </p>
+          {/* CTA — glowing border wrapper + flip text */}
+          <div className="relative group">
+            {/* Outer shell: clips the glow + shine */}
+            <div className="relative w-36 h-10 opacity-90 overflow-hidden rounded-xl z-10">
+              {/* 1. Shine sweep (from original uiverse animation) */}
+              <div className="absolute z-10 -translate-x-44 group-hover:translate-x-120 ease-in transition-all duration-700 h-full w-44 bg-linear-to-r from-gray-500 to-white/10 opacity-30 -skew-x-12 pointer-events-none" />
 
-              <p className="absolute top-6 flex justify-center text-white transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-0">
-                Let's Go
-              </p>
+              {/* 2. Spinning glow bar (border effect) */}
+              <div className="absolute duration-1000 group-hover:animate-spin w-full h-25 bg-linear-to-r from-[#65ad7e] to-yellow-400 blur-[30px] -bottom-6 left-0 pointer-events-none" />
+
+              {/* 3. Inner button face — sits above glow, contains flip text */}
+              <div className="absolute inset-0.5 rounded-[10px] bg-[#F5F5F5] group-hover:bg-[#65ad7e] transition-colors duration-300 z-1 flex items-center justify-center overflow-hidden">
+                <button
+                  onClick={() => scrollToSection("contact")}
+                  className="cursor-pointer w-full h-full font-semibold text-sm px-4"
+                >
+                  {/* Flip text animation */}
+                  <div className="relative h-8 overflow-hidden">
+                    <p
+                      className="text-black group-hover:text-white transition-transform duration-700 
+                      ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-6 
+                      animate-bounce-repeat group-hover.animation:none"
+                    >
+                      Get Started
+                    </p>
+                    <p className="absolute top-6 w-full text-center text-white transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-0">
+                      Let's Talk
+                      <span className="inline-block ml-1 text-lg transition-transform duration-500 delay-700 group-hover:translate-x-2">
+                        →
+                      </span>
+                    </p>
+                  </div>
+                </button>
+              </div>
             </div>
-          </button>
+          </div>
         </div>
       </div>
     </nav>

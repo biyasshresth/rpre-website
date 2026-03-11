@@ -113,7 +113,7 @@ const HeroSection: React.FC = () => {
                     className="mb-8 font-serif text-4xl font-bold tracking-tight text-[#244738] md:text-6xl"
                   >
                     Transform Your
-                    <span className="mb-8 block font-serif text-4xl font-bold tracking-tight text-[#997f61] md:text-6xl">
+                    <span className="mb-8 block font-serif text-4xl font-bold tracking-tight text-[#775a3a] md:text-6xl">
                       Digital Future
                     </span>
                   </motion.h1>

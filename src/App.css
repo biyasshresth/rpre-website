@@ -57,5 +57,19 @@
 }
 
 .explore-button:hover .explore-button-icon {
-  transform: rotate(405deg);        /* 360° spin + stops at DOWN ↓ */
+  transform: rotate(405deg);         
+}
+
+@keyframes bounceRepeat {
+  0%, 100% { transform: translateY(0); }
+  10%       { transform: translateY(6px); }   
+  20%       { transform: translateY(0); }
+  30%       { transform: translateY(6px); }    
+  40%       { transform: translateY(0); }
+  50%       { transform: translateY(6px); }    
+  60%       { transform: translateY(0); }
+}
+
+.animate-bounce-repeat {
+  animation: bounceRepeat 2s ease-in-out infinite;
 }
