@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const FooterPage = () => {
   return (
     <footer
-      className="relative px-6 md:px-16 lg:px-20 py-5 
+      className="relative px-6 md:px-16 lg:px-20 py-3 
       bg-linear-to-br from-[#254F3E] via-[#1F3F32] to-[#183129] 
       border-t border-white/10 text-sm overflow-hidden"
     >
@@ -13,8 +13,52 @@ const FooterPage = () => {
 
       <div className="flex flex-col md:flex-row justify-between text-center md:text-left">
         {/* Left Section */}
-        <div className="max-w-xs flex flex-col items-center md:items-start gap-3">
-          {/* Social Icons moved here */}
+        <div className="max-w-xs flex flex-col items-center mt-3 md:items-start gap-3">
+           <Link to="/">
+    <h3 className="text-white font-semibold text-xl tracking-wide cursor-pointer hover:text-emerald-400 transition-colors">
+      RPRE Tech Studio
+    </h3>
+  </Link>
+
+          <p className="text-gray-300 text-xs">
+            Building innovative digital <br className="hidden md:block" />
+            experiences for the future.
+          </p>
+        </div>
+
+        {/* Middle Section (Links & Copyright) */}
+        <div className="flex flex-col gap-4 md:gap-2 mt-8 md:mt-2 items-center md:items-start">
+          {/* Links */}
+          <div className="flex flex-col md:flex-row gap-4 md:gap-8 mt-2">
+            <Link
+              to="/policy"
+              className="relative text-gray-200 hover:text-white transition duration-300
+               after:content-[''] after:absolute after:left-0 after:-bottom-1 
+               after:w-0 after:h-px after:bg-emerald-400 
+               hover:after:w-full after:transition-all after:duration-300"
+            >
+              Privacy & Policy
+            </Link>
+
+            <Link
+              to="/termsCondition"
+              className="relative text-gray-200 hover:text-white transition duration-300
+              after:content-[''] after:absolute after:left-0 after:-bottom-1 
+              after:w-0 after:h-px after:bg-emerald-400 
+              hover:after:w-full after:transition-all after:duration-300"
+            >
+              Terms & Conditions
+            </Link>
+          </div>
+
+          {/* Copyright below links */}
+          <div className="text-gray-200 text-xs md:text-sm mt-6 ml-5">
+            © {new Date().getFullYear()} RPRE. All rights reserved.
+          </div>
+        </div>
+
+        {/* Right Section (Social Icons) */}
+        <div className="flex items-center md:items-start justify-center md:justify-end py-6  md:mb-0">
           <div className="flex gap-4">
             <a
               aria-label="LinkedIn"
@@ -48,46 +92,6 @@ const FooterPage = () => {
             >
               <FaInstagram size={14} />
             </a>
-          </div>
-
-          <h3 className="text-white font-semibold text-base tracking-wide">
-            RPRE IT Company
-          </h3>
-
-          <p className="text-gray-300">
-            Building innovative digital <br className="hidden md:block" />
-            experiences for the future.
-          </p>
-        </div>
-
-        {/* Middle Section (Links) */}
-        <div className="flex flex-col ml-10 md:flex-row gap-4 md:gap-8 mt-8 items-center md:items-start">
-          {/* Privacy first now */}
-          <Link
-            to="/policy"
-            className="relative text-gray-200 hover:text-white transition duration-300
-             after:content-[''] after:absolute after:left-0 after:-bottom-1 
-             after:w-0 after:h-px after:bg-emerald-400 
-             hover:after:w-full after:transition-all after:duration-300"
-          >
-            Privacy & Policy
-          </Link>
-
-          <Link
-            to="/termsCondition"
-            className="relative text-gray-200 hover:text-white transition duration-300
-            after:content-[''] after:absolute after:left-0 after:-bottom-1 
-            after:w-0 after:h-px after:bg-emerald-400 
-            hover:after:w-full after:transition-all after:duration-300"
-          >
-            Terms & Conditions
-          </Link>
-        </div>
-
-        {/* Right Section (Copyright) */}
-        <div className="flex items-center md:items-end justify-center md:justify-end">
-          <div className="text-gray-200 text-xs md:text-sm mb-18">
-            © {new Date().getFullYear()} RPRE. All rights reserved.
           </div>
         </div>
       </div>

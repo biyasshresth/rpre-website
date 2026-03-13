@@ -35,10 +35,6 @@ export function UiheroSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [mounted]);
 
-  const m = (extraDelay?: string) =>
-    [styles.mountBase, mounted ? styles.mountVisible : ""].join(" ") +
-    (extraDelay ? ` ${extraDelay}` : "");
-
   return (
     <>
       <section id="intro" className={styles.section}>
@@ -47,11 +43,6 @@ export function UiheroSection() {
         <div className={styles.goldEdge} aria-hidden="true" />
 
         <div className={styles.content}>
-          {/* Badge */}
-          <div className={`${styles.badgeWrap} ${m(styles.delay01)}`}>
-            <span className={styles.badge}>Portfolio · 2025</span>
-          </div>
-
           {/* Headline */}
           <h1
             className={[

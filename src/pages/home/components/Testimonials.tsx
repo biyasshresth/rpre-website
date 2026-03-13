@@ -101,7 +101,7 @@ const Testimonials: React.FC = () => {
                   }
                 }}
                 transition={{
-                  x: { type: "spring", stiffness: 800, damping: 25 },
+                  x: { type: "spring", stiffness: 600, damping: 25 },
                   opacity: { duration: 0.1 },
                   scale: { duration: 0.2 },
                 }}

@@ -21,7 +21,7 @@ export const portfolio: PortfolioItem[] = [
     title: " Mobile Banking  App",
     description: "Secure and intuitive banking experience.",
     category: "Mobile Development",
-    image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28",
+    image: "/MobileApp.png",
   },
   {
     id: 3,
