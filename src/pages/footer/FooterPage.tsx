@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const FooterPage = () => {
   return (
     <footer
-      className="relative px-6 md:px-16 lg:px-20 py-3 
+      className="relative px-6 md:px-16 lg:px-20 py-5 
       bg-linear-to-br from-[#254F3E] via-[#1F3F32] to-[#183129] 
       border-t border-white/10 text-sm overflow-hidden"
     >
@@ -14,11 +14,11 @@ const FooterPage = () => {
       <div className="flex flex-col md:flex-row justify-between text-center md:text-left">
         {/* Left Section */}
         <div className="max-w-xs flex flex-col items-center mt-3 md:items-start gap-3">
-           <Link to="/">
-    <h3 className="text-white font-semibold text-xl tracking-wide cursor-pointer hover:text-emerald-400 transition-colors">
-      RPRE Tech Studio
-    </h3>
-  </Link>
+          <Link to="/">
+            <h3 className="text-white font-semibold text-xl tracking-wide cursor-pointer hover:text-emerald-400 transition-colors">
+              RPRE Tech Studio
+            </h3>
+          </Link>
 
           <p className="text-gray-300 text-xs">
             Building innovative digital <br className="hidden md:block" />
@@ -52,8 +52,8 @@ const FooterPage = () => {
           </div>
 
           {/* Copyright below links */}
-          <div className="text-gray-200 text-xs md:text-sm mt-6 ml-5">
-            © {new Date().getFullYear()} RPRE. All rights reserved.
+          <div className="text-gray-200 text-[11px] mt-6 ml-2">
+            Copyright © {new Date().getFullYear()} RPRE. All rights reserved.
           </div>
         </div>
 
