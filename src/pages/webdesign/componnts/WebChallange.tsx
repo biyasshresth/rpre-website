@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ─── Injected Stylesheet ───────────────────────────────────────────────────────
 //
@@ -488,7 +489,7 @@ const ChallengesSection: React.FC = () => {
 
   const headingRef = useRef<HTMLDivElement>(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
-
+  const navigate = useNavigate();
   return (
     <section className="challenges-section relative overflow-hidden pt-16 pb-24 md:pt-20 md:pb-28">
       {/* Sage dot-grid texture */}
@@ -568,9 +569,9 @@ const ChallengesSection: React.FC = () => {
             Every challenge is a chance to build something extraordinary.{" "}
           </p>{" "}
           <motion.button
+            onClick={() => navigate("/contact")}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            onClick={() => router.push("/contact")}
             className="group font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-[13.5px] text-gray-700 border border-[rgba(163,177,138,0.45)] bg-white/55 backdrop-blur-sm cursor-pointer transition-all duration-300 shadow-[0_2px_8px_rgba(163,177,138,0.18)] hover:bg-white/90 hover:border-[rgba(163,177,138,0.8)] hover:text-gray-900 hover:shadow-[0_6px_24px_rgba(163,177,138,0.35)] overflow-hidden"
           >
             {" "}

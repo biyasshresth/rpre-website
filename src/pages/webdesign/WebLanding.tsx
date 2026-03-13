@@ -19,7 +19,6 @@ const WebLanding: React.FC = () => {
       >
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
-           
           <motion.h2
             className="text-5xl md:text-6xl font-bold text-[#244738] mb-8 font-serif tracking-tight"
             initial={{ opacity: 0, y: 50 }}
@@ -45,7 +44,7 @@ const WebLanding: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
             >
-               <div className="mb-2 w-8 h-8 ">
+              <div className="mb-2 w-8 h-8 ">
                 <img src={EndlessUrl} alt="Endless Icon" />
               </div>
               <div className="text-sm text-slate-700">Endless Creativity</div>
