@@ -63,6 +63,21 @@ const Navbar: React.FC = () => {
   const scrollToHero = () => {
     smoothScrollTo(0);
   };
+  const ArrowIcon: React.FC = () => (
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      viewBox="0 0 16 16"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        d="M3 8h10M9 4l4 4-4 4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 
   const showSolidBg = scrollY > 40;
 
@@ -84,6 +99,8 @@ const Navbar: React.FC = () => {
             onClick={scrollToHero}
             className="relative text-xl font-serif font-bold text-white overflow-hidden group"
           >
+            {/* top glow line */}
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-emerald-400/40 to-transparent" />
             <span className="relative z-10 leading-relaxed text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2]">
               R P R E
             </span>
@@ -107,18 +124,27 @@ const Navbar: React.FC = () => {
                   className="cursor-pointer w-full h-full font-semibold text-sm px-4"
                 >
                   {/* Flip text animation */}
-                  <div className="relative h-8 overflow-hidden">
+                  <div className="relative  overflow-hidden">
                     <p
-                      className="text-black group-hover:text-white transition-transform duration-700 
-                      ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-6 
-                      animate-bounce-repeat group-hover.animation:none"
+                      className="text-black group-hover:text-white 
+  group-hover:-translate-y-6 
+  group-hover:animation-none 
+  flex items-center justify-center transition-all duration-500"
                     >
                       Get Started
                     </p>
-                    <p className="absolute top-6 w-full text-center text-white transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-0">
+
+                    <p
+                      className="absolute top-full left-0 w-full h-full text-white 
+  transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] 
+  group-hover:top-0 flex items-center justify-center gap-1"
+                    >
                       Let's Talk
-                      <span className="inline-block ml-1 text-lg transition-transform duration-500 delay-700 group-hover:translate-x-2">
-                        →
+                      <span
+                        className="transition-transform duration-700 
+    group-hover:translate-x-3"
+                      >
+                        <ArrowIcon />
                       </span>
                     </p>
                   </div>

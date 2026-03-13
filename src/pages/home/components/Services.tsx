@@ -96,7 +96,7 @@ const Services: React.FC = () => {
           transition={{ duration: 0.8, ease }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#1a3328] md:text-5xl">
+          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#244738]  md:text-5xl">
             Our Services
           </h2>
 

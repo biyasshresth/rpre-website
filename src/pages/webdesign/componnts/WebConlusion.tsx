@@ -38,7 +38,7 @@ const WebConlusion = () => {
           </motion.div>
           <div className="flex flex-wrap gap-4 justify-center text-[#F5F1E7] text-lg">
             <motion.div
-              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors duration-300"
+              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-[#254F3E] transition-colors duration-300"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.3 }}
@@ -47,7 +47,7 @@ const WebConlusion = () => {
               <span>User-Centered</span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors duration-300"
+              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-[#254F3E] transition-colors duration-300"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 }}
@@ -56,7 +56,7 @@ const WebConlusion = () => {
               <span>Accessible</span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors duration-300"
+              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-[#254F3E] transition-colors duration-300"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.5 }}
@@ -65,7 +65,7 @@ const WebConlusion = () => {
               <span>Performant</span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors duration-300"
+              className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20 hover:bg-[#2b614b] transition-colors duration-300"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.6 }}

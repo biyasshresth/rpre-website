@@ -10,7 +10,7 @@ const Contact: React.FC = () => {
           </p>
 
           <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
-            Let's build <br /> <p className="text-[#8a6c4b]">together</p> .
+            Let's build <br /> <p className="text-[#8a6c4b]">together.</p> 
           </h2>
 
           <p className="text-white/80 max-w-md font-space-mono">

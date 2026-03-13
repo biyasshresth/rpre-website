@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   motion,
   cubicBezier,
@@ -9,13 +9,8 @@ import {
   useTransform,
 } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import Lottie from "lottie-react";
-import type { LottieRefCurrentProps } from "lottie-react";
-import robot from "@assets/robot.json";
 
 const HeroSection: React.FC = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const lottieRef = useRef<LottieRefCurrentProps>(null);
   const [viewportHeight, setViewportHeight] = useState(1000);
 
   const { scrollY } = useScroll();
@@ -63,39 +58,28 @@ const HeroSection: React.FC = () => {
     window.requestAnimationFrame(step);
   };
 
-  useEffect(() => {
-    if (!lottieRef.current) return;
-    if (isHovered) {
-      lottieRef.current.playSegments([50, 100], true);
-    } else {
-      lottieRef.current.playSegments([0, 49], true);
-    }
-  }, [isHovered]);
-
   return (
-    <section className="relative h-[200vh] bg-grid-lines pt-24 md:pt-0">
+    <section className="relative h-[200vh] bg-grid-lines pt-10 md:pt-0">
       <motion.div
         style={{ scale: heroScale, opacity: heroOpacity, y: heroY }}
         className="sticky top-0 h-screen overflow-hidden"
       >
         <section id="hero" className="relative h-screen overflow-hidden">
-          <div className="relative z-20 flex h-screen items-center px-6 lg:px-20">
-            <div className="flex w-full flex-col items-center justify-between lg:flex-row">
-              <div className="max-w-2xl text-center lg:text-left">
+          <div className="relative z-20 flex h-screen items-center justify-center px-6 lg:px-20">
+            <div className="flex w-full flex-col items-center justify-center">
+              <div className="max-w-2xl text-center">
                 <motion.div
                   initial="hidden"
                   animate="show"
                   variants={{ show: { transition: { staggerChildren: 0.2 } } }}
                 >
+                  {/* Badge */}
                   <motion.div
                     variants={fadeUp}
-                    className="mb-6 flex justify-center lg:justify-start"
+                    className="mb-6 flex justify-center"
                   >
                     <button className="group relative flex items-center gap-2 rounded-full px-3 py-1 border border-[#2F5E4B]/20 bg-white/70 backdrop-blur-sm transition-all duration-300 hover:border-[#2F5E4B]">
-                      {/* Glow background */}
                       <span className="absolute inset-0 rounded-full bg-linear-to-r from-[#66be9b] via-[#64d1ab] to-[#68d6aa] opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-40"></span>
-
-                      {/* Content */}
                       <span className="relative flex items-center gap-1.5">
                         <Sparkles
                           size={14}
@@ -108,6 +92,7 @@ const HeroSection: React.FC = () => {
                     </button>
                   </motion.div>
 
+                  {/* Heading */}
                   <motion.h1
                     variants={fadeUp}
                     className="mb-8 font-serif text-4xl font-bold tracking-tight text-[#244738] md:text-6xl"
@@ -118,7 +103,7 @@ const HeroSection: React.FC = () => {
                     </span>
                   </motion.h1>
 
-                  {/* Description Text */}
+                  {/* Description */}
                   <motion.div
                     variants={fadeUp}
                     className="mb-8 text-base font-medium text-gray-700 font-poppins"
@@ -126,10 +111,10 @@ const HeroSection: React.FC = () => {
                     <p>Empowering businesses with cutting-edge web,</p>
                     <p>mobile & cybersecurity solutions.</p>
 
-                    {/* ✅ Explore Services Button */}
-                    <div className="mt-6 flex justify-center lg:justify-start">
+                    {/* Explore Services Button */}
+                    <div className="mt-6 flex justify-center">
                       <button
-                      type="button"
+                        type="button"
                         className="explore-button"
                         onClick={revealServices}
                       >
@@ -140,23 +125,6 @@ const HeroSection: React.FC = () => {
                   </motion.div>
                 </motion.div>
               </div>
-
-              {/* Lottie Robot */}
-              <motion.div
-                initial={{ x: 200, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.8 }}
-                className="mt-12 w-72 cursor-pointer lg:mt-0 lg:w-96"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <Lottie
-                  lottieRef={lottieRef}
-                  animationData={robot}
-                  autoplay
-                  loop
-                />
-              </motion.div>
             </div>
           </div>
         </section>

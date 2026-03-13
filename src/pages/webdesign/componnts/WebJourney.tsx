@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import creativeUrl from "@/assets/icons/Creative.svg";
 import rocketUrl from "@/assets/icons/Rocket.svg";
 import settingUrl from "@/assets/icons/Setting.svg";
+ import DiscoverUrl from "@/assets/icons/Discover.svg";
+ 
+
 const WebJourney: React.FC = () => {
   const sectionsRef = useRef<HTMLElement | null>(null);
 
@@ -24,7 +27,7 @@ const WebJourney: React.FC = () => {
       <div className="max-w-6xl mx-auto w-full">
         <div className="text-center mb-16">
           <motion.h2
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#244738] mb-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
@@ -33,7 +36,7 @@ const WebJourney: React.FC = () => {
           </motion.h2>
 
           <motion.p
-            className="text-lg sm:text-xl text-slate-700 max-w-3xl mx-auto"
+            className="text-lg sm:text-base text-slate-700 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
@@ -52,7 +55,9 @@ const WebJourney: React.FC = () => {
             transition={{ delay: 0.1, duration: 0.5 }}
           >
             <div className="bg-linear-to-br from-[#A3B18A] to-[#8A9A73] rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full border border-[#A3B18A]/30">
-              <div className="text-5xl mb-4">🎯</div>
+              <div className="mb-4 w-12 h-12">
+                <img src={DiscoverUrl} alt="Discover Icon" />
+              </div>
               <h3 className="text-2xl font-bold text-white mb-4">
                 Discovery & Planning
               </h3>

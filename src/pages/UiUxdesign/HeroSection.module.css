@@ -95,7 +95,7 @@
 /* ── headline ── */
 .headline {
   font-family: "Playfair Display", serif;
-  font-size: clamp(48px, 8vw, 84px);
+  font-size: clamp(48px, 8vw, 74px);
   line-height: 1.05;
   color: var(--ink);
   margin: 0 0 24px;

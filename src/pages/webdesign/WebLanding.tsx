@@ -19,11 +19,7 @@ const WebLanding: React.FC = () => {
       >
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-block mb-6 px-6 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-[#A3B18A]/30 shadow-sm">
-            <span className="text-[#A3B18A] font-semibold text-sm tracking-wide">
-              WELCOME TO
-            </span>
-          </div>
+           
           <motion.h2
             className="text-5xl md:text-6xl font-bold text-[#244738] mb-8 font-serif tracking-tight"
             initial={{ opacity: 0, y: 50 }}
