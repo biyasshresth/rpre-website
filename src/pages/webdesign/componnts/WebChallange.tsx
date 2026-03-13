@@ -347,6 +347,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, index }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [hovered, setHovered] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -467,9 +468,10 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, index }) => {
 
           {/* Hover CTA */}
           <motion.div
+            onClick={() => navigate("/contact")}
             animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 6 }}
             transition={{ duration: 0.3 }}
-            className={`mt-6 flex items-center gap-1.5 ${challenge.ctaColorClass}`}
+            className={`mt-6 flex items-center gap-1.5 cursor-pointer ${challenge.ctaColorClass}`}
           >
             <span className="font-mono-tag text-xs font-bold tracking-wide">
               Let's talk how to solve this
@@ -490,6 +492,7 @@ const ChallengesSection: React.FC = () => {
   const headingRef = useRef<HTMLDivElement>(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
   const navigate = useNavigate();
+
   return (
     <section className="challenges-section relative overflow-hidden pt-16 pb-24 md:pt-20 md:pb-28">
       {/* Sage dot-grid texture */}
@@ -549,13 +552,15 @@ const ChallengesSection: React.FC = () => {
             className="heading-separator h-px w-40 mx-auto mt-8"
           />
         </div>
+
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {challenges.map((c: Challenge, i: number) => (
             <ChallengeCard key={c.id} challenge={c} index={i} />
           ))}
         </div>
-        {/* Bottom CTA */}{" "}
+
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -563,35 +568,30 @@ const ChallengesSection: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-16 text-center"
         >
-          {" "}
           <p className="font-body text-gray-600 text-[13.5px] mb-4">
-            {" "}
-            Every challenge is a chance to build something extraordinary.{" "}
-          </p>{" "}
+            Every challenge is a chance to build something extraordinary.
+          </p>
+
           <motion.button
             onClick={() => navigate("/contact")}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             className="group font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-[13.5px] text-gray-700 border border-[rgba(163,177,138,0.45)] bg-white/55 backdrop-blur-sm cursor-pointer transition-all duration-300 shadow-[0_2px_8px_rgba(163,177,138,0.18)] hover:bg-white/90 hover:border-[rgba(163,177,138,0.8)] hover:text-gray-900 hover:shadow-[0_6px_24px_rgba(163,177,138,0.35)] overflow-hidden"
           >
-            {" "}
             <div className="relative overflow-hidden">
-              {" "}
-              {/* Default text */}{" "}
+              {/* Default text */}
               <p className="text-gray-700 group-hover:-translate-y-6 flex items-center justify-center gap-2 transition-all duration-500">
-                {" "}
-                See our process <ArrowIcon />{" "}
-              </p>{" "}
-              {/* Hover text */}{" "}
+                See our process <ArrowIcon />
+              </p>
+
+              {/* Hover text */}
               <p className="absolute top-full left-0 w-full h-full text-gray-900 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-0 flex items-center justify-center gap-1">
-                {" "}
-                Let's Talk{" "}
+                Let's Talk
                 <span className="transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-x-10 group-hover:opacity-0 delay-500 group-hover:delay-500ms">
-                  {" "}
-                  <ArrowIcon />{" "}
-                </span>{" "}
-              </p>{" "}
-            </div>{" "}
+                  <ArrowIcon />
+                </span>
+              </p>
+            </div>
           </motion.button>
         </motion.div>
       </div>

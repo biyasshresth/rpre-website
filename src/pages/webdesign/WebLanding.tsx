@@ -20,7 +20,7 @@ const WebLanding: React.FC = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.h2
-            className="text-5xl md:text-6xl font-bold text-[#244738] mb-8 font-serif tracking-tight"
+            className="text-5xl md:text-6xl font-bold text-[#244738] mb-10 font-serif tracking-tight"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
@@ -28,7 +28,7 @@ const WebLanding: React.FC = () => {
             Webpage Designing
           </motion.h2>
           <motion.p
-            className="text-lg sm:text-xl lg:text-2xl text-slate-700 mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl lg:text-xl text-slate-700 mb-10 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 100 }}

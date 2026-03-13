@@ -1,10 +1,12 @@
 import { FadeIn } from "./FadeIn";
 import styles from "./Conclusion.module.css";
+import FooterPage from "../footer/FooterPage";
 
 const tags = ["Design", "Motion", "Identity", "Editorial"] as const;
 
 export function Conclusion() {
   return (
+    <>
     <section id="conclusion" className={styles.section}>
       <div className={styles.ringOuter}       aria-hidden="true" />
       <div className={styles.ringInner}       aria-hidden="true" />
@@ -58,5 +60,7 @@ export function Conclusion() {
         </FadeIn>
       </div>
     </section>
+    <FooterPage />
+    </>
   );
 }

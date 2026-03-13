@@ -1,4 +1,5 @@
 import "./Policy.css"; // reuses the same stylesheet as PrivacyPolicy
+import { useEffect } from "react";
 
 /* ─── Main Component ────────────────────────────────────────────────────────── */
 
@@ -13,6 +14,10 @@ function SectionBadge({ n }: { n: string }) {
 
 /* ─── Main Component ────────────────────────────────────────────────────────── */
 export default function TermsAndConditions() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className=" ">
       {/* ── Ambient blobs — same as PrivacyPolicy ── */}

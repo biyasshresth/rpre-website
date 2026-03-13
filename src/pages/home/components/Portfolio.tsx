@@ -222,7 +222,7 @@ const CarouselCard = memo(
                   transition={{ duration: 0.3, ease: EASE_LUXURY }}
                   className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer"
                 >
-                  View Project
+                   Project's Details
                   <motion.svg
                     width="16"
                     height="16"
@@ -351,7 +351,7 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="py-16 relative overflow-hidden bg-grid-lines">
+    <section className="py-10 relative overflow-hidden bg-grid-lines">
       <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" />
 
@@ -364,11 +364,9 @@ const Portfolio = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#7FAE8D] mb-2">
-            Our Work
-          </p>
+          
           <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328] mb-5 font-serif tracking-tight">
-            Portfolio
+            Our Projects
           </h2>
 
           <div className="flex flex-wrap justify-center gap-2">

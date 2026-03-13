@@ -17,29 +17,42 @@ const Contact: React.FC = () => {
             Get in touch and discover how RPRE can transform your technology
             landscape.
           </p>
-
-          {/* ✅ Updated icons with square boxes and hover glow */}
+            
           <div className="space-y-4 text-sm mt-8">
-            <div className="flex items-start gap-3 text-white/60">
-              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-white"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.327a8 8 0 10-16 0c0 3.63 1.556 6.326 3.5 8.327a19.583 19.583 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <span className="flex justify-center mt-2">
-                Kathmandu, Chabahil
-                Nepal
-              </span>
-            </div>
+           <div className="flex items-start gap-3 text-white/60 relative group">
+  {/* Icon */}
+  <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-4 h-4 text-white"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.327a8 8 0 10-16 0c0 3.63 1.556 6.326 3.5 8.327a19.583 19.583 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
+        clipRule="evenodd"
+      />
+    </svg>
+  </div>
+
+  {/* Tooltip above the icon */}
+  <div className="absolute bottom-full left-0 mb-2 -translate-x-1/2 px-3 py-1 rounded-md bg-[#8a6c4b] text-white text-xs font-space-mono opacity-0 group-hover:opacity-100 transition-opacity">
+    <a
+      href="https://www.google.com/maps/place/T.+Mart/@27.7510085,85.3620466,79m/data=!3m1!1e3!4m6!3m5!1s0x39eb1bba03125ffb:0xa95c87cddfab7291!8m2!3d27.7510504!4d85.3621478!16s%2Fg%2F11p0688q5_?entry=ttu&g_ep=EgoyMDI2MDMxMC4wIKXMDSoASAFQAw%3D%3D"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:underline"
+    >
+      Show location
+    </a>
+  </div>
+
+  {/* Text */}
+  <span className="flex justify-center mt-2">
+    Kathmandu, Chabahil, Nepal
+  </span>
+</div>
 
             <div className="flex items-center gap-3 text-white/60">
               <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">

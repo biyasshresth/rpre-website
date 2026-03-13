@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import FooterPage from "../../footer/FooterPage";
 
 const WebConlusion = () => {
   return (
+    <>
     <section
       id="conclusion"
       className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-linear-to-br from-slate-800 via-[#A3B18A] to-[#8A9A73] relative overflow-hidden"
@@ -14,10 +16,10 @@ const WebConlusion = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-8">
             The Future is Bright
           </h2>
-          <p className="text-xl sm:text-2xl text-[#F5F1E7] mb-8 leading-relaxed">
+          <p className="text-base sm:text-xl text-[#F5F1E7] mb-8 leading-relaxed">
             Webpage designing continues to evolve with emerging technologies,
             new design patterns, and changing user expectations. The key to
             success lies in staying curious, embracing innovation, and always
@@ -29,10 +31,10 @@ const WebConlusion = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
           >
-            <p className="text-2xl sm:text-3xl font-semibold text-white mb-4">
+            <p className="text-2xl sm:text-2xl font-serif font-semibold text-white mb-4">
               "Great design is not just what looks good."
             </p>
-            <p className="text-2xl sm:text-3xl font-semibold text-[#7e6e3a]">
+            <p className="text-2xl sm:text-2xl font-serif font-semibold text-[#7e6e3a]">
               It's what works best."
             </p>
           </motion.div>
@@ -77,6 +79,8 @@ const WebConlusion = () => {
         </motion.div>
       </div>
     </section>
+    <FooterPage />
+    </>
   );
 };
 

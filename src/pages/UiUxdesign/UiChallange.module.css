@@ -1,5 +1,5 @@
 .section {
-  padding: 120px 24px;
+  padding: 50px 24px;
   background: linear-gradient(175deg, var(--cream-dark) 0%, color-mix(in srgb, var(--olive-light) 20%, transparent) 100%);
   position: relative;
 }
