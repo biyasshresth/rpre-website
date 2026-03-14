@@ -19,16 +19,16 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.97 },  
+  hidden: { opacity: 0, y: 50, scale: 0.97 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      type: "spring", // spring gives natural bounce
-      stiffness: 140, // controls speed/rigidity
-      damping: 15, // lower = more bounce
-      mass: 0.7, // affects "weight" of card
+      type: "spring",
+      stiffness: 140,
+      damping: 15,
+      mass: 0.7,
     },
   },
   hover: {
@@ -42,6 +42,7 @@ const cardVariants: Variants = {
     },
   },
 };
+
 const imageVariants: Variants = {
   hover: {
     scale: 1.1,
@@ -52,6 +53,7 @@ const imageVariants: Variants = {
     },
   },
 };
+
 const iconVariants: Variants = {
   hover: {
     rotate: [0, 360, 350, 365, 358, 360],
@@ -62,6 +64,7 @@ const iconVariants: Variants = {
     },
   },
 };
+
 const Services: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
 
@@ -96,13 +99,13 @@ const Services: React.FC = () => {
           transition={{ duration: 0.8, ease }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#244738]  md:text-5xl">
+          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#244738] md:text-5xl">
             Our Services
           </h2>
 
-          <p className="mx-auto   max-w-2xl text-base text-gray-600">
-            Comprehensive IT solutions <br /> tailored to rise or lift your business and
-            drive digital excellence.
+          <p className="mx-auto max-w-2xl text-base text-gray-600">
+            Comprehensive IT solutions <br /> tailored to rise or lift your
+            business and drive digital excellence.
           </p>
         </motion.div>
 
@@ -118,11 +121,12 @@ const Services: React.FC = () => {
             return (
               <Link key={service.id} to={service.link!} className="block">
                 <motion.div
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md"
+                  className="group h-100 cursor-pointer overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md flex flex-col"
                   variants={cardVariants}
                   whileHover="hover"
                 >
-                  <div className="relative h-42 overflow-hidden">
+                  {/* Image Section - Fixed Height */}
+                  <div className="relative h-48 overflow-hidden shrink-0">
                     <motion.img
                       src={service.image}
                       alt={service.title}
@@ -140,11 +144,14 @@ const Services: React.FC = () => {
                     </motion.div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="mb-3 text-2xl font-bold text-[#3e6e5c] transition-colors duration-300 group-hover:text-[#274b32]">
+                  {/* Content Section - Fixed Space */}
+                  <div className="p-6 flex flex-col flex-1 overflow-hidden">
+                    <h3 className="mb-3 text-2xl font-bold text-[#3e6e5c] transition-colors duration-300 group-hover:text-[#274b32] shrink-0">
                       {service.title}
                     </h3>
-                    <p className="  text-gray-600">{service.description}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-5 overflow-hidden">
+                      {service.description}
+                    </p>
                   </div>
                 </motion.div>
               </Link>
