@@ -1,7 +1,10 @@
- 
+// Mock data for RPRE Landing Page (TypeScript)
+
 import { Code, Smartphone, Shield } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
- /* == Interfaces == */
+ /* =========================
+   Interfaces
+========================= */
 
 export interface Service {
   id: number;
@@ -89,7 +92,74 @@ export const services: Readonly<Service[]> = [
       link:"/ui-ux-design"
   },
 ] as const;
- 
+
+/* =========================
+   Portfolio
+========================= */
+
+// export const portfolio: Readonly<PortfolioItem[]> = [
+//   {
+//     id: 1,
+//     title: "E-Commerce Platform",
+//     category: "Web Development",
+//     image: "/Ecomerce.png", 
+//     description: "Modern shopping experience with seamless checkout",
+//   },
+//   {
+//     id: 2,
+//     title: "ApplyCan Mobile App",
+//     category: "Mobile App Development",
+//     image:
+//       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+//     description: "Secure financial transactions on the go",
+//   },
+//   {
+//     id: 3,
+//     title: "Healthcare Portal",
+//     category: "Web Development",
+//     image:
+//       "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
+//     description: "Patient management and telemedicine solution",
+//   },
+//   {
+//     id: 4,
+//     title: "Sports App development",
+//     category: "Mobile App Development",
+//      image: "/Sports.png",
+//     description: "Real-time device monitoring and analytics",
+//   },
+//   {
+//     id: 5,
+//     title: "Security Audit System",
+//     category: "Cyber Security",
+//     image:
+//       "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800",
+//     description: "Comprehensive security assessment platform",
+//   },
+//   {
+//     id: 6,
+//     title: "Fitness Tracking App",
+//     category: "Mobile App Development",
+//     image:
+//       "https://images.unsplash.com/photo-1461088945293-0c17689e48ac?w=800",
+//     description: "Personal wellness and activity monitoring",
+//   },
+// ] as const;
+
+/* =========================
+   Stats
+========================= */
+
+export const stats: Readonly<Stat[]> = [
+  { id: 1, value: 250, label: "Projects Completed", suffix: "+" },
+  { id: 2, value: 150, label: "Our Happy Clients", suffix: "+" },
+  { id: 3, value: 8, label: "Years Experience" },
+  { id: 4, value: 50, label: "Team Members", suffix: "+" },
+] as const;
+
+/* =========================
+   Testimonials
+========================= */
 
 export const testimonials: Readonly<Testimonial[]> = [
   {
