@@ -4,32 +4,12 @@ import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import { motion, type TargetAndTransition } from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
-// ---------------------------------------------------------------------------
-// ROOT CAUSE OF LAG — explained once here:
-//
-// The previous version used AnimatePresence with key="slot-{originalIndex}".
-// On every advance(), the card entering the ±2 window was FRESHLY MOUNTED
-// with CARD_INITIAL (opacity:0, scale:0.88, rotateY:-8).
-// This means on every tick:
-//   • 4 existing cards → retarget their spring (already in motion)
-//   • 1 new card       → start spring from zero (CARD_INITIAL → animate)
-//
-// 5 springs competing in the same RAF frame = compositor overload.
-// The ±2 cards have the largest delta (furthest from center) so they
-// are the ones that visibly stutter.
-//
-// FIX: Remove AnimatePresence entirely.
-// All cards are always mounted with a STABLE key (their array index).
-// React never unmounts/remounts them — it only changes `animate` targets.
-// Pure retargeting. Zero mount overhead. Perfectly smooth at any speed.
-// ---------------------------------------------------------------------------
-
+ 
 const AUTO_SCROLL_INTERVAL = 3000;
 
 const EASE_LUXURY = [0.25, 0.46, 0.45, 0.94] as const;
 
-// Slightly softer spring to eliminate any residual overshoot on outer cards
-const SPRING_CARD = {
+ const SPRING_CARD = {
   type: "spring",
   stiffness: 260,
   damping: 28,
@@ -72,9 +52,7 @@ const ARROW_TRANSITION = {
   repeatType: "mirror" as const,
 } as const;
 
-// ---------------------------------------------------------------------------
-// Slot configs — precomputed once, never change
-// ---------------------------------------------------------------------------
+// -- Slot configs --// 
 interface SlotConfig {
   x: number;
   y: number;
@@ -98,12 +76,11 @@ function computeSlot(pos: number): SlotConfig {
   };
 }
 
-// Precompute slot positions -2…+2
+//  slot positions 
 const SLOT_CONFIGS: Record<number, SlotConfig> = {};
 for (let p = -2; p <= 2; p++) SLOT_CONFIGS[p] = computeSlot(p);
 
-// Cards outside ±2 window get this — invisible, centered, waiting
-const HIDDEN: SlotConfig = {
+ const HIDDEN: SlotConfig = {
   x: 0,
   y: 0,
   scale: 0.85,
@@ -113,9 +90,7 @@ const HIDDEN: SlotConfig = {
   zIndex: 0,
 };
 
-// ---------------------------------------------------------------------------
 // Types
-// ---------------------------------------------------------------------------
 type FilterType =
   | "All"
   | "Web Development"
@@ -129,9 +104,7 @@ const CATEGORIES: FilterType[] = [
   "Cyber Security",
 ];
 
-// ---------------------------------------------------------------------------
-// CarouselCard — always mounted, no enter/exit animations, pure retargeting
-// ---------------------------------------------------------------------------
+// CarouselCard 
 interface CarouselCardProps {
   item: PortfolioItem;
   slot: SlotConfig;
@@ -169,9 +142,6 @@ const CarouselCard = memo(
 
     return (
       <motion.div
-        // No `initial` prop — Framer will use whatever `animate` says immediately.
-        // This means a card that starts hidden (opacity:0) stays hidden until
-        // it's assigned a visible slot, then springs smoothly into view.
         animate={animTarget}
         whileHover={isVisible ? hoverTarget : undefined}
         transition={CARD_TRANSITION}
@@ -261,10 +231,8 @@ const CarouselCard = memo(
     prev.slot.zIndex === next.slot.zIndex,
 );
 
-// ---------------------------------------------------------------------------
-// Portfolio root
-// ---------------------------------------------------------------------------
-const Portfolio = () => {
+ // Portfolio root
+ const Portfolio = () => {
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -321,9 +289,7 @@ const Portfolio = () => {
       img.src = image;
     });
   }, [filteredPortfolio]);
-
-  // Each card always renders. It receives the SlotConfig for its position
-  // relative to safeActive, or HIDDEN if it's outside the ±2 window.
+ 
   const cardList = useMemo(
     () =>
       filteredPortfolio.map((item, idx) => {
@@ -379,7 +345,7 @@ const Portfolio = () => {
                 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ duration: 0.2, ease: EASE_LUXURY }}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 border ${
+                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-300 border ${
                   filter === category
                     ? "bg-[#2F5E4B] shadow-lg shadow-[#2F5E4B]/20 text-white"
                     : "bg-white/70 text-[#4a7060] hover:bg-[#2F5E4B] hover:text-white hover:border-[#2e5f4c] backdrop-blur-sm"
@@ -391,7 +357,7 @@ const Portfolio = () => {
           </div>
         </motion.div>
 
-        {/* Carousel — AnimatePresence removed, all cards always in DOM */}
+        {/* Carousel */}
         <div
           className="relative flex items-end justify-center select-none h-110 perspective-1000"
           onMouseEnter={() => {
@@ -403,7 +369,7 @@ const Portfolio = () => {
         >
           {cardList.map(({ item, idx, pos, inWindow, slot }) => (
             <CarouselCard
-              key={idx} // stable key = React never unmounts this node
+              key={idx} 
               item={item}
               slot={slot}
               isCenter={pos === 0}

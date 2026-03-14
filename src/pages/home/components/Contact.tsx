@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
                   <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
                 </svg>
               </div>
-              <a className="font-space-mono hover:text-white transition-colors cursor-pointer">
+              <a className="font-space-mono hover:text-white transition-colors">
                 hello@rpre.dev
               </a>
             </div>
@@ -117,7 +117,7 @@ const Contact: React.FC = () => {
                   />
                 </svg>
               </div>
-              <span className="font-space-mono cursor-pointer hover:text-white transition-colors">
+              <span className="font-space-mono  hover:text-white transition-colors">
                 +1 (555) 000-0000
               </span>
             </div>
