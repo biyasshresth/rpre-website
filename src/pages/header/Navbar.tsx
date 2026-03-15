@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
           >
             {/* top glow line */}
             <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-emerald-400/40 to-transparent" />
-            <span className="relative z-10 leading-relaxed text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2]">
+            <span className="relative z-10 leading-relaxed shining-font text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2]">
               R P R E
             </span>
             <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full rounded-3xl transition-all duration-700"></span>
