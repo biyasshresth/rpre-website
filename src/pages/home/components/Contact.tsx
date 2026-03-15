@@ -1,6 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
+
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error for this field when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newErrors: FormErrors = {};
+
+    // Validation checks
+    if (!formData.name.trim()) {
+      newErrors.name = "Name cannot be empty";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email cannot be empty";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message cannot be empty";
+    }
+
+    setErrors(newErrors);
+
+    // If no errors, submit the form
+    if (Object.keys(newErrors).length === 0) {
+      setSubmitted(true);
+      console.log("Form submitted:", formData);
+      // Reset form after successful submission
+      setTimeout(() => {
+        setFormData({ name: "", email: "", message: "" });
+        setSubmitted(false);
+      }, 2000);
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -52,7 +127,7 @@ const Contact: React.FC = () => {
                   className="cursor-pointer relative"
                 >
                   {/* Maps Preview */}
-                  <div className="w-60 h-48 rounded-lg shadow-2xl overflow-hidden border border-white/20 bg-white/5 hover:shadow-[0_20px_40px_rgba(0,255,159,0.15)] hover:border-white/40 transition-all">
+                  <div className="w-60 h-48 rounded-lg shadow-2xl overflow-hidden border border-white/20 bg-white/5 hover:shadow-[0_20px_40px_rgba(0,255,159,0.15)] hover:border-white/40 transition-all relative group/map">
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.1356!2d85.3611481!3d27.7512223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1bba03125ffb:0xa95c87cddfab7291!2sT.%20Mart!5e0!3m2!1sen!2snp!4v1710325800000"
                       width="100%"
@@ -63,6 +138,16 @@ const Contact: React.FC = () => {
                       title="Location Map Preview"
                       className="pointer-events-auto"
                     />
+
+                    {/* Dark Gradient Vignette Effect */}
+                    <div className="absolute inset-0 rounded-lg bg-linear-to-b from-transparent via-transparent to-black/40 opacity-0 group-hover/map:opacity-100 transition-opacity duration-300 pointer-events-none" />
+ 
+                    <div className="absolute inset-0 text-end mt-6 mr-14 opacity-0 group-hover/map:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <p className="text-sm font-serif font-bold text-black drop-shadow-lg">
+                        Click Me...
+                      </p>
+                    </div>
+
                     {/* Invisible clickable overlay */}
                     <div className="absolute inset-0 cursor-pointer" />
                   </div>
@@ -124,16 +209,35 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        <form className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
+          {/* Success Message */}
+          {submitted && (
+            <div className="p-4 rounded-md bg-green-500/20 border border-green-500/50 text-green-300 text-sm font-space-mono">
+              ✓ Message sent successfully! We'll get back to you soon.
+            </div>
+          )}
+
           <div className="relative">
             <label className="block text-xs font-space-mono uppercase tracking-widest text-white/60 mb-3">
               Name
             </label>
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Your name"
-              className="w-full bg-transparent border border-white/20 px-4 py-3 rounded-md placeholder-white/30 focus:outline-none focus:border-white"
+              className={`w-full bg-transparent border ${
+                errors.name ? "border-red-500" : "border-white/20"
+              } px-4 py-3 rounded-md placeholder-white/30 focus:outline-none ${
+                errors.name ? "focus:border-red-500" : "focus:border-white"
+              } transition-colors`}
             />
+            {errors.name && (
+              <p className="text-red-400 text-xs font-space-mono mt-2">
+                {errors.name}
+              </p>
+            )}
           </div>
 
           <div className="relative">
@@ -142,9 +246,21 @@ const Contact: React.FC = () => {
             </label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="you@company.com"
-              className="w-full bg-transparent border border-white/20 px-4 py-3 rounded-md placeholder-white/30 focus:outline-none focus:border-white"
+              className={`w-full bg-transparent border ${
+                errors.email ? "border-red-500" : "border-white/20"
+              } px-4 py-3 rounded-md placeholder-white/30 focus:outline-none ${
+                errors.email ? "focus:border-red-500" : "focus:border-white"
+              } transition-colors`}
             />
+            {errors.email && (
+              <p className="text-red-400 text-xs font-space-mono mt-2">
+                {errors.email}
+              </p>
+            )}
           </div>
 
           <div className="relative">
@@ -152,15 +268,27 @@ const Contact: React.FC = () => {
               Message
             </label>
             <textarea
+              name="message"
               rows={5}
+              value={formData.message}
+              onChange={handleChange}
               placeholder="Tell us about your project..."
-              className="w-full bg-transparent border border-white/20 px-4 py-3 rounded-md placeholder-white/30 font-space-mono resize-none focus:outline-none focus:border-white"
+              className={`w-full bg-transparent border ${
+                errors.message ? "border-red-500" : "border-white/20"
+              } px-4 py-3 rounded-md placeholder-white/30 font-space-mono resize-none focus:outline-none ${
+                errors.message ? "focus:border-red-500" : "focus:border-white"
+              } transition-colors`}
             />
+            {errors.message && (
+              <p className="text-red-400 text-xs font-space-mono mt-2">
+                {errors.message}
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-white text-[#254F3E] py-4 font-space-mono cursor-pointer relative rounded-md font-bold flex items-center justify-center gap-2 transition hover:bg-white/90"
+            className="message-button font-space-mono gap-2"
           >
             Send Message
           </button>
