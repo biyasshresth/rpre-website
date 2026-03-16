@@ -9,8 +9,7 @@ import settingUrl from "@/assets/icons/Setting.svg";
 const WebJourney: React.FC = () => {
   const sectionsRef = useRef<HTMLElement | null>(null);
 
-  // ✅ Scroll to top on page load
-  useEffect(() => {
+   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "auto",   
@@ -47,8 +46,7 @@ const WebJourney: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Journey Step 1 */}
-          <motion.div
+           <motion.div
             className="group"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -70,8 +68,7 @@ const WebJourney: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Journey Step 2 */}
-          <motion.div
+           <motion.div
             className="group"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -93,8 +90,7 @@ const WebJourney: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Journey Step 3 */}
-          <motion.div
+           <motion.div
             className="group"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -116,8 +112,7 @@ const WebJourney: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Journey Step 4 */}
-          <motion.div
+           <motion.div
             className="group"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
