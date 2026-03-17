@@ -172,16 +172,26 @@ const Contact: React.FC = () => {
 
   const isSubmitting = submission.status === "loading";
 
+  // Maps URL constant to avoid repetition
+  const MAPS_URL =
+    "https://www.google.com/maps/place/T.+Mart/@27.7512223,85.3611481,195m/data=!3m1!1e3!4m10!1m2!2m1!1st-mart+chabahil!3m6!1s0x39eb1bba03125ffb:0xa95c87cddfab7291!8m2!3d27.7510504!4d85.3621478!15sCg90LW1hcnQgY2hhYmFoaWxaESIPdCBtYXJ0IGNoYWJhaGlskgENZ3JvY2VyeV9zdG9yZZoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOU2QzUnhNRkozRVFF4AEA-gEECAAQEw!16s%2Fg%2F11p0688q5_?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D";
+
+  const handleMapOpen = () => {
+    window.open(MAPS_URL, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section
       id="contact"
       className="bg-[#254F3E] text-white py-20 px-6 md:px-16"
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-start">
-        <div className="space-y-8">
-          <p className="uppercase tracking-widest text-xs text-white/80 font-serif">
-            Ready to start?
-          </p>
+        <div className="space-y-6">
+          <div className="inline-block px-4 py-2 rounded-lg border border-white/20 bg-white/5 transition-all duration-300 hover:border-[#00FF9F] hover:shadow-[0_0_15px_rgba(0,255,159,0.5)] hover:bg-white/10">
+            <p className="uppercase tracking-widest text-xs text-white/80 font-serif">
+              Ready to start?
+            </p>
+          </div>
 
           <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
             Let's build <br /> <p className="text-[#8a6c4b]">together.</p>
@@ -195,7 +205,10 @@ const Contact: React.FC = () => {
           <div className="space-y-4 text-sm mt-8">
             <div className="flex items-start gap-3 text-white/60 relative group">
               {/* Icon */}
-              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
+              <div
+                onClick={handleMapOpen}
+                className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F] cursor-pointer"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-4 h-4 text-white"
@@ -213,13 +226,7 @@ const Contact: React.FC = () => {
               {/* Google Maps Preview Dialog - appears on hover */}
               <div className="absolute bottom-full left-6 mb-3 z-50 px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none group-hover:pointer-events-auto">
                 <div
-                  onClick={() =>
-                    window.open(
-                      "https://www.google.com/maps/place/T.+Mart/@27.7512223,85.3611481,195m/data=!3m1!1e3!4m10!1m2!2m1!1st-mart+chabahil!3m6!1s0x39eb1bba03125ffb:0xa95c87cddfab7291!8m2!3d27.7510504!4d85.3621478!15sCg90LW1hcnQgY2hhYmFoaWxaESIPdCBtYXJ0IGNoYWJhaGlskgENZ3JvY2VyeV9zdG9yZZoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOU2QzUnhNRkozRVFF4AEA-gEECAAQEw!16s%2Fg%2F11p0688q5_?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D",
-                      "_blank",
-                      "noopener,noreferrer",
-                    )
-                  }
+                  onClick={handleMapOpen}
                   className="cursor-pointer relative"
                 >
                   {/* Maps Preview */}
@@ -235,20 +242,12 @@ const Contact: React.FC = () => {
                       className="pointer-events-auto"
                     />
 
-                    {/* Dark Gradient Vignette Effect */}
+                    {/* Dark Gradient Vignette Effect in map*/}
                     <div className="absolute inset-0 rounded-lg bg-linear-to-b from-transparent via-transparent to-black/40 opacity-0 group-hover/map:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-                    <div className="absolute inset-0 text-end mt-6 mr-14 opacity-0 group-hover/map:opacity-100 transition-opacity duration-300 pointer-events-none">
-                      <p className="text-sm font-serif font-bold text-black drop-shadow-lg">
-                        Click Me...
-                      </p>
-                    </div>
-
-                    {/* Invisible clickable overlay */}
                     <div className="absolute inset-0 cursor-pointer" />
                   </div>
 
-                  {/* Location Label Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-[#254F3E] to-transparent px-4 py-3 rounded-b-lg">
                     <p className="text-xs font-space-mono text-white font-semibold cursor-pointer">
                       Kathmandu, Chabahil
@@ -261,7 +260,10 @@ const Contact: React.FC = () => {
               </div>
 
               {/* Text */}
-              <span className="flex justify-center mt-2 cursor-pointer hover:text-white transition-colors">
+              <span
+                onClick={handleMapOpen}
+                className="flex justify-center mt-2 cursor-pointer hover:text-white transition-colors"
+              >
                 Kathmandu, Chabahil, Nepal
               </span>
             </div>
@@ -313,7 +315,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        <form className="space-y-8" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Success Message */}
           {submission.status === "success" && (
             <div className="p-4 rounded-md bg-green-500/20 border border-green-500/50 text-green-300 text-sm font-space-mono animate-in fade-in duration-300">
