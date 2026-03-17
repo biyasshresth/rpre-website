@@ -131,7 +131,7 @@ const Testimonials: React.FC = () => {
                       key={i}
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
-                      transition={{ delay: i * 0.1 }}
+                      transition={{ delay: i * 0.2 }}
                     >
                       <Star size={18} className="text-[#f8d825] fill-current" />
                     </motion.div>

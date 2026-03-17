@@ -402,9 +402,9 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, index }) => {
         />
 
         {/* ── Content ── */}
-        <div className="relative p-8">
+        <div className="relative p-7">
           {/* Header row */}
-          <div className="flex items-start justify-between mb-6">
+          <div className="flex items-start justify-between mb-4">
             <motion.div
               whileHover={{ rotate: [0, -8, 8, 0] }}
               transition={{ duration: 0.4 }}
@@ -422,24 +422,24 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, index }) => {
 
           {/* Title */}
           <h3
-            className={`font-display text-[23px] font-extrabold mb-2.5 leading-tight whitespace-pre-line tracking-tight ${challenge.titleColorClass}`}
+            className={`font-display text-[23px] font-extrabold mb-1.5 leading-tight whitespace-pre-line tracking-tight ${challenge.titleColorClass}`}
           >
             {challenge.title}
           </h3>
 
           {/* Description */}
           <p
-            className={`font-body text-[14.5px] leading-relaxed mb-6 ${challenge.descColorClass}`}
+            className={`font-body text-[14.5px] leading-relaxed mb-4 ${challenge.descColorClass}`}
           >
             {challenge.description}
           </p>
 
           {/* Divider */}
-          <div className={`h-px mb-5 ${challenge.dividerClass}`} />
+          <div className={`h-px mb-3.5 ${challenge.dividerClass}`} />
 
           {/* Points list — native <ul>/<li> satisfies both axe/structure and axe/aria.
               Animation is applied to an inner <div> so <li> stays a direct child of <ul>. */}
-          <ul className="space-y-2.5 list-none p-0 m-0">
+          <ul className="space-y-2 list-none p-0 m-0">
             {challenge.points.map((pt: string, i: number) => (
               <li key={i}>
                 <motion.div
@@ -471,7 +471,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, index }) => {
             onClick={() => navigate("/contact")}
             animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 6 }}
             transition={{ duration: 0.3 }}
-            className={`mt-6 flex items-center gap-1.5 cursor-pointer ${challenge.ctaColorClass}`}
+            className={`mt-4 flex items-center gap-1.5 cursor-pointer ${challenge.ctaColorClass}`}
           >
             <span className="font-mono-tag text-xs font-bold tracking-wide">
               Let's talk how to solve this
@@ -494,7 +494,7 @@ const ChallengesSection: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="challenges-section relative overflow-hidden pt-16 pb-24 md:pt-20 md:pb-28">
+    <section className="challenges-section relative overflow-hidden pt-10 pb-14 md:pt-12 md:pb-18">
       {/* Sage dot-grid texture */}
       <div className="challenges-dotgrid absolute inset-0 pointer-events-none opacity-30" />
 
@@ -504,15 +504,15 @@ const ChallengesSection: React.FC = () => {
       <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-75h-75 rounded-full blur-[60px] pointer-events-none bg-[rgba(217,180,120,0.12)]" />
 
       {/* ── Content ── */}
-      <div className="relative z-10 max-w-270 mx-auto px-6">
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
         {/* Heading block */}
-        <div ref={headingRef} className="text-center max-w-2xl mx-auto mb-18">
+        <div ref={headingRef} className="text-center max-w-2xl mx-auto mb-12">
           {/* Eyebrow pill */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 mb-6 px-5 py-2 rounded-full border border-[rgba(163,177,138,0.5)] bg-white/60 backdrop-blur-sm"
+            className="inline-flex items-center gap-2.5 mb-4 px-5 py-2 rounded-full border border-[rgba(163,177,138,0.5)] bg-white/60 backdrop-blur-sm"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shadow-[0_0_6px_rgba(5,150,105,0.6)]" />
             <span className="font-mono-tag text-[10px] font-bold tracking-[0.14em] uppercase text-gray-500">
@@ -525,7 +525,7 @@ const ChallengesSection: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#244738] mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#244738] mb-4"
           >
             Challenges <span className="text-[#244738]">We Solve</span>
           </motion.h2>
@@ -549,12 +549,12 @@ const ChallengesSection: React.FC = () => {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={headingInView ? { scaleX: 1, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="heading-separator h-px w-40 mx-auto mt-8"
+            className="heading-separator h-px w-40 mx-auto mt-6"
           />
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
           {challenges.map((c: Challenge, i: number) => (
             <ChallengeCard key={c.id} challenge={c} index={i} />
           ))}
@@ -566,9 +566,9 @@ const ChallengesSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-16 text-center"
+          className="mt-10 text-center"
         >
-          <p className="font-body text-gray-600 text-[13.5px] mb-4">
+          <p className="font-body text-gray-600 text-[13.5px] mb-3">
             Every challenge is a chance to build something extraordinary.
           </p>
 
