@@ -62,7 +62,7 @@ const FooterPage = () => {
           <div className="flex gap-4">
             <a
               aria-label="LinkedIn"
-              href="/#"
+              href="https://www.linkedin.com/in/rpre-tech-80b9013b1/"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
@@ -73,7 +73,7 @@ const FooterPage = () => {
 
             <a
               aria-label="Facebook"
-              href="/#"
+              href="https://www.facebook.com/profile.php?id=61588542292870"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
@@ -84,7 +84,7 @@ const FooterPage = () => {
 
             <a
               aria-label="Instagram"
-              href="/#"
+              href="https://www.instagram.com/tech.rpre/"
               className="w-9 h-9 flex items-center justify-center 
               rounded-full bg-white/10 backdrop-blur-md 
               hover:bg-emerald-400 hover:text-black 
