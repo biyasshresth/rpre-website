@@ -7,6 +7,8 @@ const Navbar: React.FC = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hideNavbar, setHideNavbar] = useState(false);
 
+  
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
@@ -140,10 +142,7 @@ const Navbar: React.FC = () => {
   group-hover:top-0 flex items-center justify-center gap-1"
                     >
                       Let's Talk
-                      <span
-                        className="transition-transform duration-700 
-    group-hover:translate-x-3"
-                      >
+                      <span className="arrow-slide">
                         <ArrowIcon />
                       </span>
                     </p>
