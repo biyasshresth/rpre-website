@@ -55,6 +55,7 @@ const imageVariants: Variants = {
 };
 
 const iconVariants: Variants = {
+  initial: { rotate: 0, scale: 1 },
   hover: {
     rotate: [0, 360, 350, 365, 358, 360],
     scale: 1.12,
@@ -138,6 +139,8 @@ const Services: React.FC = () => {
 
                     <motion.div
                       variants={iconVariants}
+                      initial="initial"
+                      whileHover="hover"
                       className="absolute bottom-4 left-4 rounded-full bg-white p-3 shadow-lg"
                     >
                       <IconComponent className="text-[#2F5E4B]" size={28} />
