@@ -183,35 +183,35 @@ const Contact: React.FC = () => {
   return (
     <section
       id="contact"
-      className="bg-[#254F3E] text-white py-20 px-6 md:px-16"
+      className="bg-[#dee9e2] text-black py-20 px-6 md:px-16"
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-start">
         <div className="space-y-6">
-          <div className="inline-block px-4 py-2 rounded-lg border border-white/20 bg-white/5 transition-all duration-300 hover:border-[#00FF9F] hover:shadow-[0_0_15px_rgba(0,255,159,0.5)] hover:bg-white/10">
-            <p className="uppercase tracking-widest text-xs text-white/80 font-serif">
+          <div className="inline-block px-4 py-2 rounded-lg border border-black/20 bg-[#255d47] text-white/80 transition-all duration-300 hover:border-[#255d47] hover:shadow-[0_0_15px_rgba(37,93,71,0.5)] hover:bg-transparent hover:text-black">
+            <p className="uppercase tracking-widest text-xs  font-serif">
               Ready to start?
             </p>
           </div>
 
           <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
-            Let's build <br /> <p className="text-[#8a6c4b]">together.</p>
+            Let's build <br /> <p className="text-[#775a3a]">together.</p>
           </h2>
 
-          <p className="text-white/80 max-w-md font-space-mono">
+          <p className="text-black/80 max-w-md font-space-mono">
             Get in touch and discover how RPRE can transform your technology
             landscape.
           </p>
 
           <div className="space-y-4 text-sm mt-8">
-            <div className="flex items-start gap-3 text-white/60 relative group">
+            <div className="flex items-start gap-3 text-black/60 relative group">
               {/* Icon */}
               <div
                 onClick={handleMapOpen}
-                className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F] cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F] cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-white"
+                  className="w-4 h-4 text-[#255d47]"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -230,7 +230,7 @@ const Contact: React.FC = () => {
                   className="cursor-pointer relative"
                 >
                   {/* Maps Preview */}
-                  <div className="w-60 h-48 rounded-lg shadow-2xl overflow-hidden border border-white/20 bg-white/5 hover:shadow-[0_20px_40px_rgba(0,255,159,0.15)] hover:border-white/40 transition-all relative group/map">
+                  <div className="w-60 h-48 rounded-lg shadow-2xl overflow-hidden border border-black/20 bg-black/5 hover:shadow-[0_20px_40px_rgba(0,255,159,0.15)] hover:border-black/40 transition-all relative group/map">
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.1356!2d85.3611481!3d27.7512223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1bba03125ffb:0xa95c87cddfab7291!2sT.%20Mart!5e0!3m2!1sen!2snp!4v1710325800000"
                       width="100%"
@@ -249,10 +249,10 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-[#254F3E] to-transparent px-4 py-3 rounded-b-lg">
-                    <p className="text-xs font-space-mono text-white font-semibold cursor-pointer">
+                    <p className="text-xs font-space-mono text-black font-semibold cursor-pointer">
                       Kathmandu, Chabahil
                     </p>
-                    <p className="text-xs text-white/70 font-space-mono cursor-pointer">
+                    <p className="text-xs text-black/70 font-space-mono cursor-pointer">
                       Click to view full map
                     </p>
                   </div>
@@ -262,17 +262,17 @@ const Contact: React.FC = () => {
               {/* Text */}
               <span
                 onClick={handleMapOpen}
-                className="flex justify-center mt-2 cursor-pointer hover:text-white transition-colors"
+                className="flex justify-center mt-2 cursor-pointer hover:text-black transition-colors"
               >
                 Kathmandu, Chabahil, Nepal
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-white/60">
-              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
+            <div className="flex items-center gap-3 text-black/60">
+              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-white"
+                  className="w-4 h-4 text-[#255d47]"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -282,17 +282,17 @@ const Contact: React.FC = () => {
               </div>
               <span
                 onClick={handleEmailClick}
-                className="font-space-mono hover:text-white transition-colors cursor-pointer"
+                className="font-space-mono hover:text-black transition-colors cursor-pointer"
               >
                 hello@rpre.dev
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-white/60">
-              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
+            <div className="flex items-center gap-3 text-black/60">
+              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-white"
+                  className="w-4 h-4 text-[#255d47]"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -307,7 +307,7 @@ const Contact: React.FC = () => {
                 href="https://wa.me/9840649388"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-space-mono hover:text-white transition-colors cursor-pointer"
+                className="font-space-mono hover:text-black transition-colors cursor-pointer"
               >
                 +977-9840649388
               </a>
@@ -331,7 +331,7 @@ const Contact: React.FC = () => {
           )}
 
           <div className="relative">
-            <label className="block text-xs font-semibold  uppercase tracking-widest text-white mb-3">
+            <label className="block text-xs font-semibold  uppercase tracking-widest text-black mb-3">
               Name
             </label>
             <input
@@ -343,9 +343,9 @@ const Contact: React.FC = () => {
               placeholder="Your name"
               disabled={isSubmitting}
               className={`w-full bg-transparent border ${
-                errors.name ? "border-red-500" : "border-white/20"
-              } px-4 py-3 rounded-md placeholder-white/30 focus:outline-none ${
-                errors.name ? "focus:border-red-500" : "focus:border-white"
+                errors.name ? "border-red-500" : "border-black/20"
+              } px-4 py-3 rounded-md placeholder-black/30 focus:outline-none ${
+                errors.name ? "focus:border-red-500" : "focus:border-black"
               } transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             />
             {errors.name && (
@@ -356,7 +356,7 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="relative">
-            <label className="block text-xs uppercase font-semibold tracking-widest font-space-mono text-white mb-3">
+            <label className="block text-xs uppercase font-semibold tracking-widest font-space-mono text-black mb-3">
               Email
             </label>
             <input
@@ -367,9 +367,9 @@ const Contact: React.FC = () => {
               placeholder="you@company.com"
               disabled={isSubmitting}
               className={`w-full bg-transparent border ${
-                errors.email ? "border-red-500" : "border-white/20"
-              } px-4 py-3 rounded-md placeholder-white/30 focus:outline-none ${
-                errors.email ? "focus:border-red-500" : "focus:border-white"
+                errors.email ? "border-red-500" : "border-black/20"
+              } px-4 py-3 rounded-md placeholder-black/30 focus:outline-none ${
+                errors.email ? "focus:border-red-500" : "focus:border-black"
               } transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             />
             {errors.email && (
@@ -380,7 +380,7 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="relative">
-            <label className="block text-xs font-semibold uppercase tracking-widest text-white mb-3">
+            <label className="block text-xs font-semibold uppercase tracking-widest text-black mb-3">
               Message
             </label>
             <textarea
@@ -391,9 +391,9 @@ const Contact: React.FC = () => {
               placeholder="Tell us about your project..."
               disabled={isSubmitting}
               className={`w-full bg-transparent border ${
-                errors.message ? "border-red-500" : "border-white/20"
-              } px-4 py-3 rounded-md placeholder-white/30 font-space-mono resize-none focus:outline-none ${
-                errors.message ? "focus:border-red-500" : "focus:border-white"
+                errors.message ? "border-red-500" : "border-black/20"
+              } px-4 py-3 rounded-md placeholder-black/30 font-space-mono resize-none focus:outline-none ${
+                errors.message ? "focus:border-red-500" : "focus:border-black"
               } transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             />
             {errors.message && (

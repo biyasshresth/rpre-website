@@ -7,8 +7,6 @@ const Navbar: React.FC = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hideNavbar, setHideNavbar] = useState(false);
 
-  
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
@@ -93,7 +91,7 @@ const Navbar: React.FC = () => {
         showSolidBg ? "bg-[#254F3E] shadow-lg" : "bg-[#254F3E] shadow-md",
       ].join(" ")}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 lg:px-20">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <button
@@ -102,11 +100,11 @@ const Navbar: React.FC = () => {
             className="relative text-xl font-serif font-bold text-white overflow-hidden group"
           >
             {/* top glow line */}
-            <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-emerald-400/40 to-transparent" />
-            <span className="relative z-10 leading-relaxed shining-font text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2]">
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-emerald-400/40 to-transparent " />
+            <span className="relative z-10 leading-relaxed shining-font text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2] cursor-pointer">
               R P R E
             </span>
-            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full rounded-3xl transition-all duration-700"></span>
+            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full rounded-3xl transition-all duration-700"></span>
           </button>
 
           {/* CTA — glowing border wrapper + flip text */}

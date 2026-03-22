@@ -4,12 +4,11 @@ import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import { motion, type TargetAndTransition } from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
- 
 const AUTO_SCROLL_INTERVAL = 3000;
 
 const EASE_LUXURY = [0.25, 0.46, 0.45, 0.94] as const;
 
- const SPRING_CARD = {
+const SPRING_CARD = {
   type: "spring",
   stiffness: 260,
   damping: 28,
@@ -52,7 +51,7 @@ const ARROW_TRANSITION = {
   repeatType: "mirror" as const,
 } as const;
 
-// -- Slot configs --// 
+// -- Slot configs --//
 interface SlotConfig {
   x: number;
   y: number;
@@ -76,11 +75,11 @@ function computeSlot(pos: number): SlotConfig {
   };
 }
 
-//  slot positions 
+//  slot positions
 const SLOT_CONFIGS: Record<number, SlotConfig> = {};
 for (let p = -2; p <= 2; p++) SLOT_CONFIGS[p] = computeSlot(p);
 
- const HIDDEN: SlotConfig = {
+const HIDDEN: SlotConfig = {
   x: 0,
   y: 0,
   scale: 0.85,
@@ -104,7 +103,7 @@ const CATEGORIES: FilterType[] = [
   "Cyber Security",
 ];
 
-// CarouselCard 
+// CarouselCard
 interface CarouselCardProps {
   item: PortfolioItem;
   slot: SlotConfig;
@@ -192,7 +191,7 @@ const CarouselCard = memo(
                   transition={{ duration: 0.3, ease: EASE_LUXURY }}
                   className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer"
                 >
-                   Project's Details
+                  Project's Details
                   <motion.svg
                     width="16"
                     height="16"
@@ -231,8 +230,8 @@ const CarouselCard = memo(
     prev.slot.zIndex === next.slot.zIndex,
 );
 
- // Portfolio root
- const Portfolio = () => {
+// Portfolio root
+const Portfolio = () => {
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -289,7 +288,7 @@ const CarouselCard = memo(
       img.src = image;
     });
   }, [filteredPortfolio]);
- 
+
   const cardList = useMemo(
     () =>
       filteredPortfolio.map((item, idx) => {
@@ -330,7 +329,6 @@ const CarouselCard = memo(
           viewport={{ once: true }}
           className="text-center"
         >
-          
           <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328] mb-5 font-serif tracking-tight">
             Our Projects
           </h2>
@@ -369,7 +367,7 @@ const CarouselCard = memo(
         >
           {cardList.map(({ item, idx, pos, inWindow, slot }) => (
             <CarouselCard
-              key={idx} 
+              key={idx}
               item={item}
               slot={slot}
               isCenter={pos === 0}
