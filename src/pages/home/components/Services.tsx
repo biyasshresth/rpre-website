@@ -87,9 +87,9 @@ const Services: React.FC = () => {
   return (
     <section
       id="services-overlay"
-      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem] bg-grid-lines py-14 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden"
+      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem]  py-14 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden bg-[#dee9e2]"
     >
-      <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" />
+      {/* <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" /> bg-grid-lines*/}
       <div className="pointer-events-none absolute -top-72 -right-72 z-0 h-95 w-95 text-[#2F5E4B] opacity-10" />
 
       <div className="relative mx-auto max-w-7xl px-10">
@@ -100,11 +100,11 @@ const Services: React.FC = () => {
           transition={{ duration: 0.8, ease }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#244738] md:text-5xl">
+          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#1a3328] md:text-5xl">
             Our Services
           </h2>
 
-          <p className="mx-auto max-w-2xl text-base text-gray-600">
+          <p className="mx-auto max-w-2xl text-base text-[#1a2c25]">
             Comprehensive IT solutions <br /> tailored to rise or lift your
             business and drive digital excellence.
           </p>
@@ -122,7 +122,7 @@ const Services: React.FC = () => {
             return (
               <Link key={service.id} to={service.link!} className="block">
                 <motion.div
-                  className="group h-100 cursor-pointer overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md flex flex-col"
+                  className="group h-100 cursor-pointer overflow-hidden rounded-2xl border border-[#b0edb0]  shadow-md flex flex-col"
                   variants={cardVariants}
                   whileHover="hover"
                 >
@@ -135,7 +135,7 @@ const Services: React.FC = () => {
                       variants={imageVariants}
                     />
 
-                    <div className="absolute inset-0 bg-linear-to-t from-[rgba(47,94,75,0.8)] to-transparent" />
+                    {/* <div className="absolute inset-0 bg-linear-to-t from-[rgba(47,94,75,0.8)] to-transparent" /> */}
 
                     <motion.div
                       variants={iconVariants}
@@ -149,7 +149,7 @@ const Services: React.FC = () => {
 
                   {/* Content Section - Fixed Space */}
                   <div className="p-6 flex flex-col flex-1 overflow-hidden">
-                    <h3 className="mb-3 text-2xl font-bold text-[#3e6e5c] transition-colors duration-300 group-hover:text-[#274b32] shrink-0">
+                    <h3 className="mb-3 text-2xl font-bold text-[#1a2c25] transition-colors duration-300 group-hover:text-[#274b32] shrink-0">
                       {service.title}
                     </h3>
                     <p className="text-gray-600 text-sm leading-relaxed line-clamp-5 overflow-hidden">
