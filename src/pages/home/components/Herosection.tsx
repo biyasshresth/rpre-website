@@ -10,7 +10,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Sparkles, ChevronDown } from "lucide-react";
- 
+
 interface NetworkDot {
   x: number;
   y: number;
@@ -53,18 +53,15 @@ const NetworkTopology: React.FC<{
     }
 
     const animate = () => {
-      // Clear canvas
       ctx.fillStyle = "rgba(255, 255, 255, 0)";
       ctx.clearRect(0, 0, width, height);
 
       const dots = dotsRef.current;
 
-      // Update dot positions with boundary wrapping
       dots.forEach((dot) => {
         dot.x += dot.vx;
         dot.y += dot.vy;
 
-        // Wrap around edges
         if (dot.x < 0) dot.x = width;
         if (dot.x > width) dot.x = 0;
         if (dot.y < 0) dot.y = height;
@@ -92,14 +89,13 @@ const NetworkTopology: React.FC<{
 
       // Draw dots with gradient glow effect
       dots.forEach((dot) => {
-        // Outer glow
         const gradient = ctx.createRadialGradient(
           dot.x,
           dot.y,
           0,
           dot.x,
           dot.y,
-          dot.radius * 3
+          dot.radius * 3,
         );
         gradient.addColorStop(0, "rgba(100, 209, 171, 0.3)");
         gradient.addColorStop(1, "rgba(100, 209, 171, 0)");
@@ -108,13 +104,11 @@ const NetworkTopology: React.FC<{
         ctx.arc(dot.x, dot.y, dot.radius * 3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Main dot
         ctx.fillStyle = "#66be9b";
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Inner highlight
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, dot.radius * 0.4, 0, Math.PI * 2);
@@ -153,9 +147,10 @@ const ScrollIndicator: React.FC<{ isVisible: boolean }> = ({ isVisible }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.4 }}
-          className="scroll-indicator"
+          className="         fixed bottom-8 left-1/2 z-40 -translate-x-1/2 sm:bottom-12 md:bottom-16
+ "
         >
-          <div className="scroll-content">
+          <div className="scroll-content bottom-1    lg:bottom-16">
             <span className="scroll-text">SCROLL</span>
             <motion.div
               animate={{ y: [0, 8, 0] }}
@@ -312,10 +307,7 @@ const HeroSection: React.FC = () => {
                   >
                     <button className="innovative-badge group">
                       <div className="innovative-badge-content">
-                        <Sparkles
-                          size={14}
-                          className="innovative-badge-icon"
-                        />
+                        <Sparkles size={14} className="innovative-badge-icon" />
                         <span className="innovative-badge-text">
                           Innovative IT Solutions
                         </span>
@@ -364,20 +356,21 @@ const HeroSection: React.FC = () => {
                 className="absolute bottom-0 left-0 right-0 h-38 w-full"
                 style={{ perspective: "1000px" }}
               >
-                {networkDimensions.width > 0 && networkDimensions.height > 0 && (
-                  <NetworkTopology
-                    width={networkDimensions.width}
-                    height={networkDimensions.height}
-                    isVisible={true}
-                  />
-                )}
+                {networkDimensions.width > 0 &&
+                  networkDimensions.height > 0 && (
+                    <NetworkTopology
+                      width={networkDimensions.width}
+                      height={networkDimensions.height}
+                      isVisible={true}
+                    />
+                  )}
               </motion.div>
             </div>
           </div>
         </section>
       </motion.div>
 
-       <ScrollIndicator isVisible={showScrollIndicator} />
+      <ScrollIndicator isVisible={showScrollIndicator} />
     </section>
   );
 };

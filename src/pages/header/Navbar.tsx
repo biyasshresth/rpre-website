@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
         showSolidBg ? "bg-[#254F3E] shadow-lg" : "bg-[#254F3E] shadow-md",
       ].join(" ")}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-20">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <button
@@ -100,7 +100,7 @@ const Navbar: React.FC = () => {
             className="relative text-xl font-serif font-bold text-white overflow-hidden group"
           >
             {/* top glow line */}
-            <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-emerald-400/40 to-transparent " />
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-emerald-400/40 to-transparent" />
             <span className="relative z-10 leading-relaxed shining-font text-2xl transition-colors duration-300 group-hover:text-[#d8f3e2] cursor-pointer">
               R P R E
             </span>

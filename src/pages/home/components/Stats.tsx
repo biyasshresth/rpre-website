@@ -105,7 +105,7 @@ const Stats: React.FC = () => {
                 {" "}
                 {/* Icon */}{" "}
                 <motion.div
-                  whileHover={{ scale: 1.25, rotate: 6 }}
+                  whileHover={{ scale: 1.1, rotate: 6 }}
                   transition={{ type: "spring", stiffness: 300 }}
                   className="inline-flex items-center justify-center w-20 h-20 bg-[#cfece1] backdrop-blur-md rounded-full mb-6 shadow-lg transition-all duration-500 group-hover:bg-[#255d47] "
                 >
@@ -138,7 +138,7 @@ const Stats: React.FC = () => {
           className="mt-20 text-center"
         >
           {" "}
-          <p className="text-black/90 text-lg max-w-3xl mx-auto font-space-mono leading-relaxed">
+          <p className="text-black/90 text-lg max-w-2xl mx-auto font-space-mono leading-relaxed">
             {" "}
             With nearly a decade of experience, RPRE has established itself as a
             leading IT services provider. Our team of expert professionals is

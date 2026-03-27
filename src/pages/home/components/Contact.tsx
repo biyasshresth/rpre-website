@@ -207,7 +207,7 @@ const Contact: React.FC = () => {
               {/* Icon */}
               <div
                 onClick={handleMapOpen}
-                className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F] cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#255d47] cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -269,7 +269,7 @@ const Contact: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-3 text-black/60">
-              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
+              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#255d47]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-4 h-4 text-[#255d47]"
@@ -284,12 +284,12 @@ const Contact: React.FC = () => {
                 onClick={handleEmailClick}
                 className="font-space-mono hover:text-black transition-colors cursor-pointer"
               >
-                hello@rpre.dev
+                studio@rpre.dev
               </span>
             </div>
 
             <div className="flex items-center gap-3 text-black/60">
-              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#00FF9F]">
+              <div className="w-8 h-8 flex items-center justify-center rounded-md bg-black/10 transition-shadow duration-300 hover:shadow-[0_0_10px_#255d47]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-4 h-4 text-[#255d47]"
