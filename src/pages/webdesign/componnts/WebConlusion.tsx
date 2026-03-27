@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import FooterPage from "../../footer/FooterPage";
 
 const WebConlusion = () => {
   return (
@@ -79,7 +78,6 @@ const WebConlusion = () => {
         </motion.div>
       </div>
     </section>
-    <FooterPage />
     </>
   );
 };

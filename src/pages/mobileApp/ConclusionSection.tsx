@@ -1,4 +1,3 @@
-import FooterPage from "../footer/FooterPage";
 import Reveal from "./Reveal";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +11,8 @@ export default function ConclusionSection() {
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-8 flex flex-col gap-3 items-center justify-center">
               <span>We Don't Just Build Apps</span>
               <span className="italic text-[#F5F1E7]">
-                We Build Digital <span className="text-[#F5F1E7]">Experiences.</span>
+                We Build Digital{" "}
+                <span className="text-[#F5F1E7]">Experiences.</span>
               </span>
             </h2>
           </Reveal>
@@ -35,7 +35,6 @@ export default function ConclusionSection() {
           </Reveal>
         </div>
       </section>
-      <FooterPage />
     </>
   );
 }

@@ -12,9 +12,9 @@ export default function HeroSection() {
   return (
     <div>
       <section className="min-h-screen flex items-center justify-center px-6 py-5 bg-[#F5F1E7] text-[#2D3A2E]">
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center pt-10">
           <Reveal delay={100}>
-            <h1 className="font-serif text-5xl  md:text-7xl leading-tight mb-6">
+            <h1 className="font-serif text-4xl  lg:text-6xl leading-tight mb-6">
               Mobile App <br />
               <span className="italic text-[#5A6B57]">Development</span>
             </h1>
