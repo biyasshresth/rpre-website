@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
+  const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hideNavbar, setHideNavbar] = useState(false);
@@ -96,7 +98,10 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <button
             type="button"
-            onClick={scrollToHero}
+            onClick={() => {
+              scrollToHero;
+              navigate("/");
+            }}
             className="relative text-xl font-serif font-bold text-white overflow-hidden group"
           >
             {/* top glow line */}

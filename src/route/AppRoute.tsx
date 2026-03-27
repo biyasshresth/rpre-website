@@ -8,22 +8,21 @@ import Policy from "../pages/home/components/Policy.tsx";
 import TermsCondition from "../pages/home/components/TermsCondition.tsx";
 import SelectedPage from "../pages/home/components/SelectedPage.tsx";
 import Contact from "../pages/home/components/Contact.tsx";
-import FooterPage from "../pages/footer/FooterPage.tsx";
 const AppRoute = () => {
   return (
     <div>
       <Routes>
         <Route element={<MainPage />}>
           <Route path="/" element={<HomePage />} />
+                    <Route path="/web-landing" element={<WebLanding />} />
+
+          <Route path="/mobile-app" element={<HeroSection />} />
+          <Route path="/ui-ux-design" element={<UiheroSection />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
         <Route element={<SelectedPage />}>
           <Route path="/termsCondition" element={<TermsCondition />} />
           <Route path="/policy" element={<Policy />} />
-          <Route path="/web-landing" element={<WebLanding />} />
-          <Route path="/mobile-app" element={<HeroSection />} />
-          <Route path="/ui-ux-design" element={<UiheroSection />} />
-          <Route path="/contact" element={<Contact />} />
-           <Route path="/footer-page" element={<FooterPage />} />
         </Route>
       </Routes>
     </div>
