@@ -63,7 +63,7 @@ const Stats: React.FC = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="py-14 max-h-screen max-w-full bg-[#dee9e2]"
+      className="py-14 min-h-screen max-w-full bg-[#dee9e2]"
     >
       {" "}
       {/* bg-linear-to-br from-[#335c4b] to-[#5e8a6b] */}
