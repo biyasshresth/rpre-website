@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 import { testimonials } from "../../../data/mockData";
 import type { Testimonial } from "../../../data/mockData";
@@ -20,7 +15,7 @@ const Testimonials: React.FC = () => {
   const index = ((page % total) + total) % total;
 
   const x = useMotionValue(0);
-  const backgroundX = useTransform(x, [-300, 300], [-40, 40]);
+  // const backgroundX = useTransform(x, [-300, 300], [-40, 40]);
 
   const paginate = useCallback((newDirection: number) => {
     setPage(([prev]) => [prev + newDirection, newDirection]);
@@ -60,14 +55,14 @@ const Testimonials: React.FC = () => {
   return (
     <section
       id="testimonial"
-      className="py-16 relative bg-grid-lines overflow-hidden"
+      className="py-10 relative bg-grid-lines overflow-hidden min-h-screen flex flex-col items-center justify-center gap-12"
     >
-      <motion.div
+      {/* <motion.div
         style={{ x: backgroundX }}
         className="absolute inset-0 bg-linear-to-br from-[#2F5E4B]/5 to-[#7FAE8D]/5"
-      />
+      /> */}
 
-      <div className="relative max-w-3xl mx-auto px-6">
+      <div className="relative max-w-3xl mx-auto px-6 flex flex-col items-center ">
         {/* Header */}
         <div className="text-center mb-10">
           <h2 className="text-3xl font-serif md:text-4xl font-bold text-[#2F5E4B] mb-3">

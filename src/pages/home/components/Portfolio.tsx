@@ -316,18 +316,18 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="py-9 relative max-h-screen overflow-hidden bg-grid-lines">
-      <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" />
+    <section className="py-10 relative min-h-screen overflow-hidden bg-grid-lines flex flex-col items-center justify-center">
+      {/* <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" /> */}
+      {/* <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" /> */}
 
-      <div className="max-w-7xl mx-auto px-6 relative">
+      <div className="max-w-7xl mx-auto px-6 relative flex flex-col items-center lg:gap-2 gap-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={HEADER_TRANSITION}
           viewport={{ once: true }}
-          className="text-center flex flex-col items-center gap-4"
+          className="text-center flex flex-col items-center lg:gap-6 gap-4"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328]  font-serif tracking-tight">
             Our Projects
