@@ -60,10 +60,14 @@ const Stats: React.FC = () => {
     };
   }, [isInView]);
   return (
-    <section id="about" ref={sectionRef} className="py-24 bg-[#dee9e2]">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="py-14 max-h-screen max-w-full bg-[#dee9e2]"
+    >
       {" "}
       {/* bg-linear-to-br from-[#335c4b] to-[#5e8a6b] */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="w-full h-full  px-6 lg:px-8 flex flex-col items-center gap-10">
         {" "}
         {/* Header */}{" "}
         <motion.div
@@ -71,7 +75,7 @@ const Stats: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center "
         >
           {" "}
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3328] mb-6 tracking-tight">
@@ -85,7 +89,7 @@ const Stats: React.FC = () => {
           </p>{" "}
         </motion.div>{" "}
         {/* Stats Grid */}{" "}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-10">
           {" "}
           {(stats as StatItem[]).map((stat, index) => {
             const IconComponent = iconMap[index];
@@ -135,7 +139,7 @@ const Stats: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-20 text-center"
+          className=" text-center"
         >
           {" "}
           <p className="text-black/90 text-lg max-w-2xl mx-auto font-space-mono leading-relaxed">

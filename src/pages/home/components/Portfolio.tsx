@@ -153,7 +153,7 @@ const CarouselCard = memo(
             isCenter ? "shadow-[0_32px_80px_rgba(47,94,75,0.22)]" : "shadow-xl"
           }`}
         >
-          <div className="relative overflow-hidden h-60 group">
+          <div className="relative overflow-hidden h-50 group">
             <img
               src={item.image}
               alt={item.title}
@@ -316,7 +316,7 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="py-10 relative overflow-hidden bg-grid-lines">
+    <section className="py-9 relative max-h-screen overflow-hidden bg-grid-lines">
       <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" />
 
@@ -327,13 +327,13 @@ const Portfolio = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={HEADER_TRANSITION}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center flex flex-col items-center gap-4"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328] mb-5 font-serif tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328]  font-serif tracking-tight">
             Our Projects
           </h2>
 
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-4">
             {CATEGORIES.map((category) => (
               <motion.button
                 key={category}
@@ -357,7 +357,7 @@ const Portfolio = () => {
 
         {/* Carousel */}
         <div
-          className="relative flex items-end justify-center select-none h-110 perspective-1000"
+          className="relative flex items-end justify-center select-none h-100 perspective-1000"
           onMouseEnter={() => {
             isHoveringRef.current = true;
           }}
@@ -381,7 +381,7 @@ const Portfolio = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex items-center justify-center gap-5 mt-8">
+        <div className="flex items-center justify-center gap-5 mt-4">
           <motion.button
             type="button"
             aria-label="Previous"

@@ -2,25 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [hideNavbar, setHideNavbar] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    let lastScrollY = 0;
+
     const handleScroll = () => {
       const currentScroll = window.scrollY;
+      setScrollY(currentScroll);
 
+      // Hide navbar when scrolling down more than 80px threshold
       if (currentScroll > lastScrollY && currentScroll > 80) {
-        setHideNavbar(true);
-      } else {
-        setHideNavbar(false);
+        setIsVisible(false);
+      }
+      // Show navbar when scrolling up (any amount)
+      else if (currentScroll < lastScrollY) {
+        setIsVisible(true);
+      }
+      // Always show at top
+      if (currentScroll <= 80) {
+        setIsVisible(true);
       }
 
-      setScrollY(currentScroll);
-      setLastScrollY(currentScroll);
+      lastScrollY = currentScroll;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -28,7 +37,7 @@ const Navbar: React.FC = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   const smoothScrollTo = (targetY: number, duration = 1200) => {
     const startY = window.scrollY;
@@ -65,6 +74,7 @@ const Navbar: React.FC = () => {
   const scrollToHero = () => {
     smoothScrollTo(0);
   };
+
   const ArrowIcon: React.FC = () => (
     <svg
       className="w-3.5 h-3.5"
@@ -81,16 +91,21 @@ const Navbar: React.FC = () => {
     </svg>
   );
 
-  const showSolidBg = scrollY > 40;
+  const showGlassmorphism = scrollY > 40;
 
   return (
-    <nav
+    <motion.nav
+      initial={{ y: 0, opacity: 1 }}
+      animate={{
+        y: isVisible ? 0 : -100,
+        opacity: isVisible ? 1 : 0,
+      }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
       className={[
-        "fixed top-0 left-0 right-0 z-100 transition-all duration-500 ease-in-out",
-        hideNavbar
-          ? "-translate-y-full opacity-0"
-          : "translate-y-0 opacity-100",
-        showSolidBg ? "bg-[#254F3E] shadow-lg" : "bg-[#254F3E] shadow-md",
+        "fixed top-0 left-0 right-0 z-50",
+        showGlassmorphism
+          ? "backdrop-blur-xs bg-[#254F3E]/80 shadow-lg border-b border-[#254F3E]/20"
+          : "bg-[#254F3E] shadow-none border-b border-transparent",
       ].join(" ")}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -99,7 +114,7 @@ const Navbar: React.FC = () => {
           <button
             type="button"
             onClick={() => {
-              scrollToHero;
+              scrollToHero();
               navigate("/");
             }}
             className="relative text-xl font-serif font-bold text-white overflow-hidden group"
@@ -156,7 +171,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

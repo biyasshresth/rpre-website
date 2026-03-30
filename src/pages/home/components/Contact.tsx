@@ -284,7 +284,7 @@ const Contact: React.FC = () => {
                 onClick={handleEmailClick}
                 className="font-space-mono hover:text-black transition-colors cursor-pointer"
               >
-                studio@rpre.dev
+               tech.rpre@gmail.com
               </span>
             </div>
 

@@ -87,7 +87,7 @@ const Services: React.FC = () => {
   return (
     <section
       id="services-overlay"
-      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem]  py-14 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden bg-[#dee9e2]"
+      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem]  py-10 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden bg-[#dee9e2]"
     >
       {/* <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" /> bg-grid-lines*/}
       <div className="pointer-events-none absolute -top-72 -right-72 z-0 h-95 w-95 text-[#2F5E4B] opacity-10" />
@@ -127,7 +127,7 @@ const Services: React.FC = () => {
                   whileHover="hover"
                 >
                   {/* Image Section - Fixed Height */}
-                  <div className="relative h-48 overflow-hidden shrink-0">
+                  <div className="relative h-40 ` overflow-hidden shrink-0">
                     <motion.img
                       src={service.image}
                       alt={service.title}
