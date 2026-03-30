@@ -55,7 +55,8 @@ const imageVariants: Variants = {
 };
 
 const iconVariants: Variants = {
-  initial: { rotate: 0, scale: 1 },
+  hidden: { rotate: 0, scale: 1 }, // Changed from 'initial'
+  visible: { rotate: 0, scale: 1 }, // Added so it knows what to do on mount
   hover: {
     rotate: [0, 360, 350, 365, 358, 360],
     scale: 1.12,
@@ -87,20 +88,20 @@ const Services: React.FC = () => {
   return (
     <section
       id="services-overlay"
-      className="relative z-30 -mt-[100vh] rounded-t-[2.5rem]  py-10 shadow-[0_-20px_80px_rgba(0,0,0,0.14)] overflow-hidden bg-[#dee9e2]"
+      className="relative z-30 min-h-screen  shadow-[0_-20px_80px_rgba(0,0,0,0.14)] flex flex-col justify-center items-center py-10  overflow-hidden bg-[#dee9e2]"
     >
       {/* <div className="pointer-events-none absolute inset-0 bg-grid-lines opacity-60" /> bg-grid-lines*/}
       <div className="pointer-events-none absolute -top-72 -right-72 z-0 h-95 w-95 text-[#2F5E4B] opacity-10" />
 
-      <div className="relative mx-auto max-w-7xl px-10">
+      <div className="relative mx-auto max-w-7xl flex flex-col items-center lg:gap-20 gap-4 py-auto h-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease }}
-          className="mb-16 text-center"
+          className="flex flex-col lg:gap-6 gap-4 items-center text-center"
         >
-          <h2 className="mb-3 font-serif text-3xl font-bold tracking-tight text-[#1a3328] md:text-5xl">
+          <h2 className="font-serif text-3xl font-bold tracking-tight text-[#1a3328] md:text-5xl">
             Our Services
           </h2>
 
@@ -122,7 +123,7 @@ const Services: React.FC = () => {
             return (
               <Link key={service.id} to={service.link!} className="block">
                 <motion.div
-                  className="group h-100 cursor-pointer overflow-hidden rounded-2xl border border-[#b0edb0]  shadow-md flex flex-col"
+                  className=" group h-100 cursor-pointer overflow-hidden rounded-2xl border border-[#b0edb0]  shadow-md flex flex-col "
                   variants={cardVariants}
                   whileHover="hover"
                 >

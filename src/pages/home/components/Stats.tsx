@@ -63,11 +63,11 @@ const Stats: React.FC = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="py-14 min-h-screen max-w-full bg-[#dee9e2]"
+      className="lg:py-auto min-h-screen max-w-full bg-[#dee9e2] text-center flex flex-col items-center justify-center gap-12 py-16 relative overflow-hidden"
     >
       {" "}
       {/* bg-linear-to-br from-[#335c4b] to-[#5e8a6b] */}
-      <div className="w-full h-full  px-6 lg:px-8 flex flex-col items-center gap-10">
+      <div className="w-full h-full  px-6 lg:px-8 flex flex-col items-center lg:gap-20 gap-10">
         {" "}
         {/* Header */}{" "}
         <motion.div
@@ -89,7 +89,7 @@ const Stats: React.FC = () => {
           </p>{" "}
         </motion.div>{" "}
         {/* Stats Grid */}{" "}
-        <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:gap-10 gap-4">
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:gap-8 gap-4 mx-auto max-w-7xl">
           {" "}
           {(stats as StatItem[]).map((stat, index) => {
             const IconComponent = iconMap[index];
