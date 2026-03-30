@@ -245,7 +245,7 @@ const HeroSection: React.FC = () => {
   const heroY = useTransform(scrollY, [0, viewportHeight], [0, -20]);
 
   // Parallax effect for background
-  const bgParallax = useTransform(scrollY, [0, viewportHeight], [0, 50]);
+  // const bgParallax = useTransform(scrollY, [0, viewportHeight], [0, 50]);
 
   const defaultTransition = {
     duration: 0.6,
@@ -280,16 +280,16 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative h-[200vh] bg-grid-lines pt-10 md:pt-0">
+    <section className="relative min-h-screen bg-grid-lines pt-10 md:pt-0">
       <motion.div
         style={{ scale: heroScale, opacity: heroOpacity, y: heroY }}
         className="sticky top-0 h-screen overflow-hidden"
       >
         {/* Parallax background gradient */}
-        <motion.div
+        {/* <motion.div
           style={{ y: bgParallax }}
           className="absolute inset-0 bg-linear-to-b from-transparent via-[#f8f5f0]/20 to-[#e8dcc8]/30 pointer-events-none"
-        />
+        /> */}
 
         <section id="hero" className="relative h-screen overflow-hidden">
           <div className="relative z-20 flex h-screen items-center justify-center px-6 lg:px-20">
