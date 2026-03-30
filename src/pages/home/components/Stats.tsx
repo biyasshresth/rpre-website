@@ -82,14 +82,14 @@ const Stats: React.FC = () => {
             {" "}
             Why Choose RPRE?{" "}
           </h2>{" "}
-          <p className="text-lg text-black/90 max-w-2xl mx-auto font-space-mono leading-relaxed">
+          <p className="lg:text-lg text-base text-black/90 max-w-2xl mx-auto font-space-mono leading-relaxed">
             {" "}
             Trusted by businesses worldwide for delivering exceptional results
             and innovation.{" "}
           </p>{" "}
         </motion.div>{" "}
         {/* Stats Grid */}{" "}
-        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:gap-10 gap-4">
           {" "}
           {(stats as StatItem[]).map((stat, index) => {
             const IconComponent = iconMap[index];
@@ -104,23 +104,20 @@ const Stats: React.FC = () => {
                   ease: "easeOut",
                 }}
                 viewport={{ once: true }}
-                className="text-center group"
+                className="text-center group flex flex-col items-center gap-2 lg:gap-4"
               >
                 {" "}
                 {/* Icon */}{" "}
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 6 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="inline-flex items-center justify-center w-20 h-20 bg-[#cfece1] backdrop-blur-md rounded-full mb-6 shadow-lg transition-all duration-500 group-hover:bg-[#255d47] "
+                  className="inline-flex items-center justify-center lg:w-16 w-10 h-10 lg:h-16 bg-[#cfece1] backdrop-blur-md rounded-full shadow-lg transition-all duration-500 group-hover:bg-[#255d47] "
                 >
                   {" "}
-                  <IconComponent
-                    className="text-[#255d47] group-hover:text-[#cfece1] transition-transform duration-500 group-hover:rotate-6"
-                    size={34}
-                  />{" "}
+                  <IconComponent className="text-[#255d47] group-hover:text-[#cfece1] transition-transform duration-500 group-hover:rotate-6 lg:w-8 lg:h-8 w-5 h-5" />{" "}
                 </motion.div>{" "}
                 {/* Counter */}{" "}
-                <div className="text-3xl md:text-5xl font-bold font-serif text-black uppercase mb-3 tracking-tight">
+                <div className="text-2xl lg:text-4xl font-bold font-serif text-black uppercase tracking-tight">
                   {" "}
                   {counts[index]} {stat.suffix}{" "}
                 </div>{" "}
@@ -142,7 +139,7 @@ const Stats: React.FC = () => {
           className=" text-center"
         >
           {" "}
-          <p className="text-black/90 text-lg max-w-2xl mx-auto font-space-mono leading-relaxed">
+          <p className="text-black/90 lg:text-base text-sm text-justify lg:text-center  max-w-2xl mx-auto font-space-mono leading-relaxed">
             {" "}
             With nearly a decade of experience, RPRE has established itself as a
             leading IT services provider. Our team of expert professionals is
