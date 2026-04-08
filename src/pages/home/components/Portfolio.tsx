@@ -37,19 +37,19 @@ const BADGE_TRANSITION = {
   duration: 0.4,
   ease: EASE_LUXURY,
 } as const;
-const CTA_TRANSITION = {
-  delay: 0.15,
-  duration: 0.45,
-  ease: EASE_LUXURY,
-} as const;
+// const CTA_TRANSITION = {
+//   delay: 0.15,
+//   duration: 0.45,
+//   ease: EASE_LUXURY,
+// } as const;
 const HEADER_TRANSITION = { duration: 0.9, ease: EASE_LUXURY } as const;
 
-const ARROW_TRANSITION = {
-  duration: 2.2,
-  repeat: Infinity,
-  ease: [0.45, 0, 0.55, 1] as const,
-  repeatType: "mirror" as const,
-} as const;
+// const ARROW_TRANSITION = {
+//   duration: 2.2,
+//   repeat: Infinity,
+//   ease: [0.45, 0, 0.55, 1] as const,
+//   repeatType: "mirror" as const,
+// } as const;
 
 // -- Slot configs --//
 interface SlotConfig {
@@ -90,17 +90,12 @@ const HIDDEN: SlotConfig = {
 };
 
 // Types
-type FilterType =
-  | "All"
-  | "Web Development"
-  | "Mobile Development"
-  | "Cyber Security";
+type FilterType = "All" | "Web Development" | "Mobile Development";
 
 const CATEGORIES: FilterType[] = [
   "All",
   "Web Development",
   "Mobile Development",
-  "Cyber Security",
 ];
 
 // CarouselCard
@@ -179,7 +174,7 @@ const CarouselCard = memo(
               {item.description}
             </p>
 
-            {isCenter && (
+            {/* {isCenter && (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -210,7 +205,7 @@ const CarouselCard = memo(
                   </motion.svg>
                 </motion.span>
               </motion.div>
-            )}
+            )} */}
           </div>
         </div>
       </motion.div>
