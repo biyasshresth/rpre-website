@@ -151,10 +151,10 @@ export const services: Readonly<Service[]> = [
 ========================= */
 
 export const stats: Readonly<Stat[]> = [
-  { id: 1, value: 250, label: "Projects Completed", suffix: "+" },
-  { id: 2, value: 150, label: "Our Happy Clients", suffix: "+" },
-  { id: 3, value: 8, label: "Years Experience" },
-  { id: 4, value: 50, label: "Team Members", suffix: "+" },
+  { id: 1, value: 6, label: "Projects Completed", suffix: "+" },
+  { id: 2, value: 6, label: "Our Happy Clients", suffix: "+" },
+  { id: 3, value: 3, label: "Ongoing Projects", suffix: "+" },
+  { id: 4, value: 10, label: "Team Members", suffix: "+" },
 ] as const;
 
 /* =========================
