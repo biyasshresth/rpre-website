@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
-import { motion, type TargetAndTransition } from "framer-motion";
+import { motion, type TargetAndTransition, AnimatePresence } from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
 const AUTO_SCROLL_INTERVAL = 3000;
@@ -37,19 +37,7 @@ const BADGE_TRANSITION = {
   duration: 0.4,
   ease: EASE_LUXURY,
 } as const;
-// const CTA_TRANSITION = {
-//   delay: 0.15,
-//   duration: 0.45,
-//   ease: EASE_LUXURY,
-// } as const;
 const HEADER_TRANSITION = { duration: 0.9, ease: EASE_LUXURY } as const;
-
-// const ARROW_TRANSITION = {
-//   duration: 2.2,
-//   repeat: Infinity,
-//   ease: [0.45, 0, 0.55, 1] as const,
-//   repeatType: "mirror" as const,
-// } as const;
 
 // -- Slot configs --//
 interface SlotConfig {
@@ -98,6 +86,246 @@ const CATEGORIES: FilterType[] = [
   "Mobile Development",
 ];
 
+// ProjectModal Component
+interface ProjectModalProps {
+  project: PortfolioItem | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ProjectModal = memo(function ProjectModal({
+  project,
+  isOpen,
+  onClose,
+}: ProjectModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  if (!project) return null;
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 20 }}
+            transition={{ duration: 0.4, ease: EASE_LUXURY }}
+            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pointer-events-none overflow-y-auto"
+          >
+            <motion.div className="w-full max-w-lg bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-4 sm:my-auto">
+              {/* Image Section */}
+              <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-linear-to-br from-[#f7f3ee] to-[#ede8e0]">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
+
+                {/* Close Button */}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onClose}
+                  className="absolute top-3 sm:top-4 right-3 sm:right-4 w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-white/90 text-[#1a3328] flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200 backdrop-blur-sm"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </motion.button>
+
+                {/* Category Badge */}
+                <motion.span
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.3 }}
+                  className="absolute top-3 sm:top-4 left-3 sm:left-4 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 text-xs font-bold text-[#2F5E4B] shadow-lg backdrop-blur-sm"
+                >
+                  {project.category}
+                </motion.span>
+              </div>
+
+              {/* Content Section - Scrollable on mobile */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.4 }}
+                className="p-5 sm:p-6 md:p-7 max-h-[calc(100vh-220px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto"
+              >
+                {/* Title */}
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a3328] mb-2 font-serif tracking-tight line-clamp-2">
+                  {project.title}
+                </h2>
+
+                {/* Accent Line */}
+                <div className="w-12 sm:w-16 h-1 bg-linear-to-r from-[#2F5E4B] to-[#4a7060] rounded-full mb-4 sm:mb-5" />
+
+                {/* Description */}
+                <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-5 line-clamp-3 sm:line-clamp-none">
+                  {project.description}
+                </p>
+
+                {/* Features Section */}
+                {project.features && project.features.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.4 }}
+                    className="mb-4 sm:mb-5"
+                  >
+                    <h3 className="text-xs font-bold text-[#1a3328] uppercase tracking-wider mb-2 sm:mb-3">
+                      Key Features
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {project.features.slice(0, 4).map((feature, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{
+                            delay: 0.25 + idx * 0.08,
+                            duration: 0.3,
+                          }}
+                          className="flex items-center gap-2 p-2 sm:p-2.5 rounded-lg bg-[#f7f3ee]/60 hover:bg-[#ede8e0] transition-colors duration-200"
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#2F5E4B] shrink-0" />
+                          <span className="text-xs sm:text-sm text-gray-700 line-clamp-2">
+                            {feature}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Technologies Section */}
+                {project.technologies && project.technologies.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.4 }}
+                    className="mb-4 sm:mb-5"
+                  >
+                    <h3 className="text-xs font-bold text-[#1a3328] uppercase tracking-wider mb-2 sm:mb-3">
+                      Technologies
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {project.technologies.slice(0, 6).map((tech, idx) => (
+                        <motion.span
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{
+                            delay: 0.35 + idx * 0.06,
+                            duration: 0.3,
+                          }}
+                          className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#2F5E4B]/10 text-xs font-medium text-[#2F5E4B] border border-[#2F5E4B]/20 whitespace-nowrap"
+                        >
+                          {tech}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Call-to-Action Buttons */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.4 }}
+                  className="flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-5 border-t border-gray-200"
+                >
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full"
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg bg-[#2F5E4B] text-white font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-[#1a3328] shadow-lg hover:shadow-xl flex items-center justify-center gap-1.5 sm:gap-2"
+                      >
+                        <span>Live Project</span>
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                      </motion.button>
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full"
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2F5E4B] text-[#2F5E4B] font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-[#2F5E4B]/5 hover:shadow-lg flex items-center justify-center gap-1.5 sm:gap-2"
+                      >
+                        <span>View Code</span>
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.006 3.006 0 0 0-.82-2.134c2.31-.265 4.734-1.133 4.734-4.926 0-1.09-.39-1.937-1.029-2.61.109-.577.438-1.773-.102-3.677 0 0-.84-.27-2.75 1.025A9.578 9.578 0 0 0 12 6.792a9.59 9.59 0 0 0-2.904.402c-1.91-1.295-2.75-1.025-2.75-1.025-.54 1.904-.211 3.1-.102 3.677-.639.673-1.029 1.52-1.029 2.61 0 3.793 2.424 4.661 4.734 4.926-.264.229-.479.571-.558.938" />
+                        </svg>
+                      </motion.button>
+                    </a>
+                  )}
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+});
+
 // CarouselCard
 interface CarouselCardProps {
   item: PortfolioItem;
@@ -105,6 +333,7 @@ interface CarouselCardProps {
   isCenter: boolean;
   isVisible: boolean;
   onClickSide: () => void;
+  onClickCard: () => void;
 }
 
 const CarouselCard = memo(
@@ -114,6 +343,7 @@ const CarouselCard = memo(
     isCenter,
     isVisible,
     onClickSide,
+    onClickCard,
   }: CarouselCardProps) {
     const animTarget: TargetAndTransition = {
       x: slot.x,
@@ -139,7 +369,7 @@ const CarouselCard = memo(
         animate={animTarget}
         whileHover={isVisible ? hoverTarget : undefined}
         transition={CARD_TRANSITION}
-        onClick={isCenter || !isVisible ? undefined : onClickSide}
+        onClick={isCenter ? onClickCard : !isVisible ? undefined : onClickSide}
         className="absolute cursor-pointer w-75 origin-bottom will-change-[transform,opacity] transform-3d backface-hidden"
         style={{ zIndex: slot.zIndex }}
       >
@@ -174,38 +404,40 @@ const CarouselCard = memo(
               {item.description}
             </p>
 
-            {/* {isCenter && (
+            {isCenter && (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={CTA_TRANSITION}
+                transition={{ delay: 0.1, duration: 0.3 }}
                 className="mt-4 flex items-center gap-2"
               >
-                <motion.span
+                <motion.button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClickCard();
+                  }}
                   whileHover={{ x: 4 }}
                   transition={{ duration: 0.3, ease: EASE_LUXURY }}
-                  className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer"
+                  className="text-sm font-semibold text-[#2F5E4B] flex items-center gap-1 cursor-pointer hover:text-[#1a3328] transition-colors duration-200"
                 >
-                  Project's Details
-                  <motion.svg
+                  View Details
+                  <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={ARROW_TRANSITION}
+                    stroke="currentColor"
+                    strokeWidth="1.5"
                   >
                     <path
                       d="M3 8h10M9 4l4 4-4 4"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </motion.svg>
-                </motion.span>
+                  </svg>
+                </motion.button>
               </motion.div>
-            )} */}
+            )}
           </div>
         </div>
       </motion.div>
@@ -216,6 +448,7 @@ const CarouselCard = memo(
     prev.isCenter === next.isCenter &&
     prev.isVisible === next.isVisible &&
     prev.onClickSide === next.onClickSide &&
+    prev.onClickCard === next.onClickCard &&
     prev.slot.x === next.slot.x &&
     prev.slot.y === next.slot.y &&
     prev.slot.scale === next.slot.scale &&
@@ -229,6 +462,10 @@ const CarouselCard = memo(
 const Portfolio = () => {
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isHoveringRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -257,9 +494,23 @@ const Portfolio = () => {
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      if (!isHoveringRef.current) setActiveIndex((p) => (p + 1) % total);
+      if (!isHoveringRef.current && !isModalOpen) {
+        setActiveIndex((p) => (p + 1) % total);
+      }
     }, AUTO_SCROLL_INTERVAL);
-  }, [total]);
+  }, [total, isModalOpen]);
+
+  const handleCardClick = useCallback((project: PortfolioItem) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProject(null);
+    startInterval();
+  }, [startInterval]);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("portfolioActiveIndex");
@@ -312,9 +563,6 @@ const Portfolio = () => {
 
   return (
     <section className="py-10 relative min-h-screen overflow-hidden bg-grid-lines flex flex-col items-center justify-center">
-      {/* <div className="absolute top-16 left-1/3 w-125 h-125 bg-[#7FAE8D]/10 rounded-full blur-3xl pointer-events-none" /> */}
-      {/* <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2F5E4B]/08 rounded-full blur-3xl pointer-events-none" /> */}
-
       <div className="max-w-7xl mx-auto px-6 relative flex flex-col items-center lg:gap-2 gap-4">
         {/* Header */}
         <motion.div
@@ -324,7 +572,7 @@ const Portfolio = () => {
           viewport={{ once: true }}
           className="text-center flex flex-col items-center lg:gap-6 gap-4"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328]  font-serif tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#1a3328] font-serif tracking-tight">
             Our Projects
           </h2>
 
@@ -371,6 +619,7 @@ const Portfolio = () => {
                 goTo(idx);
                 startInterval();
               }}
+              onClickCard={() => handleCardClick(item)}
             />
           ))}
         </div>
@@ -446,6 +695,13 @@ const Portfolio = () => {
           </motion.button>
         </div>
       </div>
+
+      {/* Modal */}
+      <ProjectModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };
