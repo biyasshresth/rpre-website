@@ -55,8 +55,7 @@ const imageVariants: Variants = {
 };
 
 const iconVariants: Variants = {
-  hidden: { rotate: 0, scale: 1 }, // Changed from 'initial'
-  visible: { rotate: 0, scale: 1 }, // Added so it knows what to do on mount
+  visible: { rotate: 0, scale: 1 },
   hover: {
     rotate: [0, 360, 350, 365, 358, 360],
     scale: 1.12,
@@ -69,7 +68,7 @@ const iconVariants: Variants = {
 
 const Services: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
-
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
   useEffect(() => {
     let loadedCount = 0;
 
@@ -112,7 +111,7 @@ const Services: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="grid gap-8 md:grid-cols-3 -mt-6"
+          className="grid gap-8 md:grid-cols-3 mt-2"
           variants={containerVariants}
           initial="hidden"
           animate={loaded ? "visible" : "hidden"}
@@ -126,6 +125,9 @@ const Services: React.FC = () => {
                   className=" group h-100 cursor-pointer overflow-hidden rounded-2xl border border-[#b0edb0]  shadow-md flex flex-col "
                   variants={cardVariants}
                   whileHover="hover"
+                  animate="visible"
+                  onHoverStart={() => setHoveredId(service.id)}
+                  onHoverEnd={() => setHoveredId(null)}
                 >
                   {/* Image Section - Fixed Height */}
                   <div className="relative h-40 ` overflow-hidden shrink-0">
@@ -140,8 +142,7 @@ const Services: React.FC = () => {
 
                     <motion.div
                       variants={iconVariants}
-                      initial="initial"
-                      whileHover="hover"
+                     animate={hoveredId === service.id ? "hover" : "visible"}
                       className="absolute bottom-4 left-4 rounded-full bg-white p-3 shadow-lg"
                     >
                       <IconComponent className="text-[#2F5E4B]" size={28} />

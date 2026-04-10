@@ -202,16 +202,22 @@ const HeroSection: React.FC = () => {
     return () => window.removeEventListener("resize", setHeight);
   }, []);
 
-  // Track scroll direction
+  // Track scroll direction - only show indicator when in hero section
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (value) => {
-      if (value > lastScrollY) {
-        setShowScrollIndicator(false);
-      } else {
-        // Show indicator when scrolled up past the hero section
-        if (value < viewportHeight * 0.5) {
+      // Only show indicator if we're in the hero section (scrolled less than viewportHeight * 0.8)
+      if (value < viewportHeight * 0.8) {
+        // Within hero section - show/hide based on scroll direction
+        if (value > lastScrollY) {
+          // Scrolling down - hide indicator
+          setShowScrollIndicator(false);
+        } else {
+          // Scrolling up - show indicator
           setShowScrollIndicator(true);
         }
+      } else {
+        // Scrolled past hero section - hide indicator
+        setShowScrollIndicator(false);
       }
       setLastScrollY(value);
     });
@@ -367,10 +373,9 @@ const HeroSection: React.FC = () => {
               </motion.div>
             </div>
           </div>
+          <ScrollIndicator isVisible={showScrollIndicator} />
         </section>
       </motion.div>
-
-      <ScrollIndicator isVisible={showScrollIndicator} />
     </section>
   );
 };

@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
-import { motion, type TargetAndTransition, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  type TargetAndTransition,
+  AnimatePresence,
+} from "framer-motion";
 import { portfolio, type PortfolioItem } from "../../../data/portfolioData";
 
 const AUTO_SCROLL_INTERVAL = 3000;
@@ -135,6 +139,27 @@ const ProjectModal = memo(function ProjectModal({
             className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pointer-events-none overflow-y-auto"
           >
             <motion.div className="w-full max-w-lg bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-4 sm:my-auto">
+              {/* Close Button */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onClose}
+                className="absolute top-3 sm:top-4 right-3 sm:right-4 w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-white/90 text-[#1a3328] flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200 backdrop-blur-sm"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </motion.button>
+
+              {/* Category Badge */}
+
               {/* Image Section */}
               <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-linear-to-br from-[#f7f3ee] to-[#ede8e0]">
                 <img
@@ -143,35 +168,6 @@ const ProjectModal = memo(function ProjectModal({
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
-
-                {/* Close Button */}
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={onClose}
-                  className="absolute top-3 sm:top-4 right-3 sm:right-4 w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-white/90 text-[#1a3328] flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200 backdrop-blur-sm"
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </motion.button>
-
-                {/* Category Badge */}
-                <motion.span
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.3 }}
-                  className="absolute top-3 sm:top-4 left-3 sm:left-4 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 text-xs font-bold text-[#2F5E4B] shadow-lg backdrop-blur-sm"
-                >
-                  {project.category}
-                </motion.span>
               </div>
 
               {/* Content Section - Scrollable on mobile */}
@@ -181,19 +177,24 @@ const ProjectModal = memo(function ProjectModal({
                 transition={{ delay: 0.15, duration: 0.4 }}
                 className="p-5 sm:p-6 md:p-7 max-h-[calc(100vh-220px)] sm:max-h-[calc(100vh-280px)] overflow-y-auto"
               >
-                {/* Title */}
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a3328] mb-2 font-serif tracking-tight line-clamp-2">
-                  {project.title}
+                {/* Title */}{" "}
+                <h2 className="w-full text-xl sm:text-2xl md:text-3xl font-bold text-[#1a3328] mb-2 font-serif tracking-tight line-clamp-2 flex flex-row items-center justify-between">
+                  {project.title}{" "}
+                  <motion.h3
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
+                    className="sm:left-4 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 text-xs font-semibold text-[#2F5E4B] shadow-lg backdrop-blur-sm"
+                  >
+                    {project.category}
+                  </motion.h3>
                 </h2>
-
                 {/* Accent Line */}
                 <div className="w-12 sm:w-16 h-1 bg-linear-to-r from-[#2F5E4B] to-[#4a7060] rounded-full mb-4 sm:mb-5" />
-
                 {/* Description */}
                 <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-5 line-clamp-3 sm:line-clamp-none">
                   {project.description}
                 </p>
-
                 {/* Features Section */}
                 {project.features && project.features.length > 0 && (
                   <motion.div
@@ -226,7 +227,6 @@ const ProjectModal = memo(function ProjectModal({
                     </div>
                   </motion.div>
                 )}
-
                 {/* Technologies Section */}
                 {project.technologies && project.technologies.length > 0 && (
                   <motion.div
@@ -256,7 +256,6 @@ const ProjectModal = memo(function ProjectModal({
                     </div>
                   </motion.div>
                 )}
-
                 {/* Call-to-Action Buttons */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -271,12 +270,12 @@ const ProjectModal = memo(function ProjectModal({
                       rel="noopener noreferrer"
                       className="w-full"
                     >
-                      <motion.button
+                      <motion.h3
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg bg-[#2F5E4B] text-white font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-[#1a3328] shadow-lg hover:shadow-xl flex items-center justify-center gap-1.5 sm:gap-2"
+                        className="w-full lg:px-4 px-5 lg:py-2 py-2.5 rounded-lg text-[#2F5E4B]  view-button font-semibold text-sm sm:text-base transition-all duration-300  flex items-center justify-center gap-1.5 sm:gap-2"
                       >
-                        <span>Live Project</span>
+                        <span>View Project</span>
                         <svg
                           width="14"
                           height="14"
@@ -287,7 +286,7 @@ const ProjectModal = memo(function ProjectModal({
                         >
                           <path d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
-                      </motion.button>
+                      </motion.h3>
                     </a>
                   )}
                   {project.githubUrl && (
@@ -297,7 +296,7 @@ const ProjectModal = memo(function ProjectModal({
                       rel="noopener noreferrer"
                       className="w-full"
                     >
-                      <motion.button
+                      {/* <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2F5E4B] text-[#2F5E4B] font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-[#2F5E4B]/5 hover:shadow-lg flex items-center justify-center gap-1.5 sm:gap-2"
@@ -313,7 +312,7 @@ const ProjectModal = memo(function ProjectModal({
                         >
                           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.006 3.006 0 0 0-.82-2.134c2.31-.265 4.734-1.133 4.734-4.926 0-1.09-.39-1.937-1.029-2.61.109-.577.438-1.773-.102-3.677 0 0-.84-.27-2.75 1.025A9.578 9.578 0 0 0 12 6.792a9.59 9.59 0 0 0-2.904.402c-1.91-1.295-2.75-1.025-2.75-1.025-.54 1.904-.211 3.1-.102 3.677-.639.673-1.029 1.52-1.029 2.61 0 3.793 2.424 4.661 4.734 4.926-.264.229-.479.571-.558.938" />
                         </svg>
-                      </motion.button>
+                      </motion.button> */}
                     </a>
                   )}
                 </motion.div>
@@ -463,7 +462,7 @@ const Portfolio = () => {
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(
-    null
+    null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
