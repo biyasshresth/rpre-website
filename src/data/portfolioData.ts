@@ -113,7 +113,7 @@ export const portfolio: PortfolioItem[] = [
     description:
       "Surrounded by picturesque views, our restaurant offers a cozy atmosphere and delectable dishes made from fresh, locally-sourced ingredients.",
     category: "Web Development",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3",
+    image: "/Countryside.png",
     features: [
       "Online reservation system",
       "Digital menu with images",
@@ -123,8 +123,8 @@ export const portfolio: PortfolioItem[] = [
       "Customer loyalty program",
     ],
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Stripe"],
-    liveUrl: "https://example.com/royalcountryside",
-    githubUrl: "https://github.com/example/royalcountryside",
+    liveUrl: "https://royalcountryside.com.np/",
+    
   },
   {
     id: 7,
@@ -132,7 +132,7 @@ export const portfolio: PortfolioItem[] = [
     description:
       "Discover your dream home with Royal Palm Real Estate. We offer a wide range of properties, from cozy apartments to luxurious villas, tailored to your preferences.",
     category: "Web Development",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3",
+    image: "/Rpre.png",
     features: [
       "Advanced property search",
       "Virtual property tours",
@@ -142,7 +142,6 @@ export const portfolio: PortfolioItem[] = [
       "Agent network management",
     ],
     technologies: ["React", "Node.js", "MongoDB", "Mapbox API"],
-    liveUrl: "https://example.com/royalpalm",
-    githubUrl: "https://github.com/example/royalpalm",
+    liveUrl: "https://royalpalmrealestate.com.np/",
   },
 ];
