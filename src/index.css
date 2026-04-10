@@ -11,7 +11,6 @@ html {
 .transform-style {
   transform-style: preserve-3d;
 }
- 
 
 /* Grid lines background effect */
 .bg-grid-lines {
@@ -36,8 +35,7 @@ html {
 @theme {
   --font-bezmiar: "Bezmiar", sans-serif;
 }
- 
- 
+
 /* external styles  */
 .bg-radial-gradient-custom {
   background-image:
@@ -131,16 +129,16 @@ html {
 
 .view-button:hover {
   letter-spacing: 3px;
-  background-color: #2F5E4B  ;
+  background-color: #2f5e4b;
   color: hsl(0, 0%, 100%);
   box-shadow: rgba(51, 51, 54, 0.815) 0px 7px 29px 0px;
 }
 
 .view-button:active {
   letter-spacing: 3px;
-  background-color: hsl(261deg 80% 48%);
+  background-color: #4baf87;
   color: hsl(0, 0%, 100%);
-  box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+  box-shadow: rgba(51, 51, 54, 0.815) 0px 7px 29px 0px;
   transform: translateY(10px);
   transition: 100ms;
 }
