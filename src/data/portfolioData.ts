@@ -9,7 +9,7 @@ export interface PortfolioItem {
   features?: string[];
   technologies?: string[];
   liveUrl?: string;
-  githubUrl?: string;
+   isOngoing?: boolean;  
 }
 
 export const portfolio: PortfolioItem[] = [
@@ -17,7 +17,9 @@ export const portfolio: PortfolioItem[] = [
     id: 1,
     title: "Bhumi",
     category: "Mobile Development",
-    image: "/Ecomerce.png",
+            isOngoing: false,
+
+    image: "/Bhumi.png",
     description:
       "Find, buy, sell, and rent properties with ease. Our platform offers a seamless experience for all your real estate needs.",
     features: [
@@ -27,17 +29,18 @@ export const portfolio: PortfolioItem[] = [
       "Secure payment gateway",
       "Direct messaging with agents",
     ],
-    technologies: ["React Native", "Firebase", "Stripe", "Google Maps API"],
-    liveUrl: "https://example.com/bhumi",
-    githubUrl: "https://github.com/example/bhumi",
+    technologies: ["Flutter", "Baato Maps API", "Node JS"],
+    liveUrl: "https://play.google.com/store/apps/details?id=com.royalpalmrealestate.bhumi&hl=en",    
   },
   {
     id: 2,
     title: "CAS (Accounting Pro)",
+            isOngoing: false,
+
     description:
       "Comprehensive accounting software for small businesses. Streamline your finances, manage invoices, and track expenses with ease.",
     category: "Web Development",
-    image: "/MobileApp.png",
+    image: "/Accounting.png",
     features: [
       "Invoice generation and tracking",
       "Expense categorization",
@@ -47,16 +50,17 @@ export const portfolio: PortfolioItem[] = [
       "Tax calculation assistance",
     ],
     technologies: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
-    liveUrl: "https://example.com/cas",
-    githubUrl: "https://github.com/example/cas",
+   
   },
   {
     id: 3,
     title: "ApplyCan",
+            isOngoing: false,
+
     description:
       "ApplyCan simplifies study, PR, and pathways in Canada smart and digital",
     category: "Mobile Development",
-    image: "/SecurityMonitoring.png",
+    image: "/Applycan.png",
     features: [
       "Application timeline tracking",
       "Document organization system",
@@ -65,17 +69,17 @@ export const portfolio: PortfolioItem[] = [
       "Application status notifications",
       "Expert consultation booking",
     ],
-    technologies: ["Flutter", "Firebase", "REST API", "Python Backend"],
-    liveUrl: "https://example.com/applycan",
-    githubUrl: "https://github.com/example/applycan",
+    technologies: ["Flutter", "Firebase", "Laravel", "Laravel Backend"],
+    liveUrl: "https://play.google.com/store/search?q=applycan&c=apps&hl=en",  
   },
   {
     id: 4,
     title: "Royal Sports Park",
+    isOngoing: true,
     description:
       "At Royal Sports Park, we make sports and event bookings effortless. Our user-friendly platform allows you to reserve courts, fields, and facilities for your favorite sports with just a few clicks.",
     category: "Web Development",
-    image: "/FitnessApp.png",
+    image: "/Royalsports.png",
     features: [
       "Real-time facility availability",
       "Online booking system",
@@ -84,17 +88,17 @@ export const portfolio: PortfolioItem[] = [
       "User reviews & ratings",
       "Admin dashboard for facility management",
     ],
-    technologies: ["React", "Express.js", "MongoDB", "Stripe API"],
+    technologies: ["React", "Express.js", "Stripe API"],
     liveUrl: "https://example.com/royalsportspark",
-    githubUrl: "https://github.com/example/royalsportspark",
-  },
+   },
   {
     id: 5,
     title: "Gymandu",
+    isOngoing: true,
     description:
       "Gymandu is a fitness app that helps you track your workouts, set goals, and stay motivated on your fitness journey.",
     category: "Mobile Development",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b",
+     image: "/GymMandu.png",
     features: [
       "Workout tracking & logging",
       "Personalized fitness plans",
@@ -103,13 +107,14 @@ export const portfolio: PortfolioItem[] = [
       "Nutrition tracking",
       "Wearable device integration",
     ],
-    technologies: ["React Native", "Firebase", "Redux", "Health Kit API"],
-    liveUrl: "https://example.com/gymandu",
-    githubUrl: "https://github.com/example/gymandu",
+    technologies: ["React Native", "Firebase","Health Kit API"],
+    liveUrl: "https://example.com/gymandu",     
   },
   {
     id: 6,
     title: "Royal Countryside",
+        isOngoing: false,
+
     description:
       "Surrounded by picturesque views, our restaurant offers a cozy atmosphere and delectable dishes made from fresh, locally-sourced ingredients.",
     category: "Web Development",
@@ -129,6 +134,8 @@ export const portfolio: PortfolioItem[] = [
   {
     id: 7,
     title: "Royal Palm Real Estate",
+        isOngoing: false,
+
     description:
       "Discover your dream home with Royal Palm Real Estate. We offer a wide range of properties, from cozy apartments to luxurious villas, tailored to your preferences.",
     category: "Web Development",

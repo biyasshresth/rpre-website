@@ -112,7 +112,17 @@ const ProjectModal = memo(function ProjectModal({
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+  const [showOngoingModal, setShowOngoingModal] = useState(false);
+  const handleViewProject = (item: PortfolioItem) => {
+    if (item.isOngoing) {
+      setShowOngoingModal(true);
+      return;
+    }
 
+    if (item.liveUrl) {
+      window.open(item.liveUrl, "_blank");
+    }
+  };
   if (!project) return null;
 
   return (
@@ -264,10 +274,8 @@ const ProjectModal = memo(function ProjectModal({
                   className="flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-5 border-t border-gray-200"
                 >
                   {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <div
+                      onClick={() => handleViewProject(project)}
                       className="w-full"
                     >
                       <motion.h3
@@ -287,35 +295,40 @@ const ProjectModal = memo(function ProjectModal({
                           <path d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
                       </motion.h3>
-                    </a>
-                  )}
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full"
-                    >
-                      {/* <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-full px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[#2F5E4B] text-[#2F5E4B] font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-[#2F5E4B]/5 hover:shadow-lg flex items-center justify-center gap-1.5 sm:gap-2"
-                      >
-                        <span>View Code</span>
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.006 3.006 0 0 0-.82-2.134c2.31-.265 4.734-1.133 4.734-4.926 0-1.09-.39-1.937-1.029-2.61.109-.577.438-1.773-.102-3.677 0 0-.84-.27-2.75 1.025A9.578 9.578 0 0 0 12 6.792a9.59 9.59 0 0 0-2.904.402c-1.91-1.295-2.75-1.025-2.75-1.025-.54 1.904-.211 3.1-.102 3.677-.639.673-1.029 1.52-1.029 2.61 0 3.793 2.424 4.661 4.734 4.926-.264.229-.479.571-.558.938" />
-                        </svg>
-                      </motion.button> */}
-                    </a>
+                    </div>
                   )}
                 </motion.div>
+                {showOngoingModal && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+                  >
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0, y: 10 }}
+                      animate={{ scale: 1, opacity: 1, y: 0 }}
+                      exit={{ scale: 0.9, opacity: 0, y: 10 }}
+                      transition={{ duration: 0.25 }}
+                      className="bg-white rounded-2xl p-6 w-[90%] max-w-sm shadow-2xl text-center"
+                    >
+                      <h2 className="text-lg font-semibold text-[#1a3328] mb-2">
+                        🚧 Project in Progress
+                      </h2>
+
+                      <p className="text-gray-600 text-sm mb-4">
+                        The project is ongoing, near to complete. Stay tuned!
+                      </p>
+
+                      <button
+                        onClick={() => setShowOngoingModal(false)}
+                        className="px-4 py-2 bg-[#2F5E4B] text-white rounded-lg hover:opacity-90 transition"
+                      >
+                        Got it
+                      </button>
+                    </motion.div>
+                  </motion.div>
+                )}
               </motion.div>
             </motion.div>
           </motion.div>

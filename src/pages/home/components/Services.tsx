@@ -60,7 +60,7 @@ const iconVariants: Variants = {
     rotate: [0, 360, 350, 365, 358, 360],
     scale: 1.12,
     transition: {
-      duration: 1.5,
+      duration: 2,
       ease: "easeOut",
     },
   },
@@ -142,7 +142,7 @@ const Services: React.FC = () => {
 
                     <motion.div
                       variants={iconVariants}
-                     animate={hoveredId === service.id ? "hover" : "visible"}
+                      animate={hoveredId === service.id ? "hover" : "visible"}
                       className="absolute bottom-4 left-4 rounded-full bg-white p-3 shadow-lg"
                     >
                       <IconComponent className="text-[#2F5E4B]" size={28} />
